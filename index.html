@@ -4,793 +4,807 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StrengthsMap — Discover What You're Naturally Brilliant At</title>
+<meta name="description" content="StrengthsMap is an independent AI-powered strengths discovery tool. 100 questions across 34 talent themes. Full personalised coaching report in under 60 seconds.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F1F4F9;--card:#FFFFFF;--navy:#0D1B2A;--navy2:#1A2E42;
-  --gray:#5A6478;--gray-l:#94A3B8;--border:#DDE3ED;
-  --ex:#7B5EA7;--ex-l:#EDE8F7;--in:#C96310;--in-l:#FAF0E6;
-  --rb:#1360A8;--rb-l:#E8F0FA;--st:#187840;--st-l:#E6F5EC;
-  --accent:#1360A8;
-  --shadow-sm:0 1px 8px rgba(13,27,42,.07);
-  --shadow:0 4px 20px rgba(13,27,42,.10);
-  --shadow-lg:0 12px 48px rgba(13,27,42,.14);
-  --r:14px;--r-sm:9px;--t:.2s ease;
+  --bg:#07090F;
+  --navy:#0A0F1E;
+  --card:#0F1729;
+  --card2:#141E30;
+  --border:#1A2640;
+  --border2:#243250;
+  --text:#EEF2FF;
+  --text2:#8B9AB8;
+  --text3:#4A5568;
+  --gold:#F0A500;
+  --gold-l:#FFB830;
+  --gold-dim:rgba(240,165,0,.10);
+  --ex:#8B5CF6;
+  --in:#F97316;
+  --rb:#3B82F6;
+  --st:#10B981;
+  --r:14px;
+  --r-sm:9px;
+  --t:all .2s cubic-bezier(.4,0,.2,1);
 }
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--navy);min-height:100vh;line-height:1.55}
-.wrap{max-width:720px;margin:0 auto;padding:0 20px 80px}
+html,body{min-height:100vh;background:var(--bg)}
+body{
+  font-family:'Sora',system-ui,sans-serif;
+  color:var(--text);line-height:1.6;
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse 70% 60% at 10% 0%,rgba(139,92,246,.09) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 50% at 90% 100%,rgba(59,130,246,.07) 0%,transparent 55%);
+  background-attachment:fixed;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px 80px}
 .screen{display:none}.screen.active{display:block}
 
 /* NAV */
-.site-nav{padding:18px 0 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.nav{padding:22px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
 .brand{display:flex;align-items:center;gap:9px}
 .brand-dots{display:flex;gap:4px}
-.bd{width:9px;height:9px;border-radius:50%}
-.brand-name{font-size:13px;font-weight:700;letter-spacing:.4px;color:var(--navy)}
-.brand-sub{font-size:11px;color:var(--gray-l);margin-left:3px;font-weight:400}
+.dot{width:9px;height:9px;border-radius:50%}
+.brand-name{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;color:var(--text);letter-spacing:.3px}
+.brand-sub{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-left:3px;font-weight:400}
 
 /* PROGRESS */
-.prog-wrap{background:var(--card);border-radius:var(--r);padding:16px 22px;box-shadow:var(--shadow-sm);margin-bottom:18px}
-.prog-meta{display:flex;justify-content:space-between;margin-bottom:9px;font-size:12.5px}
-.prog-round{font-weight:700;color:var(--navy)}.prog-ct{color:var(--gray-l)}
-.prog-bar{height:5px;background:var(--border);border-radius:99px;overflow:hidden}
-.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ex),var(--in),var(--rb),var(--st));transition:width .5s cubic-bezier(.4,0,.2,1)}
+.prog{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:15px 22px;margin-bottom:20px}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;flex-wrap:wrap;gap:6px}
+.prog-round{font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:700;color:var(--text)}
+.prog-right{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.prog-ct{font-size:12px;color:var(--text3)}
+.prog-time{font-size:12px;color:var(--gold);font-weight:600}
+.prog-bar{height:4px;background:var(--border2);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ex),var(--in),var(--rb),var(--st));transition:width .5s ease}
 
-/* HERO */
-.hero{background:var(--navy);border-radius:var(--r);padding:52px 44px;text-align:center;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;margin-bottom:18px}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 25% 15%,rgba(123,94,167,.35),transparent 55%),radial-gradient(ellipse at 75% 85%,rgba(24,120,64,.22),transparent 55%);pointer-events:none}
-.hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(26px,5vw,42px);color:#fff;line-height:1.18;margin-bottom:14px;position:relative}
-.hero h1 em{font-style:italic;color:#93C5FD}
-.hero p{color:rgba(255,255,255,.68);font-size:15.5px;max-width:460px;margin:0 auto 30px;position:relative;line-height:1.6}
-.domain-pills{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;position:relative}
-.pill{padding:5px 13px;border-radius:99px;font-size:11.5px;font-weight:600;letter-spacing:.3px;color:#fff}
-.pill-ex{background:var(--ex)}.pill-in{background:var(--in)}.pill-rb{background:var(--rb)}.pill-st{background:var(--st)}
+/* HERO — full width dark immersive */
+.hero{
+  position:relative;overflow:hidden;
+  border-radius:16px;
+  background:linear-gradient(135deg,#080F1E 0%,#0C1427 45%,#080B16 100%);
+  border:1px solid var(--border);
+  box-shadow:0 24px 80px rgba(0,0,0,.7);
+  margin-bottom:18px;
+  min-height:580px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.hero-glow1{position:absolute;top:-150px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(139,92,246,.12) 0%,transparent 65%);pointer-events:none;animation:g1 9s ease-in-out infinite}
+.hero-glow2{position:absolute;bottom:-150px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(59,130,246,.09) 0%,transparent 65%);pointer-events:none;animation:g2 11s ease-in-out infinite}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:55px 55px;pointer-events:none}
+@keyframes g1{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-16px)}}
+@keyframes g2{0%,100%{transform:translate(0,0)}50%{transform:translate(-16px,20px)}}
+.hero-inner{position:relative;padding:64px 56px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(240,165,0,.22);background:rgba(240,165,0,.07);border-radius:99px;padding:5px 16px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:26px}
+.eyebrow::before{content:'✦';font-size:9px}
+.hero h1{font-family:'Outfit',sans-serif;font-size:clamp(44px,7vw,76px);font-weight:900;color:var(--text);line-height:1.05;letter-spacing:-2.5px;margin-bottom:6px}
+.hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--gold),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(15px,2vw,18px);color:var(--text2);max-width:500px;margin:0 auto 18px;line-height:1.7}
+.time-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(16,185,129,.22);background:rgba(16,185,129,.07);border-radius:99px;padding:5px 15px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;color:var(--st);margin-bottom:38px;letter-spacing:.2px}
+.domain-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:44px}
+.dpill{padding:6px 16px;border-radius:99px;font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:700;border:1px solid rgba(255,255,255,.08);transition:var(--t)}
+.dpill:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.18)}
+.dpill-ex{color:#C4B5FD;background:rgba(139,92,246,.14)}
+.dpill-in{color:#FED7AA;background:rgba(249,115,22,.14)}
+.dpill-rb{color:#BFDBFE;background:rgba(59,130,246,.14)}
+.dpill-st{color:#A7F3D0;background:rgba(16,185,129,.14)}
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:44px;text-align:left}
+.feat{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:18px;transition:var(--t)}
+.feat:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);transform:translateY(-2px)}
+.feat-icon{font-size:22px;margin-bottom:9px;display:block}
+.feat-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;color:var(--text);margin-bottom:3px}
+.feat-desc{font-size:11.5px;color:var(--text3);line-height:1.5}
+.btn-cta{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--gold),#D8940A);color:#07090F;font-family:'Outfit',sans-serif;font-weight:900;font-size:17px;padding:18px 52px;border-radius:12px;border:none;cursor:pointer;transition:var(--t);box-shadow:0 4px 30px rgba(240,165,0,.35);letter-spacing:.2px;position:relative;overflow:hidden}
+.btn-cta::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);opacity:0;transition:opacity .2s}
+.btn-cta:hover{transform:translateY(-3px);box-shadow:0 8px 50px rgba(240,165,0,.5)}
+.btn-cta:hover::after{opacity:1}
+.btn-cta:active{transform:none}
+.arrow{font-size:20px;transition:transform .2s}
+.btn-cta:hover .arrow{transform:translateX(5px)}
 
 /* INFO CARD */
-.info-card{background:var(--card);border-radius:var(--r);padding:26px 30px;box-shadow:var(--shadow)}
-.info-card h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--gray-l);margin-bottom:15px}
-.rules{display:grid;gap:11px}
-.rule{display:flex;gap:11px;align-items:flex-start}
-.rule-icon{min-width:26px;height:26px;border-radius:7px;background:var(--rb-l);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px}
-.rule p{font-size:13.5px;color:var(--navy2);line-height:1.48}
-.name-row{display:flex;gap:10px;margin:22px 0 24px;flex-wrap:wrap}
-.txt-input{flex:1;min-width:190px;padding:11px 15px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:14.5px;color:var(--navy);outline:none;transition:border-color var(--t)}
-.txt-input:focus{border-color:var(--accent)}
-.txt-input::placeholder{color:var(--gray-l)}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:32px 36px;box-shadow:0 8px 40px rgba(0,0,0,.4);animation:fadeup .35s ease}
+@keyframes fadeup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.info-h{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:18px}
+.rules{display:flex;flex-direction:column;gap:14px}
+.rule{display:flex;gap:12px;align-items:flex-start}
+.rule-icon{min-width:32px;height:32px;border-radius:8px;background:var(--gold-dim);border:1px solid rgba(240,165,0,.15);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:1px}
+.rule p{font-size:13.5px;color:var(--text2);line-height:1.55}
+.rule p strong{color:var(--text)}
+.name-wrap{margin:22px 0 18px}
+.name-input{width:100%;padding:12px 16px;background:#0A0F1E;border:1.5px solid var(--border);border-radius:9px;font-family:'Sora',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s}
+.name-input:focus{border-color:var(--gold)}
+.name-input::placeholder{color:var(--text3)}
+.disc{background:rgba(240,165,0,.04);border:1px solid rgba(240,165,0,.12);border-radius:9px;padding:13px 16px;font-size:12px;color:var(--text3);line-height:1.65;margin-bottom:18px}
+.disc strong{color:rgba(240,165,0,.75);display:block;margin-bottom:3px;font-family:'Outfit',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px}
+.resume{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.16);border-radius:9px;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;font-size:13.5px;color:var(--text2)}
+.resume strong{color:#93C5FD}
+.resume-btns{display:flex;gap:8px}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 26px;border-radius:8px;font-family:inherit;font-weight:600;font-size:14.5px;cursor:pointer;border:none;transition:var(--t);text-decoration:none}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:#0D4F8A;transform:translateY(-1px)}
-.btn-primary:active{transform:none}
-.btn-primary:disabled{background:#CBD5E1;cursor:not-allowed;transform:none}
-.btn-ghost{background:transparent;color:var(--gray);border:1.5px solid var(--border)}
-.btn-ghost:hover{background:var(--card);color:var(--navy);border-color:#94A3B8}
-.btn-lg{padding:14px 34px;font-size:15.5px;border-radius:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 24px;border-radius:9px;font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;cursor:pointer;border:none;transition:var(--t);letter-spacing:.2px}
+.btn-p{background:linear-gradient(135deg,var(--gold),#D8940A);color:#07090F;box-shadow:0 4px 16px rgba(240,165,0,.2)}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(240,165,0,.38)}
+.btn-p:active{transform:none}
+.btn-p:disabled{background:var(--border2);color:var(--text3);cursor:not-allowed;transform:none;box-shadow:none}
+.btn-g{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-g:hover{background:var(--card2);color:var(--text);border-color:var(--border2)}
+.btn-lg{padding:14px 36px;font-size:15.5px;border-radius:11px}
 .btn-full{width:100%}
-.btn-sm{padding:7px 15px;font-size:13px;border-radius:6px}
+.btn-sm{padding:7px 14px;font-size:13px;border-radius:7px}
 
 /* QUIZ */
-.round-hdr{display:flex;align-items:center;gap:9px;margin-bottom:14px}
-.round-badge{background:var(--accent);color:#fff;padding:3px 12px;border-radius:99px;font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-.round-title{font-size:13px;font-weight:600;color:var(--gray)}
-.q-card{background:var(--card);border-radius:var(--r);padding:26px 26px 18px;box-shadow:var(--shadow-sm);margin-bottom:13px;border-left:3px solid transparent;transition:border-color .3s}
-.q-card.answered{border-left-color:var(--accent)}
-.q-num{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-l);margin-bottom:9px}
-.q-text{font-size:16.5px;font-weight:600;color:var(--navy);line-height:1.38;margin-bottom:18px}
-.options{display:flex;flex-direction:column;gap:9px;margin-bottom:13px}
-.option{display:flex;align-items:flex-start;gap:11px;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:var(--t);background:#fff}
-.option:hover{background:#F5F8FF;border-color:#93C5FD}
-.option.selected{background:var(--rb-l);border-color:var(--accent)}
-.option.selected .opt-l{background:var(--accent);color:#fff;border-color:var(--accent)}
-.opt-l{min-width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11.5px;color:var(--gray);flex-shrink:0;transition:var(--t);background:#fff}
-.opt-txt{font-size:13.5px;color:var(--navy2);line-height:1.45;padding-top:3px}
-.cmt-wrap{margin-top:1px}
-.cmt-btn{background:none;border:none;padding:0;font-family:inherit;font-size:12.5px;color:var(--accent);cursor:pointer;display:flex;align-items:center;gap:3px;font-weight:500}
-.cmt-btn:hover{text-decoration:underline}
-.cmt-area{display:none;margin-top:9px}
-.cmt-area.open{display:block}
-.cmt-area textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;color:var(--navy);resize:vertical;min-height:64px;outline:none;transition:border-color var(--t);line-height:1.5}
-.cmt-area textarea:focus{border-color:var(--accent)}
-.cmt-area textarea::placeholder{color:#94A3B8}
-.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.round-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.rbadge{background:linear-gradient(135deg,var(--gold),#D8940A);color:#07090F;padding:4px 14px;border-radius:99px;font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:900;letter-spacing:.8px;text-transform:uppercase}
+.rtitle{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--text3)}
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:26px 26px 18px;box-shadow:0 2px 16px rgba(0,0,0,.3);margin-bottom:12px;border-left:3px solid transparent;transition:border-color .3s}
+.qcard.done{border-left-color:var(--gold)}
+.qnum{font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:10px}
+.qtext{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:#0A0F1E;border:1px solid var(--border);border-radius:9px;cursor:pointer;transition:var(--t)}
+.opt:hover{background:var(--card2);border-color:var(--border2);transform:translateX(2px)}
+.opt.sel{background:rgba(240,165,0,.07);border-color:rgba(240,165,0,.35)}
+.opt.sel .oletter{background:var(--gold);color:#07090F;border-color:var(--gold);font-weight:900}
+.oletter{min-width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;color:var(--text3);flex-shrink:0;transition:var(--t);background:var(--card)}
+.otext{font-size:13.5px;color:var(--text2);line-height:1.5;padding-top:3px}
+.opt.sel .otext{color:var(--text)}
+.cmt-btn{background:none;border:none;padding:0;font-family:'Sora',sans-serif;font-size:12px;color:var(--text3);cursor:pointer;display:flex;align-items:center;gap:4px;font-weight:500;transition:color .2s}
+.cmt-btn:hover{color:var(--gold)}
+.cmt-wrap{display:none;margin-top:9px}
+.cmt-wrap.open{display:block}
+.cmt-wrap textarea{width:100%;padding:10px 13px;background:#0A0F1E;border:1.5px solid var(--border);border-radius:8px;font-family:'Sora',sans-serif;font-size:12.5px;color:var(--text);resize:vertical;min-height:60px;outline:none;transition:border-color .2s;line-height:1.5}
+.cmt-wrap textarea:focus{border-color:var(--gold)}
+.cmt-wrap textarea::placeholder{color:var(--text3)}
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
 
 /* LOADING */
-.loading-card{background:var(--card);border-radius:var(--r);padding:60px 40px;box-shadow:var(--shadow-lg);text-align:center}
-.pulse-ring{width:72px;height:72px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--accent);animation:spin 1s linear infinite;margin:0 auto 24px}
+.load-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:64px 40px;text-align:center}
+.spinner{width:64px;height:64px;border-radius:50%;border:2px solid var(--border2);border-top-color:var(--gold);animation:spin 1s linear infinite;margin:0 auto 28px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-card h2{font-family:'DM Serif Display',Georgia,serif;font-size:26px;margin-bottom:10px;color:var(--navy)}
-.loading-card p{color:var(--gray);font-size:14.5px;max-width:400px;margin:0 auto 28px;line-height:1.6}
-.load-steps{display:flex;flex-direction:column;gap:10px;max-width:340px;margin:0 auto}
-.load-step{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--gray-l);transition:color .4s}
-.load-step.active{color:var(--navy);font-weight:600}
-.load-step.done{color:var(--st)}
-.load-dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0;transition:background .4s}
-.load-step.active .load-dot{background:var(--accent);animation:pdot 1s infinite}
-.load-step.done .load-dot{background:var(--st)}
-@keyframes pdot{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+.load-card h2{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;margin-bottom:9px}
+.load-card p{color:var(--text3);font-size:14px;max-width:360px;margin:0 auto 30px;line-height:1.65}
+.lsteps{display:flex;flex-direction:column;gap:11px;max-width:300px;margin:0 auto}
+.lstep{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--text3);transition:color .4s}
+.lstep.active{color:var(--text);font-weight:600}
+.lstep.done{color:var(--st)}
+.ldot{width:8px;height:8px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:background .4s}
+.lstep.active .ldot{background:var(--gold);animation:pd 1s infinite}
+.lstep.done .ldot{background:var(--st)}
+@keyframes pd{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
 
 /* ERROR */
-.error-card{background:var(--card);border-radius:var(--r);padding:40px 36px;box-shadow:var(--shadow-lg);text-align:center}
-.error-card h2{font-family:'DM Serif Display',Georgia,serif;font-size:24px;margin-bottom:10px;color:var(--navy)}
-.error-card p{color:var(--gray);font-size:14px;margin-bottom:24px;line-height:1.6}
-.error-detail{background:#FEF2F2;border:1px solid #FECACA;color:#991B1B;border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:20px;text-align:left}
+.err-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:44px 36px;text-align:center}
+.err-card h2{font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;margin-bottom:9px}
+.err-card p{color:var(--text3);font-size:14px;margin-bottom:22px;line-height:1.6}
+.err-detail{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.15);color:#FCA5A5;border-radius:8px;padding:12px 16px;font-size:12.5px;margin-bottom:18px;text-align:left;line-height:1.6}
 
-/* REPORT */
-.rpt-hero{background:var(--navy);border-radius:var(--r);padding:48px 40px;box-shadow:var(--shadow-lg);margin-bottom:20px;position:relative;overflow:hidden}
-.rpt-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(123,94,167,.3),transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(24,120,64,.2),transparent 50%);pointer-events:none}
+/* REPORT HERO */
+.rpt-hero{background:linear-gradient(135deg,#07101E 0%,#0B1525 50%,#07090F 100%);border:1px solid var(--border);border-radius:var(--r);padding:52px 48px;box-shadow:0 20px 70px rgba(0,0,0,.6);margin-bottom:18px;position:relative;overflow:hidden}
+.rpt-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:380px;height:380px;background:radial-gradient(circle,rgba(240,165,0,.07),transparent 60%);pointer-events:none}
 .rpt-inner{position:relative}
-.rpt-greeting{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.45);margin-bottom:6px}
-.rpt-name{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,6vw,48px);color:#fff;line-height:1.1;margin-bottom:10px}
-.rpt-tagline{font-family:'DM Serif Display',Georgia,serif;font-style:italic;color:rgba(255,255,255,.7);font-size:clamp(15px,2.5vw,19px);margin-bottom:28px;line-height:1.4}
-.rpt-top5{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:28px}
-.rpt-pill{padding:5px 14px;border-radius:99px;font-size:12px;font-weight:600;color:#fff;letter-spacing:.2px}
-.domain-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.rpt-greet{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:rgba(240,165,0,.55);margin-bottom:6px}
+.rpt-name{font-family:'Outfit',sans-serif;font-size:clamp(32px,6vw,54px);font-weight:900;color:var(--text);line-height:1.05;margin-bottom:10px;letter-spacing:-2px}
+.rpt-tagline{font-style:italic;color:var(--text2);font-size:clamp(14px,2.2vw,18px);margin-bottom:30px;line-height:1.5;max-width:520px}
+.rpt-pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:28px}
+.rpt-pill{padding:5px 16px;border-radius:99px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:#fff}
+.dbar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .dbar-item{text-align:center}
-.dbar-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.45);margin-bottom:5px}
-.dbar-track{height:4px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
-.dbar-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1)}
-.dbar-count{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);margin-top:4px}
+.dbar-lbl{font-family:'Outfit',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.25);margin-bottom:6px}
+.dbar-track{height:3px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.dbar-fill{height:100%;border-radius:99px;transition:width .9s ease}
+.dbar-ct{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);margin-top:5px}
+.rpt-actions{display:flex;gap:9px;margin-bottom:20px;flex-wrap:wrap}
 
-.rpt-actions{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+/* SECTION */
+.sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:32px 30px;margin-bottom:13px;opacity:0;transform:translateY(12px);animation:fadeup .45s forwards}
+.sec:nth-child(1){animation-delay:.04s}.sec:nth-child(2){animation-delay:.08s}.sec:nth-child(3){animation-delay:.12s}
+.sec:nth-child(4){animation-delay:.16s}.sec:nth-child(5){animation-delay:.20s}.sec:nth-child(6){animation-delay:.24s}
+.sec:nth-child(7){animation-delay:.28s}.sec:nth-child(8){animation-delay:.32s}.sec:nth-child(9){animation-delay:.36s}
+.sec:nth-child(10){animation-delay:.40s}.sec:nth-child(11){animation-delay:.44s}.sec:nth-child(12){animation-delay:.48s}
+.sec:nth-child(13){animation-delay:.52s}
+.sec-hdr{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
+.sec-num{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:13px;color:#fff;flex-shrink:0;margin-top:2px}
+.sec-title{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:var(--text);line-height:1.2}
+.sec-sub{font-size:12px;color:var(--text3);margin-top:3px}
 
-.rpt-section{background:var(--card);border-radius:var(--r);padding:32px 30px;box-shadow:var(--shadow-sm);margin-bottom:16px;opacity:0;transform:translateY(16px);animation:fadeUp .5s forwards}
-@keyframes fadeUp{to{opacity:1;transform:none}}
-.rpt-section:nth-child(1){animation-delay:.05s}.rpt-section:nth-child(2){animation-delay:.10s}
-.rpt-section:nth-child(3){animation-delay:.15s}.rpt-section:nth-child(4){animation-delay:.20s}
-.rpt-section:nth-child(5){animation-delay:.25s}.rpt-section:nth-child(6){animation-delay:.30s}
-.rpt-section:nth-child(7){animation-delay:.35s}.rpt-section:nth-child(8){animation-delay:.40s}
-.rpt-section:nth-child(9){animation-delay:.45s}.rpt-section:nth-child(10){animation-delay:.50s}
-.rpt-section:nth-child(11){animation-delay:.55s}.rpt-section:nth-child(12){animation-delay:.60s}
-.rpt-section:nth-child(13){animation-delay:.65s}
+/* DOMAIN GRID */
+.dgrid{overflow-x:auto;margin-bottom:26px;-webkit-overflow-scrolling:touch}
+.dgrid-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;min-width:560px}
+.dcol-hdr{font-family:'Outfit',sans-serif;font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;padding-bottom:7px;margin-bottom:5px;border-bottom:2px solid currentColor}
+.dtiles{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.dtile{border-radius:6px;padding:8px 5px 7px;text-align:center;cursor:default;transition:transform .15s}
+.dtile:hover{transform:translateY(-2px)}
+.dt-rank{font-family:'Outfit',sans-serif;font-weight:900;line-height:1;margin-bottom:3px}
+.dt-name{font-family:'Outfit',sans-serif;font-weight:700;line-height:1.25}
+.dgrid-legend{display:flex;gap:16px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.dleg-item{display:flex;align-items:center;gap:6px;font-family:'Outfit',sans-serif;font-size:11px;color:var(--text3)}
+.dleg-sw{width:12px;height:12px;border-radius:3px;flex-shrink:0}
 
-.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-.sec-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;flex-shrink:0}
-.sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:21px;color:var(--navy);line-height:1.2}
-.sec-sub{font-size:12px;color:var(--gray-l);margin-top:2px}
+/* TABLE */
+.ptable{width:100%;border-collapse:collapse;font-size:13px}
+.ptable th{text-align:left;padding:9px 12px;font-family:'Outfit',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);border-bottom:1px solid var(--border)}
+.ptable td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2)}
+.ptable tr:last-child td{border-bottom:none}
+.ptable tr:hover td{background:rgba(255,255,255,.015)}
+.rnum{font-family:'Outfit',sans-serif;font-weight:900;color:var(--text);min-width:26px;display:inline-block}
+.dbadge{padding:2px 9px;border-radius:99px;font-size:9.5px;font-weight:700;font-family:'Outfit',sans-serif;display:inline-block;color:#fff}
+.tbadge{padding:2px 9px;border-radius:99px;font-size:9.5px;font-weight:700;font-family:'Outfit',sans-serif;display:inline-block}
+.t-sig{background:rgba(240,165,0,.12);color:var(--gold);border:1px solid rgba(240,165,0,.18)}
+.t-sup{background:rgba(255,255,255,.05);color:var(--text2);border:1px solid var(--border)}
+.t-bg{background:transparent;color:var(--text3);border:1px solid var(--border)}
+.t-les{background:transparent;color:var(--text3);border:1px solid var(--border);opacity:.55}
 
-.portrait-text{font-family:'DM Serif Display',Georgia,serif;font-size:17px;line-height:1.75;color:var(--navy2);font-style:italic}
+/* PORTRAIT */
+.portrait{font-style:italic;font-size:17px;line-height:1.82;color:var(--text2)}
+.portrait strong{font-style:normal;color:var(--text)}
 
-.sig5-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.sig5-card{border-radius:var(--r-sm);padding:18px 16px;border-left:4px solid transparent}
-.sig5-rank{font-size:22px;font-weight:700;margin-bottom:2px}
-.sig5-name{font-size:13.5px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}
-.sig5-desc{font-size:13px;line-height:1.5}
-.when-all-fire{margin-top:20px;padding:18px 20px;border-radius:var(--r-sm);background:var(--navy);color:rgba(255,255,255,.88);font-size:14px;line-height:1.65}
-.waf-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:8px}
+/* SIG5 */
+.sig5{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:11px}
+.sig5-card{border-radius:9px;padding:18px 16px;background:#0A0F1E;border:1px solid var(--border);border-left:4px solid transparent;transition:transform .2s}
+.sig5-card:hover{transform:translateY(-2px)}
+.s5rank{font-family:'Outfit',sans-serif;font-size:20px;font-weight:900;margin-bottom:2px}
+.s5name{font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:800;margin-bottom:7px;text-transform:uppercase;letter-spacing:.5px}
+.s5desc{font-size:12.5px;line-height:1.55;color:var(--text2)}
+.waf{margin-top:20px;padding:20px 22px;border-radius:9px;background:linear-gradient(135deg,rgba(240,165,0,.06),rgba(139,92,246,.04));border:1px solid rgba(240,165,0,.12);font-size:14px;line-height:1.7;color:var(--text2)}
+.waf-lbl{font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);margin-bottom:9px}
 
-.combo-list{display:flex;flex-direction:column;gap:16px}
-.combo-card{border-radius:var(--r-sm);padding:20px;background:#F8FAFF;border:1px solid var(--border)}
+/* COMBOS */
+.combos{display:flex;flex-direction:column;gap:14px}
+.combo{border-radius:9px;padding:20px;background:#0A0F1E;border:1px solid var(--border);transition:border-color .2s}
+.combo:hover{border-color:var(--border2)}
 .combo-eq{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.combo-theme{padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;color:#fff}
-.combo-op{font-size:18px;font-weight:300;color:var(--gray-l)}
-.combo-title{font-size:15.5px;font-weight:700;color:var(--navy);margin-bottom:6px}
-.combo-capability{font-size:13.5px;color:var(--navy2);line-height:1.55;margin-bottom:8px}
-.combo-example{font-size:13px;color:var(--gray);line-height:1.5;padding:10px 14px;background:var(--card);border-radius:8px;border-left:3px solid var(--accent)}
-.combo-example strong{color:var(--navy);font-size:11px;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:3px}
+.ctheme{padding:4px 13px;border-radius:99px;font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:700;color:#fff}
+.cop{font-size:20px;font-weight:300;color:var(--text3)}
+.ctitle{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px}
+.ccap{font-size:13.5px;color:var(--text2);line-height:1.6;margin-bottom:10px}
+.cex{font-size:13px;color:var(--text3);line-height:1.55;padding:11px 15px;background:rgba(255,255,255,.02);border-radius:8px;border-left:3px solid var(--gold)}
+.cex strong{color:var(--gold);font-family:'Outfit',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.6px;display:block;margin-bottom:3px}
 
-.shadow-list{display:flex;flex-direction:column;gap:14px}
-.shadow-card{border-radius:var(--r-sm);padding:18px;background:#FFFBF5;border:1px solid #FDE8C8}
-.shadow-theme-badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px}
-.shadow-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.shadow-theme-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--navy)}
-.shadow-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-@media(max-width:560px){.shadow-row{grid-template-columns:1fr}}
-.shadow-box{padding:11px 13px;border-radius:8px;background:#fff;border:1px solid #FDE8C8}
-.shadow-box-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#C26B1A;margin-bottom:5px}
-.shadow-box p{font-size:13px;color:var(--navy2);line-height:1.48}
-.shadow-warn{padding:9px 12px;border-radius:8px;background:#FFF8E7;border:1px solid #FDE68A;display:flex;gap:8px;align-items:flex-start}
-.shadow-warn-icon{font-size:13px;flex-shrink:0;margin-top:1px}
-.shadow-warn p{font-size:12.5px;color:#92400E;line-height:1.45}
-.shadow-warn strong{display:block;margin-bottom:2px;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px}
+/* SHADOW */
+.shadows{display:flex;flex-direction:column;gap:13px}
+.shadow{border-radius:9px;padding:18px;background:rgba(249,115,22,.03);border:1px solid rgba(249,115,22,.09)}
+.sh-badge{display:inline-flex;align-items:center;gap:7px;margin-bottom:11px}
+.sh-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sh-name{font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+.sh-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+.sh-box{padding:11px 13px;border-radius:8px;background:rgba(255,255,255,.02);border:1px solid var(--border)}
+.sh-lbl{font-family:'Outfit',sans-serif;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:rgba(249,115,22,.7);margin-bottom:5px}
+.sh-box p{font-size:13px;color:var(--text2);line-height:1.5}
+.sh-warn{padding:9px 12px;border-radius:8px;background:rgba(250,204,21,.04);border:1px solid rgba(250,204,21,.12);display:flex;gap:8px;align-items:flex-start}
+.sh-warn p{font-size:12.5px;color:var(--text2);line-height:1.5}
+.sh-warn strong{display:block;margin-bottom:2px;font-family:'Outfit',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#FDE68A}
 
-.thrive-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-@media(max-width:540px){.thrive-grid{grid-template-columns:1fr}}
-.thrive-box{padding:18px;border-radius:var(--r-sm)}
-.thrive-box.green{background:var(--st-l);border:1px solid #B7DFCA}
-.thrive-box.red{background:#FEF2F2;border:1px solid #FECACA}
-.thrive-box h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
-.thrive-box.green h4{color:var(--st)}.thrive-box.red h4{color:#DC2626}
-.thrive-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-.thrive-list li{font-size:13px;color:var(--navy2);line-height:1.45;display:flex;gap:7px;align-items:flex-start}
-.thrive-list li::before{font-size:10px;flex-shrink:0;margin-top:3px}
-.thrive-box.green .thrive-list li::before{content:'✓';color:var(--st);font-weight:700}
-.thrive-box.red .thrive-list li::before{content:'✕';color:#DC2626;font-weight:700}
-.thrive-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-@media(max-width:540px){.thrive-split{grid-template-columns:1fr}}
-.thrive-phrase-box{padding:14px;border-radius:var(--r-sm);background:#F8FAFF;border:1px solid var(--border)}
-.thrive-phrase-box h5{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:9px}
-.phrase-list{list-style:none;display:flex;flex-direction:column;gap:7px}
-.phrase-list li{font-size:13px;color:var(--navy2);line-height:1.4;padding:7px 10px;border-radius:6px;background:var(--card)}
-.thrive-ideal{margin-top:14px;padding:16px;border-radius:var(--r-sm);background:var(--rb-l);border:1px solid #BFDBFE}
-.thrive-ideal h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--rb);margin-bottom:8px}
-.thrive-ideal p{font-size:13.5px;color:var(--navy2);line-height:1.55}
+/* THRIVE */
+.thrive-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:13px}
+.tbox{padding:18px;border-radius:9px}
+.tbox.g{background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12)}
+.tbox.r{background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.09)}
+.tbox h4{font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:11px}
+.tbox.g h4{color:var(--st)}.tbox.r h4{color:#F87171}
+.tlist{list-style:none;display:flex;flex-direction:column;gap:7px}
+.tlist li{font-size:13px;color:var(--text2);line-height:1.48;display:flex;gap:7px;align-items:flex-start}
+.tlist li::before{font-size:10px;flex-shrink:0;margin-top:3px}
+.tbox.g .tlist li::before{content:'✓';color:var(--st);font-weight:700}
+.tbox.r .tlist li::before{content:'✕';color:#F87171;font-weight:700}
+.tideal{padding:15px 17px;border-radius:9px;background:rgba(59,130,246,.04);border:1px solid rgba(59,130,246,.12);margin-bottom:11px}
+.tideal.g2{background:rgba(16,185,129,.04);border-color:rgba(16,185,129,.12)}
+.tideal h5{font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#93C5FD;margin-bottom:7px}
+.tideal.g2 h5{color:var(--st)}
+.tideal p{font-size:13.5px;color:var(--text2);line-height:1.6}
+.tsplit{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:12px}
+.tphrase{padding:14px 15px;border-radius:9px;background:#0A0F1E;border:1px solid var(--border)}
+.tphrase h5{font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:9px}
+.plist{list-style:none;display:flex;flex-direction:column;gap:6px}
+.plist li{font-size:12.5px;color:var(--text2);padding:7px 10px;border-radius:6px;background:rgba(255,255,255,.02);border:1px solid var(--border)}
 
-.prose-section{display:flex;flex-direction:column;gap:16px}
-.prose-block{padding:16px;border-radius:var(--r-sm);background:#F8FAFF;border:1px solid var(--border)}
-.prose-block h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:8px}
-.prose-block p{font-size:13.5px;color:var(--navy2);line-height:1.6}
-.flag-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:540px){.flag-grid{grid-template-columns:1fr}}
-.flag-box{padding:14px;border-radius:var(--r-sm)}
-.flag-box.green{background:var(--st-l);border:1px solid #B7DFCA}
-.flag-box.red{background:#FEF2F2;border:1px solid #FECACA}
-.flag-box h5{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px}
-.flag-box.green h5{color:var(--st)}.flag-box.red h5{color:#DC2626}
-.flag-list{list-style:none;display:flex;flex-direction:column;gap:7px}
-.flag-list li{font-size:13px;color:var(--navy2);line-height:1.42;display:flex;gap:7px;align-items:flex-start}
-.flag-box.green .flag-list li::before{content:'💚';font-size:10px;flex-shrink:0;margin-top:2px}
-.flag-box.red .flag-list li::before{content:'🚩';font-size:10px;flex-shrink:0;margin-top:2px}
-.develop-list{display:flex;flex-direction:column;gap:9px;margin-top:6px}
-.develop-item{display:flex;gap:9px;align-items:flex-start;padding:11px 13px;background:var(--card);border-radius:8px;border:1px solid var(--border)}
-.dev-num{min-width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;margin-top:1px}
-.develop-item p{font-size:13px;color:var(--navy2);line-height:1.45}
+/* PROSE */
+.prose{display:flex;flex-direction:column;gap:12px}
+.pblock{padding:15px 17px;border-radius:9px;background:#0A0F1E;border:1px solid var(--border)}
+.pblock.warn{background:rgba(250,204,21,.03);border-color:rgba(250,204,21,.1)}
+.pblock h5{font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:7px}
+.pblock.warn h5{color:#FDE68A}
+.pblock p{font-size:13.5px;color:var(--text2);line-height:1.65}
+.flaggrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.fbox{padding:14px 15px;border-radius:9px}
+.fbox.g{background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.11)}
+.fbox.r{background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.09)}
+.fbox h5{font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.fbox.g h5{color:var(--st)}.fbox.r h5{color:#F87171}
+.flist{list-style:none;display:flex;flex-direction:column;gap:6px}
+.flist li{font-size:13px;color:var(--text2);line-height:1.55;display:flex;gap:7px;align-items:flex-start}
+.fbox.g .flist li::before{content:'💚';font-size:10px;flex-shrink:0;margin-top:2px}
+.fbox.r .flist li::before{content:'⚠';font-size:10px;flex-shrink:0;margin-top:2px;color:#F87171}
+.devlist{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.devitem{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;background:#0A0F1E;border-radius:8px;border:1px solid var(--border)}
+.devnum{min-width:22px;height:22px;border-radius:6px;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:11px;flex-shrink:0;border:1px solid rgba(240,165,0,.15)}
+.devitem p{font-size:13px;color:var(--text2);line-height:1.48}
 
-.career-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-@media(max-width:540px){.career-grid{grid-template-columns:1fr}}
-.career-box{padding:16px;border-radius:var(--r-sm)}
-.career-box.excels{background:var(--st-l);border:1px solid #B7DFCA}
-.career-box.drains{background:#FEF2F2;border:1px solid #FECACA}
-.career-box h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px}
-.career-box.excels h5{color:var(--st)}.career-box.drains h5{color:#DC2626}
-.career-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-.career-list li{font-size:13px;color:var(--navy2);line-height:1.42;display:flex;gap:8px;align-items:flex-start}
-.career-box.excels .career-list li::before{content:'→';color:var(--st);font-weight:700;flex-shrink:0}
-.career-box.drains .career-list li::before{content:'−';color:#DC2626;font-weight:700;flex-shrink:0}
-.move-list{display:flex;flex-direction:column;gap:12px}
-.move-card{padding:16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--card)}
-.move-title{font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:5px}
-.move-why{font-size:13px;color:var(--navy2);line-height:1.5;margin-bottom:8px}
-.move-themes{display:flex;gap:5px;flex-wrap:wrap}
-.move-tag{padding:2px 9px;border-radius:99px;font-size:11px;font-weight:600;background:var(--rb-l);color:var(--accent);border:1px solid #BFDBFE}
+/* CAREER */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:17px}
+.cbox{padding:16px 17px;border-radius:9px}
+.cbox.ex{background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.11)}
+.cbox.dr{background:rgba(239,68,68,.03);border:1px solid rgba(239,68,68,.09)}
+.cbox h5{font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px}
+.cbox.ex h5{color:var(--st)}.cbox.dr h5{color:#F87171}
+.clist{list-style:none;display:flex;flex-direction:column;gap:7px}
+.clist li{font-size:13px;color:var(--text2);line-height:1.45;display:flex;gap:7px;align-items:flex-start}
+.cbox.ex .clist li::before{content:'→';color:var(--st);font-weight:700;flex-shrink:0}
+.cbox.dr .clist li::before{content:'−';color:#F87171;font-weight:700;flex-shrink:0}
+.mlabel{font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:11px}
+.moves{display:flex;flex-direction:column;gap:10px}
+.mcard{padding:15px 17px;border-radius:9px;background:#0A0F1E;border:1px solid var(--border);transition:border-color .2s}
+.mcard:hover{border-color:var(--border2)}
+.mtitle{font-family:'Outfit',sans-serif;font-size:14.5px;font-weight:800;color:var(--text);margin-bottom:4px}
+.mwhy{font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:8px}
+.mtags{display:flex;gap:5px;flex-wrap:wrap}
+.mtag{padding:3px 10px;border-radius:99px;font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:700;background:var(--gold-dim);color:var(--gold);border:1px solid rgba(240,165,0,.16)}
 
-.sabotage-list{display:flex;flex-direction:column;gap:14px}
-.sabotage-card{border-radius:var(--r-sm);padding:18px;background:#FFFBF5;border:1px solid #FDE8C8}
-.sabotage-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px}
-.sabotage-flow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-@media(max-width:560px){.sabotage-flow{grid-template-columns:1fr}}
-.sab-box{padding:11px 12px;border-radius:8px;background:#fff;border:1px solid #FDE8C8}
-.sab-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
-.sab-box:nth-child(1) .sab-label{color:#C26B1A}
-.sab-box:nth-child(2) .sab-label{color:#9A3412}
-.sab-box:nth-child(3) .sab-label{color:var(--st)}
-.sab-box p{font-size:12.5px;color:var(--navy2);line-height:1.45}
+/* SABOTAGE */
+.sabs{display:flex;flex-direction:column;gap:12px}
+.sab{border-radius:9px;padding:18px 19px;background:rgba(249,115,22,.03);border:1px solid rgba(249,115,22,.09)}
+.sabtitle{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-bottom:12px}
+.sabflow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.sabbox{padding:11px 12px;border-radius:8px;background:rgba(255,255,255,.02);border:1px solid var(--border)}
+.sablbl{font-family:'Outfit',sans-serif;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
+.sabbox:nth-child(1) .sablbl{color:rgba(249,115,22,.7)}
+.sabbox:nth-child(2) .sablbl{color:#F87171}
+.sabbox:nth-child(3) .sablbl{color:var(--st)}
+.sabbox p{font-size:12.5px;color:var(--text2);line-height:1.48}
 
-.others-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:540px){.others-grid{grid-template-columns:1fr}}
-.others-box{padding:16px;border-radius:var(--r-sm)}
-.others-box.magnetic{background:var(--rb-l);border:1px solid #BFDBFE}
-.others-box.friction{background:#FFF8E7;border:1px solid #FDE68A}
-.others-box h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px}
-.others-box.magnetic h5{color:var(--rb)}.others-box.friction h5{color:#92400E}
-.others-box p{font-size:13px;color:var(--navy2);line-height:1.55}
-.misread-box{margin-top:12px;padding:14px;border-radius:var(--r-sm);background:#F8F0FF;border:1px solid #E0C5F7}
-.misread-box h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ex);margin-bottom:8px}
-.misread-box p{font-size:13px;color:var(--navy2);line-height:1.55}
+/* HOW OTHERS */
+.othgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px}
+.othbox{padding:16px 17px;border-radius:9px}
+.othbox.mag{background:rgba(59,130,246,.04);border:1px solid rgba(59,130,246,.11)}
+.othbox.fric{background:rgba(250,204,21,.03);border:1px solid rgba(250,204,21,.1)}
+.othbox h5{font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.othbox.mag h5{color:#93C5FD}.othbox.fric h5{color:#FDE68A}
+.othbox p{font-size:13px;color:var(--text2);line-height:1.6}
+.misread{padding:13px 15px;border-radius:9px;background:rgba(139,92,246,.04);border:1px solid rgba(139,92,246,.11);margin-bottom:11px}
+.misread h5{font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#C4B5FD;margin-bottom:7px}
+.misread p{font-size:13px;color:var(--text2);line-height:1.6}
 
-.growth-cards{display:flex;flex-direction:column;gap:12px}
-.growth-card{padding:18px;border-radius:var(--r-sm);border:1px solid var(--border)}
-.growth-card.highlight{background:var(--navy);border-color:var(--navy)}
-.growth-card.highlight .growth-label{color:rgba(255,255,255,.4)}
-.growth-card.highlight .growth-title{color:#fff}
-.growth-card.highlight .growth-text{color:rgba(255,255,255,.75)}
-.growth-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:6px}
-.growth-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:7px}
-.growth-text{font-size:13.5px;color:var(--navy2);line-height:1.55}
+/* GROWTH */
+.gcards{display:flex;flex-direction:column;gap:11px}
+.gcard{padding:18px 20px;border-radius:9px;border:1px solid var(--border);background:#0A0F1E}
+.gcard.hl{background:linear-gradient(135deg,rgba(240,165,0,.07),rgba(139,92,246,.04));border-color:rgba(240,165,0,.16)}
+.glbl{font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:5px}
+.gcard.hl .glbl{color:var(--gold)}
+.gtitle{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px}
+.gtext{font-size:13.5px;color:var(--text2);line-height:1.6}
 
-.action-timeline{display:flex;flex-direction:column;gap:0}
-.action-item{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--border)}
-.action-item:last-child{border-bottom:none}
-.action-icon-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
-.action-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.action-line{width:2px;flex:1;min-height:20px;margin-top:4px}
-.action-item:last-child .action-line{display:none}
-.action-time{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-l);margin-bottom:5px}
-.action-text{font-size:14px;color:var(--navy2);line-height:1.6}
-.coaching-q{margin-top:20px;padding:20px;border-radius:var(--r-sm);background:var(--navy);border-left:4px solid var(--in)}
-.cq-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.35);margin-bottom:8px}
-.cq-text{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:17px;color:rgba(255,255,255,.88);line-height:1.5}
+/* ACTION */
+.actions{display:flex;flex-direction:column}
+.aitem{display:flex;gap:15px;align-items:flex-start;padding:17px 0;border-bottom:1px solid var(--border)}
+.aitem:last-child{border-bottom:none}
+.aicon-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.aicon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;background:#0A0F1E;border:1px solid var(--border);flex-shrink:0}
+.aline{width:2px;flex:1;min-height:16px;margin-top:4px;background:var(--border)}
+.aitem:last-child .aline{display:none}
+.atime{font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--gold);margin-bottom:5px}
+.atext{font-size:14px;color:var(--text2);line-height:1.65}
+.atext strong{color:var(--text)}
+.cq{margin-top:20px;padding:21px 23px;border-radius:9px;background:linear-gradient(135deg,rgba(240,165,0,.05),rgba(139,92,246,.03));border:1px solid rgba(240,165,0,.13);border-left:3px solid var(--gold)}
+.cq-lbl{font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:rgba(240,165,0,.55);margin-bottom:8px}
+.cq-text{font-style:italic;font-size:17px;color:var(--text);line-height:1.55}
 
-.profile-table{width:100%;border-collapse:collapse;font-size:13px}
-.profile-table th{text-align:left;padding:8px 10px;font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);border-bottom:1px solid var(--border)}
-.profile-table td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--navy2)}
-.profile-table tr:last-child td{border-bottom:none}
-.profile-table tr:hover td{background:#F8FAFF}
-.rank-num{font-weight:700;color:var(--navy);min-width:28px;display:inline-block}
-.tier-badge{padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;display:inline-block}
-.tier-sig{background:var(--navy);color:#fff}
-.tier-sup{background:var(--border);color:var(--navy)}
-.tier-bg{background:#F1F4F9;color:var(--gray)}
-.tier-les{background:#F8F9FA;color:var(--gray-l)}
-.domain-badge{padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;display:inline-block;color:#fff}
+/* FOOTER */
+.rpt-footer{text-align:center;padding:34px 16px;color:var(--text3);font-size:11px;line-height:1.9;border-top:1px solid var(--border);margin-top:22px}
+.rpt-footer strong{color:var(--text2);display:block;margin-bottom:4px;font-family:'Outfit',sans-serif;font-size:12px}
 
-.resume-banner{background:var(--rb-l);border:1.5px solid #BFDBFE;border-radius:var(--r-sm);padding:13px 17px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;margin-bottom:16px;font-size:13.5px}
-.resume-banner strong{color:var(--accent)}
-.resume-btns{display:flex;gap:7px}
+/* PRINT */
+@media print{body{background:#fff!important;color:#000!important}.nav,.prog,.rpt-actions,.btn{display:none!important}.sec{box-shadow:none!important;border:1px solid #ddd!important;animation:none!important;opacity:1!important;transform:none!important;background:#fff!important}.rpt-hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}.dgrid-inner{min-width:unset!important}}
 
-@media print{
-  .site-nav,.prog-wrap,.rpt-actions,.btn{display:none!important}
-  .rpt-section{box-shadow:none;border:1px solid var(--border);break-inside:avoid}
-  .rpt-hero{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .rpt-section{animation:none!important;opacity:1!important;transform:none!important}
-}
-@media(max-width:600px){
-  .hero{padding:36px 22px}
-  .info-card,.loading-card,.error-card{padding:26px 18px}
-  .rpt-hero{padding:36px 22px}
-  .rpt-section{padding:24px 20px}
+@media(max-width:640px){
+  .hero-inner{padding:38px 22px}
+  .feats{grid-template-columns:1fr}
+  .info-card{padding:24px 18px}
+  .rpt-hero{padding:34px 20px}
+  .sec{padding:22px 18px}
   .btn-lg{padding:13px 22px;font-size:15px}
+  .dbar{grid-template-columns:repeat(2,1fr)}
+  .sig5{grid-template-columns:1fr 1fr}
+  .thrive-grid,.cgrid,.othgrid,.flaggrid,.tsplit,.sh-row{grid-template-columns:1fr}
+  .sabflow{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
-
-<div class="site-nav">
+<div class="nav">
   <div class="brand">
     <div class="brand-dots">
-      <div class="bd" style="background:var(--ex)"></div>
-      <div class="bd" style="background:var(--in)"></div>
-      <div class="bd" style="background:var(--rb)"></div>
-      <div class="bd" style="background:var(--st)"></div>
+      <div class="dot" style="background:var(--ex)"></div>
+      <div class="dot" style="background:var(--in)"></div>
+      <div class="dot" style="background:var(--rb)"></div>
+      <div class="dot" style="background:var(--st)"></div>
     </div>
-    <span class="brand-name">StrengthsMap<span class="brand-tag">&thinsp;strengths discovery</span></span>
+    <span class="brand-name">StrengthsMap<span class="brand-sub">&nbsp;strengths discovery</span></span>
   </div>
 </div>
 
-<div class="prog-wrap" id="progWrap" style="display:none">
-  <div class="prog-meta">
+<div class="prog" id="progWrap" style="display:none">
+  <div class="prog-top">
     <span class="prog-round" id="progRound">Round 1 of 10</span>
-    <span class="prog-ct" id="progCt">0 / 100 answered</span>
-      <span style="font-size:12px;color:var(--gold-l);font-weight:600;display:flex;align-items:center;gap:4px;" id="progTime">⏱ ~20 min remaining</span>
+    <div class="prog-right">
+      <span class="prog-ct" id="progCt">0 / 100</span>
+      <span class="prog-time" id="progTime">⏱ ~20 min</span>
+    </div>
   </div>
   <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
 </div>
 
-<!-- SCREEN 1: INTRO -->
 <div class="screen active" id="sIntro">
   <div class="hero">
-    <div class="domain-pills">
-      <span class="pill pill-ex">Executing</span>
-      <span class="pill pill-in">Influencing</span>
-      <span class="pill pill-rb">Relationship Building</span>
-      <span class="pill pill-st">Strategic Thinking</span>
+    <div class="hero-glow1"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div class="eyebrow">Independent Strengths Discovery Tool</div>
+      <h1>What are you<br><em>naturally brilliant</em> at?</h1>
+      <p class="hero-sub">100 questions. 34 talent themes. A complete personalised coaching report delivered in under 60 seconds.</p>
+      <div class="time-badge">⏱ About 20 minutes &nbsp;·&nbsp; Save and resume anytime</div>
+      <div class="domain-pills">
+        <span class="dpill dpill-ex">Executing</span>
+        <span class="dpill dpill-in">Influencing</span>
+        <span class="dpill dpill-rb">Relationship Building</span>
+        <span class="dpill dpill-st">Strategic Thinking</span>
+      </div>
+      <div class="feats">
+        <div class="feat"><span class="feat-icon">🗺</span><div class="feat-title">All 34 themes ranked</div><div class="feat-desc">Full talent map across all four domains with domain grid and full table</div></div>
+        <div class="feat"><span class="feat-icon">⚡</span><div class="feat-title">Power combinations</div><div class="feat-desc">The unique capabilities your specific theme pairings create together</div></div>
+        <div class="feat"><span class="feat-icon">🎯</span><div class="feat-title">Personal action plan</div><div class="feat-desc">Concrete steps for 24 hours, 1 week, and 3 months ahead</div></div>
+      </div>
+      <button class="btn-cta" id="btnDiscover" onclick="showInfo()">Discover Your Strengths <span class="arrow">→</span></button>
     </div>
-    <h1>What are you<br><em>naturally brilliant</em> at?</h1>
-    <p>A research-grounded 100-question strengths assessment across all 34 talent themes. Your full personalised coaching report generates in under 60 seconds.</p>
-    <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.09);border:1px solid rgba(16,185,129,.22);border-radius:99px;padding:5px 15px;font-size:12px;font-weight:600;color:#10B981;margin-bottom:22px;letter-spacing:.2px">⏱ About 20 minutes &nbsp;·&nbsp; Save and resume anytime</div><br><button class="btn btn-primary btn-lg" onclick="showInfo()">Discover Your Strengths →</button>
   </div>
 
   <div class="info-card" id="infoCard" style="display:none">
-    <h3>Before You Begin</h3>
+    <div class="info-h">Before You Begin</div>
     <div class="rules">
-      <div class="rule"><div class="rule-icon">⚡</div><p><strong>100 questions across 10 rounds.</strong> Each round takes about 3 minutes. You can pause and resume anytime on the same device.</p></div>
-      <div class="rule"><div class="rule-icon">💡</div><p><strong>Choose what feels most like you, most of the time.</strong> Your first instinct is almost always the most accurate.</p></div>
-      <div class="rule"><div class="rule-icon">💬</div><p><strong>Use the "Add context" field freely.</strong> Personal comments produce the most precise coaching. The more you share, the more accurate your report.</p></div>
-      <div class="rule"><div class="rule-icon">✨</div><p><strong>Your full 13-section coaching report is generated instantly at the end.</strong> No account needed. No credit card. Completely free.</p></div>
+      <div class="rule"><div class="rule-icon">⚡</div><p><strong>100 questions across 10 rounds.</strong> Each round takes about 2 minutes. Progress saves automatically — close and resume anytime on the same device.</p></div>
+      <div class="rule"><div class="rule-icon">💡</div><p><strong>Choose what feels most like you, most of the time.</strong> Your first instinct is almost always the most accurate. Don't overthink.</p></div>
+      <div class="rule"><div class="rule-icon">💬</div><p><strong>Use the "Add context" field freely.</strong> Personal notes produce the most precise report. The more you share, the better your coaching.</p></div>
+      <div class="rule"><div class="rule-icon">✨</div><p><strong>Your full 13-section report generates instantly at the end.</strong> No account. No payment. Completely free.</p></div>
     </div>
-
-    <div class="name-row" style="margin-top:22px">
-      <input type="text" class="txt-input" id="nameInput" placeholder="Your first name (personalises your report)" maxlength="50">
-    </div>
-
-    <div id="resumeBanner" class="resume-banner" style="display:none">
+    <div class="name-wrap"><input type="text" class="name-input" id="nameInput" placeholder="Your first name (personalises your report)" maxlength="50"></div>
+    <div id="resumeBanner" class="resume" style="display:none">
       <div><strong>Progress saved</strong> — <span id="resumeCount"></span></div>
-      <div class="resume-btns">
-        <button class="btn btn-primary btn-sm" onclick="resumeIt()">Resume</button>
-        <button class="btn btn-ghost btn-sm" onclick="freshStart()">Start Fresh</button>
-      </div>
+      <div class="resume-btns"><button class="btn btn-p btn-sm" onclick="resumeIt()">Resume</button><button class="btn btn-g btn-sm" onclick="freshStart()">Start Fresh</button></div>
     </div>
-
-    <div style="margin-bottom:16px;padding:14px 16px;background:#F8FAFF;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--gray);line-height:1.6">
-      <strong style="color:var(--navy);display:block;margin-bottom:4px">Important Notice</strong>
-      StrengthsMap is an independent tool and is not affiliated with Gallup, Inc. or the official CliftonStrengths® assessment. This report is AI-generated for personal reflection purposes only and should not be used as the sole basis for employment, medical, or other consequential decisions. By proceeding you acknowledge this is a self-discovery tool, not a clinical assessment.
-    </div>
-    <button class="btn btn-primary btn-lg btn-full" onclick="beginAssessment()">Begin Assessment →</button>
+    <div class="disc"><strong>Important Notice</strong>StrengthsMap is an independent tool and is not affiliated with, endorsed by, or connected to Gallup, Inc. or any official assessment provider. This report is AI-generated for personal reflection purposes only and should not be used as the sole basis for employment, medical, or other consequential decisions.</div>
+    <button class="btn btn-p btn-lg btn-full" onclick="beginAssessment()">Begin Assessment →</button>
   </div>
 </div>
 
-<!-- SCREEN 2: QUIZ -->
 <div class="screen" id="sQuiz">
-  <div class="round-hdr">
-    <span class="round-badge" id="roundBadge">Round 1</span>
-    <span class="round-title" id="roundTitle">Questions 1–10</span>
-  </div>
+  <div class="round-hdr"><span class="rbadge" id="roundBadge">Round 1</span><span class="rtitle" id="roundTitle">Questions 1–10</span></div>
   <div id="questionsWrap"></div>
   <div class="nav-row">
-    <button class="btn btn-ghost" id="btnPrev" onclick="goBack()" style="visibility:hidden">← Back</button>
-    <button class="btn btn-primary" id="btnNext" onclick="goNext()" disabled>Next Round →</button>
+    <button class="btn btn-g" id="btnPrev" onclick="goBack()" style="visibility:hidden">← Back</button>
+    <button class="btn btn-p" id="btnNext" onclick="goNext()" disabled>Next Round →</button>
   </div>
 </div>
 
-<!-- SCREEN 3: LOADING -->
 <div class="screen" id="sLoading">
-  <div class="loading-card">
-    <div class="pulse-ring"></div>
-    <h2>Analysing Your Strengths</h2>
+  <div class="load-card">
+    <div class="spinner"></div>
+    <h2>Analysing Your Profile</h2>
     <p>Mapping your responses across 34 talent themes and building your personalised coaching report...</p>
-    <div class="load-steps">
-      <div class="load-step active" id="ls1"><div class="load-dot"></div><span>Reading your response patterns</span></div>
-      <div class="load-step" id="ls2"><div class="load-dot"></div><span>Ranking all 34 themes</span></div>
-      <div class="load-step" id="ls3"><div class="load-dot"></div><span>Identifying power combinations</span></div>
-      <div class="load-step" id="ls4"><div class="load-dot"></div><span>Mapping shadow sides and blind spots</span></div>
-      <div class="load-step" id="ls5"><div class="load-dot"></div><span>Building career alignment</span></div>
-      <div class="load-step" id="ls6"><div class="load-dot"></div><span>Writing your personal action plan</span></div>
+    <div class="lsteps">
+      <div class="lstep active" id="ls1"><div class="ldot"></div><span>Reading your response patterns</span></div>
+      <div class="lstep" id="ls2"><div class="ldot"></div><span>Ranking all 34 themes</span></div>
+      <div class="lstep" id="ls3"><div class="ldot"></div><span>Identifying power combinations</span></div>
+      <div class="lstep" id="ls4"><div class="ldot"></div><span>Mapping shadow sides</span></div>
+      <div class="lstep" id="ls5"><div class="ldot"></div><span>Building career alignment</span></div>
+      <div class="lstep" id="ls6"><div class="ldot"></div><span>Writing your action plan</span></div>
     </div>
   </div>
 </div>
 
-<!-- SCREEN 4: ERROR -->
 <div class="screen" id="sError">
-  <div class="error-card">
+  <div class="err-card">
     <h2>Something went wrong</h2>
-    <p>Your responses are saved. Please try again — this is almost always a temporary issue.</p>
-    <div class="error-detail" id="errorDetail"></div>
-    <button class="btn btn-primary btn-lg btn-full" onclick="retryGenerate()">Try Again</button>
-    <div style="margin-top:12px;text-align:center">
-      <button class="btn btn-ghost" onclick="show('sQuiz');document.getElementById('progWrap').style.display='block'">Back to Assessment</button>
-    </div>
+    <p>Your responses are saved. This is almost always temporary — please try again.</p>
+    <div class="err-detail" id="errDetail"></div>
+    <button class="btn btn-p btn-lg btn-full" onclick="retryGen()">Try Again</button>
+    <div style="margin-top:12px;text-align:center"><button class="btn btn-g" onclick="show('sQuiz');document.getElementById('progWrap').style.display='block'">Back to Assessment</button></div>
   </div>
 </div>
 
-<!-- SCREEN 5: REPORT -->
-<div class="screen" id="sReport">
-  <div id="reportContent"></div>
+<div class="screen" id="sReport"><div id="reportContent"></div></div>
 </div>
-
-</div>
-
 <script>
-// ═══════════════════════════════════════════════════════════
-// QUESTIONS — 100 questions, 10 rounds
-// ═══════════════════════════════════════════════════════════
-const ROUND_NAMES=['First Impressions','Patterns & Preferences','How You Work','What Drives You','Your Instincts','Facing Challenges','Your Relationships','Your Inner World','Who You Are','Your Signature'];
-
+const RN=['First Impressions','Patterns & Preferences','How You Work','What Drives You','Your Instincts','Facing Challenges','Your Relationships','Your Inner World','Who You Are','Your Signature'];
 const Q=[
 {id:1,q:"When facing a complex problem with no obvious solution...",a:"I instinctively see multiple paths and quickly find the most viable route — clarity emerges fast for me",b:"I want to understand the full context and history first — how we got here shapes what we should do"},
-{id:2,q:"The energy I feel around starting vs finishing...",a:"Starting energises me most — launch energy and the moment something comes to life is when I feel most alive",b:"Finishing drives me — the deep satisfaction of completing something properly is my real reward"},
+{id:2,q:"The energy I feel around starting vs finishing...",a:"Starting energises me most — launch energy, the moment something comes to life, is when I feel most alive",b:"Finishing drives me — the deep satisfaction of completing something properly is my real reward"},
 {id:3,q:"How I relate to the people in my life...",a:"I prefer a small circle of deep, completely trusted relationships — I invest everything in those few",b:"I find genuine energy in connecting broadly — making new people feel immediately welcomed is one of my natural gifts"},
 {id:4,q:"What I most naturally notice when thinking through a problem...",a:"Unexpected connections — two seemingly unrelated things linking to form a completely new angle",b:"Flaws, gaps, inconsistencies — I want to stress-test what seems true and find what actually holds up"},
-{id:5,q:"In a group or meeting without a clear direction...",a:"I read the emotional temperature first — I know how people are feeling before anything is said",b:"I step in and direct — when there's ambiguity, I'm comfortable being the one who decides what needs to happen"},
+{id:5,q:"In a group or meeting without a clear direction...",a:"I read the emotional temperature first — I know how people are feeling before anything is said",b:"I step in and direct — when there's ambiguity I'm comfortable being the one who decides what needs to happen"},
 {id:6,q:"When working toward something that matters to me...",a:"I lock onto the destination with tenacity — I don't lose sight of where I'm going and filter out anything that doesn't serve it",b:"I flow with what's actually happening — responding to the present moment matters more than rigidly following the original plan"},
 {id:7,q:"What gives me the deepest professional satisfaction...",a:"Watching someone grow into their potential — I see capability before people see it themselves",b:"Diagnosing what's broken and fixing it — identifying problems and engineering solutions is deeply satisfying to me"},
 {id:8,q:"What pulls me forward most powerfully...",a:"A vivid picture of what the future could look like — I can see clearly what's possible and it genuinely motivates me",b:"Daily progress — moving things forward and completing meaningful work is what keeps me energised"},
-{id:9,q:"In a group, I'm most naturally aware of...",a:"Who might be left out — if someone is on the edge of the group, I feel a pull to bring them in",b:"What makes each person genuinely different — I notice unique qualities, motivations, and wiring in each individual"},
-{id:10,q:"My relationship with knowledge and information...",a:"I love collecting — I gather continuously because having a rich, ever-growing store to draw from is satisfying in itself",b:"I love the process of learning — the journey from not-knowing to deeply understanding something is what energises me"},
-{id:11,q:"What guides my decisions most consistently...",a:"My core values — they are non-negotiable and filter every significant commitment I make",b:"My personal accountability — when I commit to something, I own it completely until it's done right"},
+{id:9,q:"In a group I'm most naturally aware of...",a:"Who might be left out — if someone is on the edge of the group I feel a pull to bring them in",b:"What makes each person genuinely different — I notice unique qualities, motivations, and wiring in each individual"},
+{id:10,q:"My relationship with knowledge and information...",a:"I love collecting — I gather continuously because having a rich ever-growing store to draw from is satisfying in itself",b:"I love the process of learning — the journey from not-knowing to deeply understanding something is what energises me"},
+{id:11,q:"What guides my decisions most consistently...",a:"My core values — they are non-negotiable and filter every significant commitment I make",b:"My personal accountability — when I commit to something I own it completely until it's done right"},
 {id:12,q:"Where my confidence ultimately comes from...",a:"My own judgment — I've learned to trust my instincts and don't need external endorsement to act on them",b:"Wanting my work to matter — I want to be known for contributing something meaningful and significant"},
-{id:13,q:"How I make sense of conflict and disagreement...",a:"I look for common ground — when people disagree, I naturally find where they agree and build from there",b:"I see the larger web — people, events, and ideas are connected in ways that aren't always obvious but always feel real"},
+{id:13,q:"How I make sense of conflict and disagreement...",a:"I look for common ground — when people disagree I naturally find where they agree and build from there",b:"I see the larger web — people, events, and ideas are connected in ways not always obvious but always real"},
 {id:14,q:"My natural operating preference...",a:"Clear structure and consistent routines — I perform best when I have predictable systems to execute against",b:"Continuous optimisation — I'm always looking for a better arrangement of tasks and resources and reconfigure readily"},
 {id:15,q:"My most instinctive contribution in any situation...",a:"Finding the clearest path through complexity — I see the route when others are still trying to map the terrain",b:"Generating a completely new way of looking at something — an unexpected reframing, a genuinely novel angle"},
-{id:16,q:"Before making an important decision, I naturally...",a:"Mentally rehearse what could go wrong — I scan for risks and address each one before committing",b:"Examine the evidence carefully — I want data and logic to confirm what's actually true before I commit"},
-{id:17,q:"When I first encounter a person, what I notice most...",a:"Their emotional state — how they're feeling registers immediately and clearly before anything else",b:"What makes them specifically different — their unique motivations, capabilities, and wiring are what I see first"},
-{id:18,q:"When I see a clear opportunity or goal...",a:"I want to move — once I've determined something is right, waiting feels like the biggest cost of all",b:"I lock in — I set it as a clear destination and maintain relentless focus until I reach it, filtering out distractions"},
+{id:16,q:"Before making an important decision I naturally...",a:"Mentally rehearse what could go wrong — I scan for risks and address each one before committing",b:"Examine the evidence carefully — I want data and logic to confirm what's actually true before I commit"},
+{id:17,q:"When I first encounter a person what I notice most...",a:"Their emotional state — how they're feeling registers immediately and clearly before anything else",b:"What makes them specifically different — their unique motivations, capabilities, and wiring are what I see first"},
+{id:18,q:"When I see a clear opportunity or goal...",a:"I want to move — once I've determined something is right waiting feels like the biggest cost of all",b:"I lock in — I set it as a clear destination and maintain relentless focus until I reach it filtering out distractions"},
 {id:19,q:"My deepest satisfaction in close relationships...",a:"Depth of knowing — truly knowing and being known by someone is what creates real intimacy for me",b:"Witnessing growth — watching someone I've invested in move beyond where they started is the most rewarding thing"},
 {id:20,q:"How I relate to information from the past...",a:"I gather broadly and continuously — I never know when something will become useful and I love having a rich store",b:"I look backwards for insight — understanding how something came to be reveals more than examining what it is right now"},
 {id:21,q:"At a professional event with a few hours available...",a:"I move through the room warmly — I connect with many people and each one leaves feeling genuinely welcomed",b:"I find one or two people where I sense real depth and invest everything — one real connection beats twenty surface ones",c:"I've identified specific people I want to meet and allocate my time deliberately toward those goals"},
 {id:22,q:"When I encounter something that's already performing well...",a:"I'm drawn to elevating it — good is never enough; I want to push it toward exceptional",b:"I notice what's still not working — the remaining gaps pull at me even within something mostly performing well"},
 {id:23,q:"My instinct around treating people fairly...",a:"Everyone should play by the same rules — consistency of application is what fairness means to me",b:"Everyone deserves to be treated as the individual they are — equal treatment isn't always equitable treatment"},
-{id:24,q:"What energises me more in leadership or planning...",a:"Painting a compelling picture of what the future could look like — I can make people feel what's possible",b:"Finding the best path from here to there — I care more about the route than the vision; I navigate, I don't just dream"},
+{id:24,q:"What energises me more in leadership or planning...",a:"Painting a compelling picture of what the future could look like — I can make people feel what's possible",b:"Finding the best path from here to there — I care more about the route than the vision; I navigate I don't just dream"},
 {id:25,q:"What drives me most deeply beyond daily tasks...",a:"My values — acting in alignment with what I believe is right is non-negotiable regardless of external pressure",b:"My legacy — I want to be known for doing something that truly mattered and that outlasts the immediate moment"},
 {id:26,q:"In a difficult situation involving people under stress...",a:"I bring optimism — I naturally find what's good and possible and lift the energy of people around me",b:"I sense the emotional reality — I know exactly what people are feeling even before they've expressed it"},
 {id:27,q:"What gives me the deepest sense of working well...",a:"Knowing I followed through on commitments — personal ownership of what I said I'd do is essential to who I am",b:"Seeing measurable progress — moving things forward and completing meaningful work gives me my sense of momentum"},
-{id:28,q:"How I hold authority and my own judgment...",a:"I'm comfortable directing — when a group needs leadership, I step in and name what needs to happen",b:"My confidence is internal — I trust my own judgment deeply and act on it without needing to broadcast it outwardly"},
-{id:29,q:"Midway through a major project, important new information arrives suggesting a different approach. You...",a:"Evaluate whether this changes the destination — if the goal is still right, I find a better route. I only change course if the destination itself changes",b:"Adapt quickly — new information means a new best path, and following it feels natural rather than disruptive",c:"Complete what I committed to and apply the learning next time — changing approach midway creates more problems"},
-{id:30,q:"You've identified a real opportunity but don't yet have complete information. You...",a:"Gather more first — I move when I'm confident, not before. Insufficient preparation always costs more than a short delay",b:"Make the move — clarity comes through action; I can adjust as I go and I trust my ability to adapt",c:"Identify exactly what I need to know, gather only that, then commit fully with complete confidence"},
+{id:28,q:"How I hold authority and my own judgment...",a:"I'm comfortable directing — when a group needs leadership I step in and name what needs to happen",b:"My confidence is internal — I trust my own judgment deeply and act on it without needing to broadcast it outwardly"},
+{id:29,q:"Midway through a major project important new information arrives suggesting a different approach. You...",a:"Evaluate whether this changes the destination — if the goal is still right I find a better route. I only change course if the destination itself changes",b:"Adapt quickly — new information means a new best path and following it feels natural rather than disruptive",c:"Complete what I committed to and apply the learning next time — changing approach midway creates more problems"},
+{id:30,q:"You've identified a real opportunity but don't yet have complete information. You...",a:"Gather more first — I move when I'm confident not before. Insufficient preparation always costs more than a short delay",b:"Make the move — clarity comes through action; I can adjust as I go and I trust my ability to adapt",c:"Identify exactly what I need to know gather only that then commit fully with complete confidence"},
 {id:31,q:"When a colleague is struggling with their performance...",a:"I diagnose — I want to identify exactly what's going wrong and help fix the specific problem",b:"I develop — I see this as a growth opportunity and invest in helping them emerge from it stronger"},
 {id:32,q:"When asked to solve a genuinely novel problem...",a:"I scan for patterns — I look for what this situation resembles and find the angle others haven't tried",b:"I examine the evidence — I want to understand exactly what is and isn't true before I try to solve anything"},
-{id:33,q:"My relationship with the information I gather...",a:"I accumulate — I love having a rich, growing resource base that I can draw on from memory when needed",b:"I connect — when I encounter something new, I immediately think about what else it links to and what new idea emerges"},
+{id:33,q:"My relationship with the information I gather...",a:"I accumulate — I love having a rich growing resource base that I can draw on from memory when needed",b:"I connect — when I encounter something new I immediately think about what else it links to and what new idea emerges"},
 {id:34,q:"In a group where tension or disagreement exists...",a:"I notice who's not speaking — I make sure quieter voices are heard before we reach any conclusion",b:"I look for what people agree on — I naturally move toward shared ground that lets everyone progress"},
-{id:35,q:"My approach to learning in a new domain I care about...",a:"I build a comprehensive resource base — I find the best books, experts, and sources and create a rich foundation",b:"I go deep on fundamentals — I study until I understand the underlying structure, then explore further from there"},
+{id:35,q:"My approach to learning in a new domain I care about...",a:"I build a comprehensive resource base — I find the best books experts and sources and create a rich foundation",b:"I go deep on fundamentals — I study until I understand the underlying structure then explore further from there"},
 {id:36,q:"When I've made a significant decision and encounter evidence I might be wrong...",a:"I seriously consider it — I'm willing to change course if the evidence genuinely warrants it",b:"I examine it carefully but don't reverse lightly — I made this decision with full preparation and I trust that process"},
-{id:37,q:"What I want my work to ultimately mean...",a:"Alignment with what I believe is right — I won't compromise my values for results, recognition, or reward",b:"Lasting impact — I want what I've built to matter beyond the immediate moment and be remembered"},
-{id:38,q:"How I experience connections between things in the world...",a:"I sense a larger web — everything and everyone is linked in ways not always visible but fundamentally real to me",b:"I see the next chapter — I can picture with clarity what hasn't happened yet, and that future feels real and motivating"},
-{id:39,q:"When managing important tasks and priorities suddenly shift...",a:"I reconfigure immediately — I re-sort, re-sequence, and re-assign without resistance to find the optimal new arrangement",b:"I evaluate the shift — I ask whether this genuinely changes my destination or just the immediate order, then adjust"},
+{id:37,q:"What I want my work to ultimately mean...",a:"Alignment with what I believe is right — I won't compromise my values for results recognition or reward",b:"Lasting impact — I want what I've built to matter beyond the immediate moment and be remembered"},
+{id:38,q:"How I experience connections between things in the world...",a:"I sense a larger web — everything and everyone is linked in ways not always visible but fundamentally real to me",b:"I see the next chapter — I can picture with clarity what hasn't happened yet and that future feels real and motivating"},
+{id:39,q:"When managing important tasks and priorities suddenly shift...",a:"I reconfigure immediately — I re-sort re-sequence and re-assign without resistance to find the optimal new arrangement",b:"I evaluate the shift — I ask whether this genuinely changes my destination or just the immediate order then adjust"},
 {id:40,q:"In a heated meeting where both data and emotions are running high...",a:"I focus on the emotional undercurrent first — what people are really feeling needs acknowledging before anything resolves",b:"I focus on separating fact from feeling — I try to return the group to what's actually true so a sound decision emerges"},
 {id:41,q:"What motivates me day to day most reliably...",a:"A clear destination — knowing exactly where I'm going and maintaining sight of it keeps me fully engaged",b:"Daily momentum — feeling like I've moved things forward and completed meaningful work drives my sense of purpose"},
 {id:42,q:"The warmth I extend to people...",a:"Is broad and genuine — I can make almost anyone feel welcomed and I find real energy in connecting widely",b:"Is reserved and deep — the people I trust receive something qualitatively different and more total from me"},
-{id:43,q:"My most natural mode of thinking...",a:"Generating — new ideas, new framings, unexpected angles are what excite and energise me most",b:"Navigating — finding the best path through complex situations is where I add my most distinctive value"},
+{id:43,q:"My most natural mode of thinking...",a:"Generating — new ideas new framings unexpected angles are what excite and energise me most",b:"Navigating — finding the best path through complex situations is where I add my most distinctive value"},
 {id:44,q:"When someone I believe in is hesitating on a decision I think is right for them...",a:"I build their confidence patiently — I reflect back what I know they can do and help them see their capability",b:"I make the case and spark movement — I believe in the decision and I want to activate them toward it now"},
-{id:45,q:"What calls to me most in any work environment...",a:"What's broken — the gap, the problem, the thing not working pulls at me until I've diagnosed and addressed it",b:"What's already good — I'm drawn to what's performing and feel a pull to elevate it toward extraordinary"},
+{id:45,q:"What calls to me most in any work environment...",a:"What's broken — the gap the problem the thing not working pulls at me until I've diagnosed and addressed it",b:"What's already good — I'm drawn to what's performing and feel a pull to elevate it toward extraordinary"},
 {id:46,q:"How my values operate in practice...",a:"As my personal compass — they guide my own behaviour regardless of what others around me are doing",b:"As my standard for fairness — I believe in consistent application of shared rules and expectations for everyone"},
-{id:47,q:"When I collect or gather information and ideas...",a:"It nourishes me — I love having a growing, rich store that feeds my thinking and connects to almost everything",b:"I interrogate it — I want to stress-test ideas and find where the logic breaks or the evidence is genuinely thin"},
+{id:47,q:"When I collect or gather information and ideas...",a:"It nourishes me — I love having a growing rich store that feeds my thinking and connects to almost everything",b:"I interrogate it — I want to stress-test ideas and find where the logic breaks or the evidence is genuinely thin"},
 {id:48,q:"In conflict or disagreement between people...",a:"I sense what's underneath — I know what people are really feeling and respond to that before addressing the surface",b:"I seek what's shared — I naturally move toward common ground that lets us reach a resolution everyone can accept"},
 {id:49,q:"My orientation to time and what motivates me...",a:"I'm pulled forward — a clear picture of a compelling future drives my effort and decisions in the present",b:"I'm anchored by precedent — understanding history and how things came to be gives me confidence about the present"},
 {id:50,q:"How I direct a group when clarity is needed...",a:"I trust my judgment — I've learned my instincts are reliable and I act on them without needing external confirmation",b:"I take charge — I'm comfortable being the person who directs and makes decisions when others hesitate"},
-{id:51,q:"Your manager makes a significant decision you believe is wrong. You...",a:"Speak up clearly and directly — I'll make my case confidently regardless of hierarchy",b:"Choose my moment deliberately — I'll raise it thoughtfully, picking when and how to have the most impact",c:"Raise it privately with my manager first — I voice my view but manage how and when carefully"},
-{id:52,q:"You've just joined a new team. What do you notice first?",a:"What's not working — the gaps, bottlenecks, and problems that need solving are immediately visible to me",b:"What's working well — the existing strengths and assets that could be built on are what I gravitate toward first"},
+{id:51,q:"Your manager makes a significant decision you believe is wrong. You...",a:"Speak up clearly and directly — I'll make my case confidently regardless of hierarchy",b:"Choose my moment deliberately — I'll raise it thoughtfully picking when and how to have the most impact",c:"Raise it privately with my manager first — I voice my view but manage how and when carefully"},
+{id:52,q:"You've just joined a new team. What do you notice first?",a:"What's not working — the gaps bottlenecks and problems that need solving are immediately visible to me",b:"What's working well — the existing strengths and assets that could be built on are what I gravitate toward first"},
 {id:53,q:"What I bring most naturally to a group under pressure...",a:"Optimism — I naturally find what's good and possible and lift the energy around me",b:"Calm — change and uncertainty don't shake me; I flow through them and help others feel grounded"},
-{id:54,q:"How I influence and lead in a group...",a:"I express — I find the words that make people understand and feel something; communication is a natural tool for me",b:"I direct — I'm comfortable taking charge, naming what needs to happen, and ensuring the group moves toward it"},
+{id:54,q:"How I influence and lead in a group...",a:"I express — I find the words that make people understand and feel something; communication is a natural tool for me",b:"I direct — I'm comfortable taking charge naming what needs to happen and ensuring the group moves toward it"},
 {id:55,q:"My approach to knowledge and mastery...",a:"I become — the process of deepening my understanding and capability is inherently rewarding in any domain",b:"I question — I want to stress-test what everyone believes to be true and find what actually holds up under scrutiny"},
-{id:56,q:"When someone is left out of a group or conversation...",a:"I notice and act — I feel responsible for bringing overlooked people in and making them feel genuinely included",b:"I notice the tension — when friction or exclusion rises, I feel pulled to find common ground that eases it"},
-{id:57,q:"What sparks my deepest creative energy...",a:"Unexpected connection — two unrelated things linking to form something genuinely new is almost physical for me",b:"Vivid future — the more clearly I can see what hasn't happened yet, the more motivated I become to make it real"},
-{id:58,q:"What I configure versus what I navigate...",a:"I orchestrate — I love configuring people, resources, and timelines into the most efficient possible arrangement",b:"I navigate — I see the best path through complexity and find routes that others haven't mapped yet"},
+{id:56,q:"When someone is left out of a group or conversation...",a:"I notice and act — I feel responsible for bringing overlooked people in and making them feel genuinely included",b:"I notice the tension — when friction or exclusion rises I feel pulled to find common ground that eases it"},
+{id:57,q:"What sparks my deepest creative energy...",a:"Unexpected connection — two unrelated things linking to form something genuinely new is almost physical for me",b:"Vivid future — the more clearly I can see what hasn't happened yet the more motivated I become to make it real"},
+{id:58,q:"What I configure versus what I navigate...",a:"I orchestrate — I love configuring people resources and timelines into the most efficient possible arrangement",b:"I navigate — I see the best path through complexity and find routes that others haven't mapped yet"},
 {id:59,q:"What I invest in most naturally when I care about someone...",a:"Their growth — I want to help them develop from where they are toward where they genuinely could be",b:"Their mission — I want to spark them toward action and ensure they're moving toward what's possible for them"},
-{id:60,q:"Six months into a major goal, the original path has become significantly harder. You...",a:"Find another route to the same destination — the goal doesn't change; I adapt the method and keep moving relentlessly",b:"Reassess the whole picture — I stay fluid and let the best next move emerge from what the situation is telling me"},
+{id:60,q:"Six months into a major goal the original path has become significantly harder. You...",a:"Find another route to the same destination — the goal doesn't change; I adapt the method and keep moving relentlessly",b:"Reassess the whole picture — I stay fluid and let the best next move emerge from what the situation is telling me"},
 {id:61,q:"My natural operating rhythm...",a:"Reliable structure — I perform best with clear routines and systems I can execute against consistently",b:"Constant optimisation — I'm always reconfiguring my approach for greater efficiency and I adapt without hesitation"},
-{id:62,q:"How I extend care to people around me...",a:"I include — I make sure everyone feels welcome and part of the group, not just those I already know",b:"I develop — helping someone become more than they were is where I find my deepest satisfaction"},
+{id:62,q:"How I extend care to people around me...",a:"I include — I make sure everyone feels welcome and part of the group not just those I already know",b:"I develop — helping someone become more than they were is where I find my deepest satisfaction"},
 {id:63,q:"My relationship with language and ideas...",a:"I express — I'm energised by finding language that makes ideas land; communication is a genuine gift for me",b:"I generate — the spark of a new idea or unexpected connection is what I find most energising of all"},
 {id:64,q:"Where I gain understanding and confidence...",a:"From becoming — the journey from novice to knowledgeable is inherently rewarding in whatever domain I'm exploring",b:"From precedent — understanding how things came to be reveals patterns that the present moment alone cannot show"},
 {id:65,q:"What energises me in competitive or high-stakes situations...",a:"Benchmarks and rankings — knowing where I stand relative to others or previous standards pushes me to my best",b:"Impact and meaning — contributing something that genuinely mattered drives me far more than any comparative ranking"},
-{id:66,q:"When I make a new connection with someone...",a:"I warm them — I make strangers feel immediately comfortable and welcome; my warmth opens every door",b:"I fire them — I energise people toward action and movement; I want to activate people, not just welcome them"},
-{id:67,q:"How I handle unpredictability...",a:"Change activates me — I remain calm and fluid when things shift; uncertainty is a space I navigate naturally",b:"I manage tension proactively — when disagreement rises in a group, I'm drawn to find common ground that lets us move forward"},
+{id:66,q:"When I make a new connection with someone...",a:"I warm them — I make strangers feel immediately comfortable and welcome; my warmth opens every door",b:"I fire them — I energise people toward action and movement; I want to activate people not just welcome them"},
+{id:67,q:"How I handle unpredictability...",a:"Change activates me — I remain calm and fluid when things shift; uncertainty is a space I navigate naturally",b:"I manage tension proactively — when disagreement rises in a group I'm drawn to find common ground that lets us move forward"},
 {id:68,q:"What I commit to most deeply...",a:"What I've said I'll do — personal accountability is central to my identity; letting someone down feels genuinely wrong",b:"What aligns with my values — my moral compass filters my commitments before I make them"},
-{id:69,q:"What I'm drawn to raise up...",a:"What's already strong — I'm drawn to making something good become genuinely outstanding",b:"What's still emerging — I'm drawn to helping someone or something develop toward their full, unrealised potential"},
-{id:70,q:"You encounter a complex problem in an area you're new to. Your first instinct...",a:"Research extensively — I find every credible source, expert, and piece of data I can access before forming a view",b:"Diagnose systematically — I begin identifying probable causes and work through them methodically to find the root"},
-{id:71,q:"What defines my closest, most trusted relationships...",a:"Mutual trust and deep knowing — I invest in people over a long time and that depth is what creates real intimacy",b:"Emotional attunement — I feel what people feel; that immediate resonance creates a connection words can't always capture"},
-{id:72,q:"How I warm versus how I activate others...",a:"I warm — I make people feel welcome and comfortable; my warmth opens things up naturally",b:"I activate — I want to energise people toward action; once I see something is right, I want movement now"},
+{id:69,q:"What I'm drawn to raise up...",a:"What's already strong — I'm drawn to making something good become genuinely outstanding",b:"What's still emerging — I'm drawn to helping someone or something develop toward their full unrealised potential"},
+{id:70,q:"You encounter a complex problem in an area you're new to. Your first instinct...",a:"Research extensively — I find every credible source expert and piece of data I can access before forming a view",b:"Diagnose systematically — I begin identifying probable causes and work through them methodically to find the root"},
+{id:71,q:"What defines my closest most trusted relationships...",a:"Mutual trust and deep knowing — I invest in people over a long time and that depth is what creates real intimacy",b:"Emotional attunement — I feel what people feel; that immediate resonance creates a connection words can't always capture"},
+{id:72,q:"How I warm versus how I activate others...",a:"I warm — I make people feel welcome and comfortable; my warmth opens things up naturally",b:"I activate — I want to energise people toward action; once I see something is right I want movement now"},
 {id:73,q:"Where I find reliable pattern and understanding...",a:"In the past — I look backwards to find patterns that explain the present and reduce uncertainty about what to do",b:"In the data — I stress-test evidence and separate what genuinely holds up from what merely seems to"},
-{id:74,q:"My source of internal confidence...",a:"My own judgment — I trust what I know from experience and reasoning; external pressure rarely shakes a deliberate decision",b:"My values — when I act in alignment with what I believe is right, I feel certainty regardless of external feedback"},
-{id:75,q:"Before making a major decision, my natural process...",a:"I gather comprehensively — I talk to every expert I can access, read widely, and compile everything relevant",b:"I stress-test risks — I identify every way this could go wrong and make sure I've accounted for each",c:"I do both in sequence — gather first, then stress-test risks, then commit fully with complete confidence"},
+{id:74,q:"My source of internal confidence...",a:"My own judgment — I trust what I know from experience and reasoning; external pressure rarely shakes a deliberate decision",b:"My values — when I act in alignment with what I believe is right I feel certainty regardless of external feedback"},
+{id:75,q:"Before making a major decision my natural process...",a:"I gather comprehensively — I talk to every expert I can access read widely and compile everything relevant",b:"I stress-test risks — I identify every way this could go wrong and make sure I've accounted for each",c:"I do both in sequence — gather first then stress-test risks then commit fully with complete confidence"},
 {id:76,q:"When helping someone make a major decision they're unsure about...",a:"I build their confidence patiently — I help them see their own capability and reflect back what I know they can do",b:"I make the case directly and persistently — I believe in the decision and I want to activate them toward it now"},
 {id:77,q:"In work with real deadlines and limited resources...",a:"I fix what's broken first — clearing blockers and solving real problems is where I add the most immediate value",b:"I elevate what's working — exceptional output is what I push toward with whatever time and resources I have"},
-{id:78,q:"When I discover a subject area I find genuinely compelling...",a:"I build a resource library — I find the best books, podcasts, experts, and tools and create a rich store to return to",b:"I go deep on core principles — I study fundamentals until I understand the underlying structure, then explore from there"},
+{id:78,q:"When I discover a subject area I find genuinely compelling...",a:"I build a resource library — I find the best books podcasts experts and tools and create a rich store to return to",b:"I go deep on core principles — I study fundamentals until I understand the underlying structure then explore from there"},
 {id:79,q:"The thread that runs through everything I do...",a:"Meaning and connection — I sense a larger web; my work and life feel part of something interconnected and significant",b:"Values and conscience — acting in alignment with what I believe is right is the thread that holds everything together"},
 {id:80,q:"When I've achieved something significant that others haven't yet noticed...",a:"I find a way to make it visible — visibility of excellent work matters for credibility and future impact",b:"It doesn't change my sense of its value — my confidence in what I've done doesn't depend on whether others recognise it"},
 {id:81,q:"Your organisation introduces a policy that is ethically right but applied inconsistently. What matters more?",a:"The intent and values behind it — imperfect implementation of something right beats consistent application of something wrong",b:"Consistent application — a policy applied inconsistently creates injustice regardless of the intent behind it"},
-{id:82,q:"You're asked to lead a long-term project with no clear precedent. You begin by...",a:"Gathering extensively — I access every source, expert, and precedent I can find to build a comprehensive foundation",b:"Mapping the territory — I identify patterns in the complexity and find viable paths forward from there",c:"Understanding my people — I quickly learn what each person brings and configure the team around their specific strengths"},
-{id:83,q:"When you have an hour of unscheduled thinking time, you most naturally spend it...",a:"Connecting — thinking about how different things I know link together and what new ideas emerge from those connections",b:"Reflecting — going deep on a single question, exploring it privately and thoroughly until something clarifies"},
+{id:82,q:"You're asked to lead a long-term project with no clear precedent. You begin by...",a:"Gathering extensively — I access every source expert and precedent I can find to build a comprehensive foundation",b:"Mapping the territory — I identify patterns in the complexity and find viable paths forward from there",c:"Understanding my people — I quickly learn what each person brings and configure the team around their specific strengths"},
+{id:83,q:"When you have an hour of unscheduled thinking time you most naturally spend it...",a:"Connecting — thinking about how different things I know link together and what new ideas emerge from those connections",b:"Reflecting — going deep on a single question exploring it privately and thoroughly until something clarifies"},
 {id:84,q:"When you spot a way to make a process or routine more efficient...",a:"I change it — I can't leave an inefficiency in place if I can see a better way; optimising is almost involuntary for me",b:"I assess materiality — not every inefficiency is worth the disruption; I weigh the real gain against the real cost"},
-{id:85,q:"In a group where someone is being overlooked or unheard...",a:"I bring them in — I make a point of including the overlooked person and ensuring their voice is genuinely heard",b:"I find common ground — I focus on what the group can agree on and build from there, regardless of who's contributing"},
+{id:85,q:"In a group where someone is being overlooked or unheard...",a:"I bring them in — I make a point of including the overlooked person and ensuring their voice is genuinely heard",b:"I find common ground — I focus on what the group can agree on and build from there regardless of who's contributing"},
 {id:86,q:"When I reflect on what I find most meaningful about work I've done...",a:"The problems I've solved — diagnosing difficult challenges and engineering lasting fixes is what I remember most",b:"The people I've helped grow — watching someone I invested in surpass their previous limits is what stays with me"},
 {id:87,q:"What truly motivates me beyond surface drivers...",a:"Benchmarks and comparison sharpen me — knowing where I stand relative to others activates something real in me",b:"Shared purpose and meaningful contribution — working toward something important with people I respect brings out my best"},
-{id:88,q:"My confidence in what I decide is ultimately based on...",a:"The quality of my preparation — I've identified and addressed key risks so I act with genuine certainty",b:"The reliability of my judgment — I've made enough good decisions to trust the instinct itself, not just the preparation"},
+{id:88,q:"My confidence in what I decide is ultimately based on...",a:"The quality of my preparation — I've identified and addressed key risks so I act with genuine certainty",b:"The reliability of my judgment — I've made enough good decisions to trust the instinct itself not just the preparation"},
 {id:89,q:"What I offer most distinctively at my very best...",a:"Clarity through complexity — I see the path and help people navigate what others find overwhelming",b:"Depth of connection — I know the people I invest in at a level that creates real trust and I show up for them consistently"},
 {id:90,q:"When deciding whether to speak up in a high-stakes situation...",a:"I speak — I'll voice my perspective even when uncomfortable; silence on important matters feels dishonest to me",b:"I choose my moment — I speak when it matters but I'm deliberate about when and how; impact of the message matters most"},
-{id:91,q:"My most natural approach to an unfamiliar, high-stakes challenge...",a:"Research first — I gather comprehensively from every credible source before forming a position",b:"Pattern first — I look for what the situation resembles and find the angle others haven't seen",c:"Diagnosis first — I identify what's broken or unclear and systematically work toward the root cause"},
-{id:92,q:"What I'm most likely to be doing when I feel most professionally alive...",a:"Generating something new — an idea, a solution, an approach that surprises even me",b:"Navigating something genuinely complex — finding the path through a situation where no map exists yet"},
+{id:91,q:"My most natural approach to an unfamiliar high-stakes challenge...",a:"Research first — I gather comprehensively from every credible source before forming a position",b:"Pattern first — I look for what the situation resembles and find the angle others haven't seen",c:"Diagnosis first — I identify what's broken or unclear and systematically work toward the root cause"},
+{id:92,q:"What I'm most likely to be doing when I feel most professionally alive...",a:"Generating something new — an idea a solution an approach that surprises even me",b:"Navigating something genuinely complex — finding the path through a situation where no map exists yet"},
 {id:93,q:"How I invest my relational loyalty and care...",a:"Broadly but genuinely — I can make almost anyone feel truly welcomed and seen in a relatively brief interaction",b:"Deeply and selectively — the people in my inner circle receive something qualitatively different; I hold nothing back for them"},
 {id:94,q:"What I reach for instinctively when facing something broken or stuck...",a:"The fix — I diagnose quickly and move to resolution; unsolved problems pull at me and I can't leave them alone",b:"The upgrade — I look for what could make this not just fixed but genuinely better than it was before"},
-{id:95,q:"My interpersonal sensitivity and attunement...",a:"I sense what others feel — their emotional states are immediately real and present to me before they need to speak",b:"I see who others are — their unique wiring, motivations, and specific patterns are what I read naturally in any person"},
-{id:96,q:"What I believe about how people and events connect...",a:"Everything is linked — I sense a larger web; there are invisible threads between people, events, and ideas always present",b:"Context explains everything — how things came to be tells me more than any examination of what they are right now"},
-{id:97,q:"What I guard most carefully in my personal commitments...",a:"My integrity — I won't compromise my values regardless of pressure, opportunity, or external expectation",b:"My energy — I direct my deepest commitment toward those and things that genuinely deserve it; I protect that capacity"},
+{id:95,q:"My interpersonal sensitivity and attunement...",a:"I sense what others feel — their emotional states are immediately real and present to me before they need to speak",b:"I see who others are — their unique wiring motivations and specific patterns are what I read naturally in any person"},
+{id:96,q:"What I believe about how people and events connect...",a:"Everything is linked — I sense a larger web; there are invisible threads between people events and ideas always present",b:"Context explains everything — how things came to be tells me more than any examination of what they are right now"},
+{id:97,q:"What I guard most carefully in my personal commitments...",a:"My integrity — I won't compromise my values regardless of pressure opportunity or external expectation",b:"My energy — I direct my deepest commitment toward those and things that genuinely deserve it; I protect that capacity"},
 {id:98,q:"When I learn something genuinely useful...",a:"I share it proactively — I think immediately about who else needs to know this and I act on that instinct",b:"I apply it — I connect the new knowledge directly to the problems or opportunities in front of me and put it to work"},
 {id:99,q:"What people who know me best would say is my most defining quality...",a:"You are always there — your loyalty and follow-through are unlike anyone else's; we know you will never let us down",b:"You always see — you read situations and people with an accuracy that still surprises us; you see what we can't see"},
-{id:100,q:"You are asked to lead a team through a genuinely complex, unprecedented challenge. Your first week...",a:"I gather everything — every data source, expert, and precedent I can access to build a complete, informed picture",b:"I map the landscape — I find the patterns in the complexity and identify the most viable paths through the unknown",c:"I understand my people — I learn what each person uniquely brings and configure the team around those specific strengths",d:"I set the destination — I ensure everyone has a vivid, shared sense of where we're going and holds it together"}
+{id:100,q:"You are asked to lead a team through a genuinely complex unprecedented challenge. Your first week...",a:"I gather everything — every data source expert and precedent I can access to build a complete informed picture",b:"I map the landscape — I find the patterns in the complexity and identify the most viable paths through the unknown",c:"I understand my people — I learn what each person uniquely brings and configure the team around those specific strengths",d:"I set the destination — I ensure everyone has a vivid shared sense of where we're going and holds it together"}
 ];
 
-// ═══════════════════════════════════════════════════════════
-// STATE & STORAGE
-// ═══════════════════════════════════════════════════════════
 let S={round:0,answers:{},name:''};
-function save(){try{localStorage.setItem('sm_a',JSON.stringify(S.answers));localStorage.setItem('sm_r',S.round);localStorage.setItem('sm_n',S.name)}catch(e){}}
-function load(){try{const a=localStorage.getItem('sm_a');const r=localStorage.getItem('sm_r');const n=localStorage.getItem('sm_n');if(a)S.answers=JSON.parse(a);if(r)S.round=parseInt(r)||0;if(n)S.name=n}catch(e){}}
-function clearSave(){try{localStorage.removeItem('sm_a');localStorage.removeItem('sm_r');localStorage.removeItem('sm_n')}catch(e){}}
-
+function sv(){try{localStorage.setItem('sm_a',JSON.stringify(S.answers));localStorage.setItem('sm_r',S.round);localStorage.setItem('sm_n',S.name)}catch(e){}}
+function ld(){try{const a=localStorage.getItem('sm_a');const r=localStorage.getItem('sm_r');const n=localStorage.getItem('sm_n');if(a)S.answers=JSON.parse(a);if(r)S.round=parseInt(r)||0;if(n)S.name=n}catch(e){}}
+function cs(){try{localStorage.removeItem('sm_a');localStorage.removeItem('sm_r');localStorage.removeItem('sm_n')}catch(e){}}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 
-// INTRO
-function showInfo(){document.getElementById('infoCard').style.display='block';document.getElementById('infoCard').scrollIntoView({behavior:'smooth',block:'nearest'});load();const ct=Object.keys(S.answers).filter(k=>S.answers[k]&&S.answers[k].choice).length;if(ct>0){document.getElementById('resumeBanner').style.display='flex';document.getElementById('resumeCount').textContent=ct+' of 100 questions answered';if(S.name)document.getElementById('nameInput').value=S.name;}}
-function beginAssessment(){S.name=document.getElementById('nameInput').value.trim();clearSave();S.answers={};S.round=0;launchQuiz()}
-function resumeIt(){S.name=document.getElementById('nameInput').value.trim()||S.name;launchQuiz()}
-function freshStart(){clearSave();S={round:0,answers:{},name:''};document.getElementById('resumeBanner').style.display='none';document.getElementById('nameInput').value='';beginAssessment()}
-function launchQuiz(){show('sQuiz');document.getElementById('progWrap').style.display='block';renderRound()}
-
-// QUIZ
-function renderRound(){
-  const start=S.round*10;const rQs=Q.slice(start,start+10);
-  document.getElementById('roundBadge').textContent='Round '+(S.round+1);
-  document.getElementById('roundTitle').textContent=ROUND_NAMES[S.round]+' — Questions '+(start+1)+'–'+(start+10);
-  document.getElementById('btnPrev').style.visibility=S.round===0?'hidden':'visible';
-  const isLast=S.round===9;document.getElementById('btnNext').textContent=isLast?'Complete & Generate Report ✓':'Next Round →';
-  let html='';
-  rQs.forEach((q,i)=>{
-    const qNum=start+i+1;const ans=S.answers[q.id];const savedChoice=ans?ans.choice:null;const savedComment=ans?ans.comment:'';
-    const opts=[{k:'a',t:q.a},{k:'b',t:q.b}];if(q.c)opts.push({k:'c',t:q.c});if(q.d)opts.push({k:'d',t:q.d});
-    html+=`<div class="q-card${savedChoice?' answered':''}" id="qc-${q.id}"><div class="q-num">Question ${qNum} of 100</div><div class="q-text">${q.q}</div><div class="options">`;
-    opts.forEach(o=>{const sel=savedChoice===o.k;html+=`<div class="option${sel?' selected':''}" onclick="pick(${q.id},'${o.k}',this)"><div class="opt-l">${o.k.toUpperCase()}</div><div class="opt-txt">${o.t}</div></div>`;});
-    html+=`</div><div class="cmt-wrap"><button class="cmt-btn" onclick="toggleCmt(${q.id})">+ Add context or nuance</button><div class="cmt-area${savedComment?' open':''}" id="ca-${q.id}"><textarea id="ta-${q.id}" placeholder="Add any 'it depends', personal context, or nuance here — these details make your report more precise..." onchange="saveCmt(${q.id},this.value)">${savedComment||''}</textarea></div></div></div>`;
-  });
-  document.getElementById('questionsWrap').innerHTML=html;
-  updateProgress();updateNextBtn();window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function pick(qId,choice,el){
-  const card=document.getElementById('qc-'+qId);
-  card.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
-  if(!S.answers[qId])S.answers[qId]={choice:'',comment:''};
-  S.answers[qId].choice=choice;card.classList.add('answered');save();updateProgress();updateNextBtn();
-}
-function saveCmt(qId,val){if(!S.answers[qId])S.answers[qId]={choice:'',comment:''};S.answers[qId].comment=val;save()}
-function toggleCmt(qId){const ca=document.getElementById('ca-'+qId);ca.classList.toggle('open');if(ca.classList.contains('open'))setTimeout(()=>document.getElementById('ta-'+qId).focus(),50)}
-function roundDone(r){const s=r*10;for(let i=s;i<s+10;i++){if(!S.answers[Q[i].id]||!S.answers[Q[i].id].choice)return false}return true}
-function updateNextBtn(){document.getElementById('btnNext').disabled=!roundDone(S.round)}
-function updateProgress(){const ct=Object.keys(S.answers).filter(k=>S.answers[k]&&S.answers[k].choice).length;document.getElementById('progFill').style.width=ct+'%';document.getElementById('progCt').textContent=ct+' / 100 answered';document.getElementById('progRound').textContent='Round '+(S.round+1)+' of 10 — '+ROUND_NAMES[S.round]}
-function goNext(){if(!roundDone(S.round))return;if(S.round<9){S.round++;save();renderRound()}else{document.getElementById('progWrap').style.display='none';generateReport()}}
-function goBack(){if(S.round>0){S.round--;save();renderRound()}}
-
-// ═══════════════════════════════════════════════════════════
-// GEMINI PROMPT
-// ═══════════════════════════════════════════════════════════
-function buildPrompt(){
-  const name=S.name||'the person';
-  let responses='';
-  Q.forEach(q=>{
-    const ans=S.answers[q.id];if(!ans||!ans.choice)return;
-    const opts=[{k:'a',t:q.a},{k:'b',t:q.b}];if(q.c)opts.push({k:'c',t:q.c});if(q.d)opts.push({k:'d',t:q.d});
-    const chosen=opts.find(o=>o.k===ans.choice);
-    responses+=`Q${q.id}: ${q.q}\nCHOSE ${ans.choice.toUpperCase()}: ${chosen?chosen.t:''}\n`;
-    if(ans.comment&&ans.comment.trim())responses+=`PERSONAL CONTEXT: "${ans.comment.trim()}"\n`;
-    responses+='\n';
-  });
-  const nameNote=S.name?`\nThe person's name is ${name}. Address them by name throughout the report.\n`:'';
-  return `You are an expert strengths coach and organisational psychologist with deep mastery of trait-based profiling frameworks and all 34 talent themes across their four domains. You draw on evidence-based coaching frameworks and positive psychology research.
-
-THE 34 CLIFTONSTRENGTHS THEMES:
-EXECUTING (domain="executing"): Achiever, Arranger, Belief, Consistency, Deliberative, Discipline, Focus, Responsibility, Restorative
-INFLUENCING (domain="influencing"): Activator, Command, Communication, Competition, Maximizer, Self-Assurance, Significance, Woo
-RELATIONSHIP BUILDING (domain="relationship"): Adaptability, Connectedness, Developer, Empathy, Harmony, Includer, Individualization, Positivity, Relator
-STRATEGIC THINKING (domain="strategic"): Analytical, Context, Futuristic, Ideation, Input, Intellection, Learner, Strategic
-${nameNote}
-CRITICAL RULES:
-1. Every insight must name specific themes. No generic advice whatsoever.
-2. Shadow sides for all top 5 themes are mandatory.
-3. Analyse themes in combination, not isolation.
-4. Personal comments carry the HIGHEST diagnostic weight — weight them heavily.
-5. Be specific, honest, and coach-like — not just flattering.
-6. Immediate action steps are required in Section 13.
-
-ASSESSMENT RESPONSES:
-${responses}
-
-IMPORTANT ADDITIONAL RULES:
-- ALL 4 domains must appear in the top 10 results
-- Red flags MUST include a constructive reframe or navigation strategy — never just a trait to avoid
-- bestCollaborators field: describe who brings out their best (qualities that complement their blind spots)
-- Personal comments (PERSONAL CONTEXT) carry the HIGHEST weight
-
-RESPOND WITH ONLY VALID JSON (no markdown, no code blocks, just raw JSON):
-{"name":"string","tagline":"string (12-15 words capturing their essence at their best)","allThemes":[{"rank":1,"theme":"ThemeName","domain":"executing|influencing|relationship|strategic"}],"signatureFive":[{"theme":"string","domain":"string","description":"string (2-3 sentences specific to THIS person)"}],"portrait":"string (280-320 word narrative at their absolute best)","whenAllFire":"string (150 words what happens when all 5 fire together)","powerCombinations":[{"title":"string","themes":["t1","t2"],"domains":["d1","d2"],"capability":"string","example":"string"}],"shadowSides":[{"theme":"string","domain":"string","liability":"string","looksLike":"string","warning":"string"}],"thrive":{"bestConditions":["s","s","s","s"],"energyKillers":["s","s","s","s"],"idealPartner":"string","bestCollaborators":"string (describe themes or qualities in people who naturally complement this person's blind spots — frame positively as who brings out their best, not who they should avoid)","needToHear":["s","s","s"],"doNotSay":["s","s","s"]},"relationships":{"whatTheyOffer":"string","whatTheyNeed":"string","blindSpots":"string","greenFlags":["string — each flag must include a brief explanation of why this is a natural fit for this profile, not just a trait label"],"redFlags":["string — IMPORTANT: each red flag must be framed constructively. Do not say 'avoid people who X'. Instead say 'People who X may create friction — but this can be navigated by Y'. Include a brief mitigation or reframe for each flag so the reader does not use this to exclude or judge people unfairly."]},"workplace":{"colleagueExperience":"string","naturalRole":"string","highestValue":"string","unintendedFriction":"string"},"leadership":{"style":"string","teamLoves":"string","teamChallenges":"string","developBehaviors":["s","s","s"]},"career":{"excels":["s","s","s"],"drains":["s","s","s"],"moves":[{"title":"string","reasoning":"string","themes":["s","s"]}]},"selfSabotage":[{"patternName":"string","behavior":"string","trigger":"string","solution":"string"}],"howOthers":{"magnetic":"string","friction":"string","misread":"string","remembered":"string"},"growthEdge":{"signatureNext":"string","developTheme":"string","masterShadow":"string"},"actionPlan":{"hours24":"string","week1":"string","months3":"string","coachingQuestion":"string"}}`;
-}
-
-// ═══════════════════════════════════════════════════════════
-// GENERATE REPORT — calls /api/generate (Vercel proxy)
-// ═══════════════════════════════════════════════════════════
-let lastPrompt='';
-async function generateReport(){
-  show('sLoading');
-  const steps=['ls1','ls2','ls3','ls4','ls5','ls6'];
-  let si=0;
-  const iv=setInterval(()=>{
-    if(si>0)document.getElementById(steps[si-1]).className='load-step done';
-    if(si<steps.length){document.getElementById(steps[si]).className='load-step active';si++}
-    else clearInterval(iv);
-  },4000);
-
-  try{
-    lastPrompt=buildPrompt();
-    const res=await fetch('/api/generate',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({prompt:lastPrompt})
-    });
-    clearInterval(iv);steps.forEach(s=>document.getElementById(s).className='load-step done');
-
-    if(!res.ok){
-      const err=await res.json().catch(()=>({}));
-      showError(err.error||'Server error (status '+res.status+'). Please try again.');return;
-    }
-    const data=await res.json();
-    const text=data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if(!text){showError('No response received. Please try again.');return}
-
-    let report;
-    try{
-      const clean=text.replace(/^```json?\s*/,'').replace(/\s*```$/,'').trim();
-      report=JSON.parse(clean);
-    }catch(e){showError('Report parsing error — please try again. Your answers are saved.');return}
-
-    await new Promise(r=>setTimeout(r,600));
-    renderReport(report);
-  }catch(e){
-    clearInterval(iv);
-    showError(e.message.includes('fetch')||e.message.includes('Failed')?'Network error — please check your connection and try again.':'Error: '+e.message);
+function showInfo(){
+  var c=document.getElementById('infoCard');
+  c.style.display='block';
+  c.scrollIntoView({behavior:'smooth',block:'nearest'});
+  ld();
+  var ct=Object.keys(S.answers).filter(function(k){return S.answers[k]&&S.answers[k].choice}).length;
+  if(ct>0){
+    document.getElementById('resumeBanner').style.display='flex';
+    document.getElementById('resumeCount').textContent=ct+' of 100 questions answered';
+    if(S.name)document.getElementById('nameInput').value=S.name;
   }
 }
 
-function retryGenerate(){generateReport()}
-function showError(msg){document.getElementById('errorDetail').textContent=msg;show('sError')}
+function beginAssessment(){S.name=document.getElementById('nameInput').value.trim();cs();S.answers={};S.round=0;launchQuiz()}
+function resumeIt(){S.name=document.getElementById('nameInput').value.trim()||S.name;launchQuiz()}
+function freshStart(){cs();S={round:0,answers:{},name:''};document.getElementById('resumeBanner').style.display='none';document.getElementById('nameInput').value='';beginAssessment()}
+function launchQuiz(){show('sQuiz');document.getElementById('progWrap').style.display='block';renderRound()}
 
+function renderRound(){
+  var start=S.round*10;var rQs=Q.slice(start,start+10);
+  document.getElementById('roundBadge').textContent='Round '+(S.round+1);
+  document.getElementById('roundTitle').textContent=RN[S.round]+' — Q'+(start+1)+'–'+(start+10);
+  document.getElementById('btnPrev').style.visibility=S.round===0?'hidden':'visible';
+  document.getElementById('btnNext').textContent=S.round===9?'Complete & Generate Report ✓':'Next Round →';
+  var html='';
+  rQs.forEach(function(q,i){
+    var qNum=start+i+1;var ans=S.answers[q.id];var sc=ans?ans.choice:null;var sco=ans?ans.comment:'';
+    var opts=[{k:'a',t:q.a},{k:'b',t:q.b}];if(q.c)opts.push({k:'c',t:q.c});if(q.d)opts.push({k:'d',t:q.d});
+    html+='<div class="qcard'+(sc?' done':'')+'" id="qc-'+q.id+'"><div class="qnum">Question '+qNum+' of 100</div><div class="qtext">'+q.q+'</div><div class="opts">';
+    opts.forEach(function(o){html+='<div class="opt'+(sc===o.k?' sel':'')+'" onclick="pick('+q.id+',\''+o.k+'\',this)"><div class="oletter">'+o.k.toUpperCase()+'</div><div class="otext">'+o.t+'</div></div>'});
+    html+='</div><button class="cmt-btn" onclick="toggleCmt('+q.id+')">+ Add context or nuance</button><div class="cmt-wrap'+(sco?' open':'')+'" id="ca-'+q.id+'"><textarea id="ta-'+q.id+'" placeholder="Add any context or nuance here..." onchange="saveCmt('+q.id+',this.value)">'+( sco||'')+'</textarea></div></div>';
+  });
+  document.getElementById('questionsWrap').innerHTML=html;
+  updProg();updBtn();window.scrollTo({top:0,behavior:'smooth'});
+}
+function pick(qId,choice,el){
+  var card=document.getElementById('qc-'+qId);
+  card.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});
+  el.classList.add('sel');
+  if(!S.answers[qId])S.answers[qId]={choice:'',comment:''};
+  S.answers[qId].choice=choice;card.classList.add('done');sv();updProg();updBtn();
+}
+function saveCmt(qId,val){if(!S.answers[qId])S.answers[qId]={choice:'',comment:''};S.answers[qId].comment=val;sv()}
+function toggleCmt(qId){var ca=document.getElementById('ca-'+qId);ca.classList.toggle('open');if(ca.classList.contains('open'))setTimeout(function(){document.getElementById('ta-'+qId).focus()},50)}
+function roundDone(r){var s=r*10;for(var i=s;i<s+10;i++){if(!S.answers[Q[i].id]||!S.answers[Q[i].id].choice)return false}return true}
+function updBtn(){document.getElementById('btnNext').disabled=!roundDone(S.round)}
+function updProg(){
+  var ct=Object.keys(S.answers).filter(function(k){return S.answers[k]&&S.answers[k].choice}).length;
+  document.getElementById('progFill').style.width=ct+'%';
+  document.getElementById('progCt').textContent=ct+' / 100';
+  document.getElementById('progRound').textContent='Round '+(S.round+1)+' of 10 — '+RN[S.round];
+  var m=Math.ceil((100-ct)*0.2);
+  document.getElementById('progTime').textContent=ct>=100?'Almost done!':m<=1?'⏱ ~1 min':'⏱ ~'+m+' min';
+}
+function goNext(){if(!roundDone(S.round))return;if(S.round<9){S.round++;sv();renderRound()}else{document.getElementById('progWrap').style.display='none';genReport()}}
+function goBack(){if(S.round>0){S.round--;sv();renderRound()}}
 
-// DOMAIN GRID CHART BUILDER
-const DOMAIN_ORDER_DG=['executing','influencing','relationship','strategic'];
+function buildPrompt(){
+  var name=S.name||'the person';var responses='';
+  Q.forEach(function(q){
+    var ans=S.answers[q.id];if(!ans||!ans.choice)return;
+    var opts=[{k:'a',t:q.a},{k:'b',t:q.b}];if(q.c)opts.push({k:'c',t:q.c});if(q.d)opts.push({k:'d',t:q.d});
+    var chosen=opts.find(function(o){return o.k===ans.choice});
+    responses+='Q'+q.id+': '+q.q+'\nCHOSE '+ans.choice.toUpperCase()+': '+(chosen?chosen.t:'')+'\n';
+    if(ans.comment&&ans.comment.trim())responses+='PERSONAL CONTEXT: "'+ans.comment.trim()+'"\n';
+    responses+='\n';
+  });
+  var nameNote=S.name?'\nAddress them as '+name+' throughout the report.\n':'';
+  return 'You are an expert strengths coach and organisational psychologist with deep mastery of trait-based profiling frameworks and all 34 talent themes across their four domains. You draw on strengths-based psychology, positive psychology, and evidence-based coaching.\n\nTHE 34 TALENT THEMES:\nEXECUTING (domain=\"executing\"): Achiever, Arranger, Belief, Consistency, Deliberative, Discipline, Focus, Responsibility, Restorative\nINFLUENCING (domain=\"influencing\"): Activator, Command, Communication, Competition, Maximizer, Self-Assurance, Significance, Woo\nRELATIONSHIP BUILDING (domain=\"relationship\"): Adaptability, Connectedness, Developer, Empathy, Harmony, Includer, Individualization, Positivity, Relator\nSTRATEGIC THINKING (domain=\"strategic\"): Analytical, Context, Futuristic, Ideation, Input, Intellection, Learner, Strategic\n'+nameNote+'\nCRITICAL RULES:\n1. ALL 34 themes must appear in allThemes with unique ranks 1-34.\n2. All 4 domains must be represented in the top 10.\n3. Every insight must name specific themes. No generic advice.\n4. Shadow sides for all top 5 themes are mandatory.\n5. PERSONAL CONTEXT comments carry the HIGHEST diagnostic weight.\n6. Red flags must include a constructive navigation strategy — never just a trait to avoid.\n7. bestCollaborators: describe positively who brings out this person\'s best.\n\nASSESSMENT RESPONSES:\n'+responses+'\nRESPOND WITH ONLY VALID JSON no markdown no fences raw JSON only:\n{"name":"string","tagline":"string 12-15 words capturing their essence","allThemes":[{"rank":1,"theme":"ThemeName","domain":"executing|influencing|relationship|strategic"}],"signatureFive":[{"theme":"string","domain":"string","description":"string 2-3 sentences specific to THIS person"}],"portrait":"string 280-320 word narrative at their absolute best","whenAllFire":"string 120-150 words when all 5 fire together","powerCombinations":[{"title":"string catchy name","themes":["t1","t2"],"domains":["d1","d2"],"capability":"string","example":"string"}],"shadowSides":[{"theme":"string","domain":"string","liability":"string","looksLike":"string","warning":"string specific early warning sign"}],"thrive":{"bestConditions":["s","s","s","s"],"energyKillers":["s","s","s","s"],"idealPartner":"string","bestCollaborators":"string who brings out their best described positively","needToHear":["s","s","s"],"doNotSay":["s","s","s"]},"relationships":{"whatTheyOffer":"string","whatTheyNeed":"string","blindSpots":"string","greenFlags":["string explain WHY this fits this profile"],"redFlags":["string name the dynamic explain why it creates friction AND give a navigation strategy"]},"workplace":{"colleagueExperience":"string","naturalRole":"string","highestValue":"string","unintendedFriction":"string"},"leadership":{"style":"string","teamLoves":"string","teamChallenges":"string","developBehaviors":["s","s","s"]},"career":{"excels":["s","s","s"],"drains":["s","s","s"],"moves":[{"title":"string","reasoning":"string","themes":["s","s"]}]},"selfSabotage":[{"patternName":"string","behavior":"string","trigger":"string","solution":"string use existing top themes as solution"}],"howOthers":{"magnetic":"string","friction":"string","misread":"string","remembered":"string"},"growthEdge":{"signatureNext":"string","developTheme":"string","masterShadow":"string"},"actionPlan":{"hours24":"string","week1":"string","months3":"string","coachingQuestion":"string"}}';
+}
+
+async function genReport(){
+  show('sLoading');
+  var steps=['ls1','ls2','ls3','ls4','ls5','ls6'];var si=0;
+  var iv=setInterval(function(){
+    if(si>0)document.getElementById(steps[si-1]).className='lstep done';
+    if(si<steps.length){document.getElementById(steps[si]).className='lstep active';si++}
+    else clearInterval(iv);
+  },4000);
+  try{
+    var res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:buildPrompt()})});
+    clearInterval(iv);steps.forEach(function(s){document.getElementById(s).className='lstep done'});
+    if(!res.ok){var err=await res.json().catch(function(){return{}});showErr(err.error||'Server error '+res.status);return}
+    var data=await res.json();
+    var text=data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text;
+    if(!text){showErr('No response received. Please try again.');return}
+    var report;
+    try{var clean=text.replace(/^```json?\s*/,'').replace(/\s*```$/,'').trim();report=JSON.parse(clean)}
+    catch(e){showErr('Parsing error — please try again. Your answers are saved.');return}
+    await new Promise(function(r){setTimeout(r,600)});
+    renderReport(report);
+  }catch(e){clearInterval(iv);showErr(e.message&&(e.message.indexOf('fetch')>=0||e.message.indexOf('Failed')>=0)?'Network error — check your connection.':'Error: '+e.message)}
+}
+function retryGen(){genReport()}
+function showErr(msg){document.getElementById('errDetail').textContent=msg;show('sError')}
+
+// DOMAIN CONSTANTS
+var DC={executing:'#8B5CF6',influencing:'#F97316',relationship:'#3B82F6',strategic:'#10B981'};
+var DN={executing:'EXECUTING',influencing:'INFLUENCING',relationship:'RELATIONSHIP BUILDING',strategic:'STRATEGIC THINKING'};
+var DO=['executing','influencing','relationship','strategic'];
+function dc(d){return DC[d]||'#5A6880'}
+
 function buildDomainGrid(allThemes){
-  const groups={executing:[],influencing:[],relationship:[],strategic:[]};
-  allThemes.forEach(t=>{if(groups[t.domain])groups[t.domain].push(t)});
-  Object.values(groups).forEach(g=>g.sort((a,b)=>a.rank-b.rank));
-  const DN2={executing:'EXECUTING',influencing:'INFLUENCING',relationship:'RELATIONSHIP BUILDING',strategic:'STRATEGIC THINKING'};
-  let html='<div style="margin-bottom:24px;overflow-x:auto;-webkit-overflow-scrolling:touch"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-width:560px">';
-  DOMAIN_ORDER_DG.forEach(d=>{
-    const themes=groups[d]||[];const col=DC[d];
-    html+=`<div><div style="font-family:Outfit,sans-serif;font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:${col};padding-bottom:7px;margin-bottom:5px;border-bottom:2px solid ${col}">${DN2[d]}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">`;
-    themes.forEach(t=>{
-      const rank=t.rank;let bg,tc,rs,ns;
-      if(rank<=5){bg=col;tc='#fff';rs='19px';ns='9px'}
-      else if(rank<=10){bg=col+'66';tc='#fff';rs='15px';ns='8.5px'}
-      else if(rank<=20){bg=col+'28';tc=col;rs='12px';ns='7.5px'}
-      else{bg=col+'12';tc=col+'99';rs='11px';ns='7px'}
-      html+=`<div style="background:${bg};border-radius:6px;padding:8px 5px 7px;text-align:center;transition:transform .15s" title="${t.theme} — Rank ${rank}"><div style="font-family:Outfit,sans-serif;font-weight:900;line-height:1;margin-bottom:3px;color:${tc};font-size:${rs}">${rank}</div><div style="font-family:Outfit,sans-serif;font-weight:700;line-height:1.25;color:${tc};font-size:${ns}">${t.theme}</div></div>`;
+  var groups={executing:[],influencing:[],relationship:[],strategic:[]};
+  allThemes.forEach(function(t){if(groups[t.domain])groups[t.domain].push(t)});
+  Object.values(groups).forEach(function(g){g.sort(function(a,b){return a.rank-b.rank})});
+  var html='<div class="dgrid"><div class="dgrid-inner">';
+  DO.forEach(function(d){
+    var themes=groups[d]||[];var col=DC[d];
+    html+='<div><div class="dcol-hdr" style="color:'+col+'">'+DN[d]+'</div><div class="dtiles">';
+    themes.forEach(function(t){
+      var rank=t.rank;var bg,tc,rs,ns;
+      if(rank<=5){bg=col;tc='#fff';rs='18px';ns='9px'}
+      else if(rank<=10){bg=col+'66';tc='#fff';rs='14px';ns='8.5px'}
+      else if(rank<=20){bg=col+'22';tc=col;rs='12px';ns='7.5px'}
+      else{bg=col+'0F';tc=col+'99';rs='10px';ns='7px'}
+      html+='<div class="dtile" style="background:'+bg+'" title="'+t.theme+' Rank '+rank+'"><div class="dt-rank" style="color:'+tc+';font-size:'+rs+'">'+rank+'</div><div class="dt-name" style="color:'+tc+';font-size:'+ns+'">'+t.theme+'</div></div>';
     });
-    html+=`</div></div>`;
+    html+='</div></div>';
   });
-  html+=`</div><div style="display:flex;gap:16px;justify-content:center;margin-top:12px;flex-wrap:wrap">`;
-  [{l:'Signature (1–5)',o:'1'},{l:'Supporting (6–10)',o:'.65'},{l:'Background (11–20)',o:'.35'},{l:'Lesser Used (21–34)',o:'.18'}].forEach(item=>{
-    html+=`<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gray)"><div style="width:12px;height:12px;border-radius:3px;background:#8B5CF6;opacity:${item.o};flex-shrink:0"></div>${item.l}</div>`;
+  html+='</div><div class="dgrid-legend">';
+  [{l:'Signature (1–5)',o:'1'},{l:'Supporting (6–10)',o:'.65'},{l:'Background (11–20)',o:'.35'},{l:'Lesser Used (21–34)',o:'.15'}].forEach(function(item){
+    html+='<div class="dleg-item"><div class="dleg-sw" style="background:#8B5CF6;opacity:'+item.o+'"></div>'+item.l+'</div>';
   });
-  html+=`</div></div>`;
+  html+='</div></div>';
   return html;
 }
 
-// ═══════════════════════════════════════════════════════════
-// REPORT RENDER
-// ═══════════════════════════════════════════════════════════
-const DC={executing:'#7B5EA7',influencing:'#C96310',relationship:'#1360A8',strategic:'#187840'};
-const DL={executing:'#EDE8F7',influencing:'#FAF0E6',relationship:'#E8F0FA',strategic:'#E6F5EC'};
-const DN={executing:'Executing',influencing:'Influencing',relationship:'Relationship Building',strategic:'Strategic Thinking'};
-function dc(d){return DC[d]||'#5A6478'}function dl(d){return DL[d]||'#F1F4F9'}
-
 function renderReport(r){
   show('sReport');
-  const top5=r.signatureFive||[];const allT=r.allThemes||[];
-  const top10=allT.slice(0,10);const dcounts={executing:0,influencing:0,relationship:0,strategic:0};
-  top10.forEach(t=>{if(dcounts[t.domain]!==undefined)dcounts[t.domain]++});
-
-  const pillsHtml=top5.map(t=>`<span class="rpt-pill" style="background:${dc(t.domain)}">${t.theme}</span>`).join('');
-  const dbarHtml=Object.entries(dcounts).map(([d,c])=>`<div class="dbar-item"><div class="dbar-label">${DN[d].split(' ')[0]}</div><div class="dbar-track"><div class="dbar-fill" style="width:${c*10}%;background:${dc(d)}"></div></div><div class="dbar-count">${c}/10</div></div>`).join('');
-
-  const profileTableHtml=`<table class="profile-table"><thead><tr><th>Rank</th><th>Theme</th><th>Domain</th><th>Tier</th></tr></thead><tbody>${allT.map(t=>{const tier=t.rank<=5?'sig':t.rank<=10?'sup':t.rank<=20?'bg':'les';const tl=t.rank<=5?'Signature':t.rank<=10?'Supporting':t.rank<=20?'Background':'Lesser Used';return`<tr><td><span class="rank-num">${t.rank}</span></td><td style="font-weight:${t.rank<=5?700:400}">${t.theme}</td><td><span class="domain-badge" style="background:${dc(t.domain)}">${DN[t.domain]}</span></td><td><span class="tier-badge tier-${tier}">${tl}</span></td></tr>`}).join('')}</tbody></table>`;
-
-  const sig5Html=top5.map(t=>`<div class="sig5-card" style="background:${dl(t.domain)};border-left-color:${dc(t.domain)}"><div class="sig5-rank" style="color:${dc(t.domain)}">★</div><div class="sig5-name" style="color:${dc(t.domain)}">${t.theme}</div><div class="sig5-desc">${t.description}</div></div>`).join('');
-  const comboHtml=(r.powerCombinations||[]).map(c=>{const tb=(c.themes||[]).map((t,i)=>`<span class="combo-theme" style="background:${dc((c.domains||[])[i]||'strategic')}">${t}</span>`).join(`<span class="combo-op">+</span>`);return`<div class="combo-card"><div class="combo-eq">${tb}<span class="combo-op">=</span><span style="font-size:14px;font-weight:700;color:#0D1B2A">${c.title}</span></div><div class="combo-capability">${c.capability}</div><div class="combo-example"><strong>In Practice:</strong>${c.example}</div></div>`}).join('');
-  const shadowHtml=(r.shadowSides||[]).map(s=>`<div class="shadow-card"><div class="shadow-theme-badge"><div class="shadow-dot" style="background:${dc(s.domain)}"></div><div class="shadow-theme-name">${s.theme}</div></div><div class="shadow-row"><div class="shadow-box"><div class="shadow-box-label">When Overused</div><p>${s.liability}</p></div><div class="shadow-box"><div class="shadow-box-label">What It Looks Like</div><p>${s.looksLike}</p></div></div><div class="shadow-warn"><div class="shadow-warn-icon">⚠️</div><p><strong>Early Warning Sign</strong>${s.warning}</p></div></div>`).join('');
-  const th=r.thrive||{};
-  const thriveHtml=`<div class="thrive-grid"><div class="thrive-box green"><h4>What Brings Out Your Best</h4><ul class="thrive-list">${(th.bestConditions||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div><div class="thrive-box red"><h4>What Drains You</h4><ul class="thrive-list">${(th.energyKillers||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div></div>${th.idealPartner?`<div class="thrive-ideal"><h5>Ideal Manager or Partner</h5><p>${th.idealPartner}</p></div>`:''}${th.bestCollaborators?`<div class="thrive-ideal" style="background:var(--st-l);border-color:#B7DFCA;margin-top:12px"><h5 style="color:var(--st)">Who Brings Out Your Best</h5><p>${th.bestCollaborators}</p></div>`:''}${th.bestCollaborators?`<div class="thrive-ideal" style="background:var(--st-l);border-color:#B7DFCA;margin-top:12px"><h5 style="color:var(--st)">Who Brings Out Your Best</h5><p>${th.bestCollaborators}</p></div>`:''}<div class="thrive-split"><div class="thrive-phrase-box"><h5>Say This to Me</h5><ul class="phrase-list">${(th.needToHear||[]).map(p=>`<li>"${p}"</li>`).join('')}</ul></div><div class="thrive-phrase-box"><h5>Never Say This</h5><ul class="phrase-list">${(th.doNotSay||[]).map(p=>`<li>"${p}"</li>`).join('')}</ul></div></div>`;
-  const rel=r.relationships||{};
-  const relHtml=`<div class="prose-section"><div class="prose-block"><h5>What You Offer Those You Love</h5><p>${rel.whatTheyOffer||''}</p></div><div class="prose-block"><h5>What You Genuinely Need in Return</h5><p>${rel.whatTheyNeed||''}</p></div><div class="prose-block"><h5>Your Relationship Blind Spots</h5><p>${rel.blindSpots||''}</p></div><div class="flag-grid"><div class="flag-box green"><h5>Green Flags</h5><ul class="flag-list">${(rel.greenFlags||[]).map(f=>`<li>${f}</li>`).join('')}</ul></div><div class="flag-box red"><h5>Watch &amp; Navigate</h5><ul class="flag-list">${(rel.redFlags||[]).map(f=>`<li>${f}</li>`).join('')}</ul></div></div></div>`;
-  const wp=r.workplace||{};
-  const wpHtml=`<div class="prose-section"><div class="prose-block"><h5>How Colleagues Experience You</h5><p>${wp.colleagueExperience||''}</p></div><div class="prose-block"><h5>Your Natural Team Role</h5><p>${wp.naturalRole||''}</p></div><div class="prose-block"><h5>Where You Add the Most Value</h5><p>${wp.highestValue||''}</p></div><div class="prose-block" style="background:#FFF8E7;border-color:#FDE68A"><h5 style="color:#92400E">Unintended Friction to Watch</h5><p>${wp.unintendedFriction||''}</p></div></div>`;
-  const ld=r.leadership||{};
-  const ldHtml=`<div class="prose-section"><div class="prose-block"><h5>Your Natural Leadership Style</h5><p>${ld.style||''}</p></div><div class="flag-grid"><div class="flag-box green"><h5>Your Team Will Love</h5><p style="font-size:13px;color:var(--navy2);line-height:1.55">${ld.teamLoves||''}</p></div><div class="flag-box red"><h5>Your Team Will Find Challenging</h5><p style="font-size:13px;color:var(--navy2);line-height:1.55">${ld.teamChallenges||''}</p></div></div><div><h5 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:10px">3 Leadership Behaviours to Develop</h5><div class="develop-list">${(ld.developBehaviors||[]).map((b,i)=>`<div class="develop-item"><div class="dev-num">${i+1}</div><p>${b}</p></div>`).join('')}</div></div></div>`;
-  const ca=r.career||{};
-  const caHtml=`<div class="career-grid"><div class="career-box excels"><h5>Where You'll Excel</h5><ul class="career-list">${(ca.excels||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div><div class="career-box drains"><h5>What Will Drain You</h5><ul class="career-list">${(ca.drains||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div></div><h5 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:12px">3 Career Moves For Your Exact Profile</h5><div class="move-list">${(ca.moves||[]).map(m=>`<div class="move-card"><div class="move-title">${m.title}</div><div class="move-why">${m.reasoning}</div><div class="move-themes">${(m.themes||[]).map(t=>`<span class="move-tag">${t}</span>`).join('')}</div></div>`).join('')}</div>`;
-  const sabHtml=(r.selfSabotage||[]).map(s=>`<div class="sabotage-card"><div class="sabotage-title">${s.patternName}</div><div class="sabotage-flow"><div class="sab-box"><div class="sab-label">The Pattern</div><p>${s.behavior}</p></div><div class="sab-box"><div class="sab-label">What Triggers It</div><p>${s.trigger}</p></div><div class="sab-box"><div class="sab-label">The Fix</div><p>${s.solution}</p></div></div></div>`).join('');
-  const ho=r.howOthers||{};
-  const howHtml=`<div class="others-grid"><div class="others-box magnetic"><h5>The Magnetic Impact</h5><p>${ho.magnetic||''}</p></div><div class="others-box friction"><h5>The Unintended Friction</h5><p>${ho.friction||''}</p></div></div>${ho.misread?`<div class="misread-box"><h5>What People Commonly Misread About You</h5><p>${ho.misread}</p></div>`:''}<div class="prose-block" style="margin-top:12px"><h5>What People Remember</h5><p>${ho.remembered||''}</p></div>`;
-  const ge=r.growthEdge||{};
-  const growthHtml=`<div class="growth-cards"><div class="growth-card highlight"><div class="growth-label">Your #1 Strength — Fully Trusted</div><div class="growth-title">What the Next Level Looks Like</div><div class="growth-text">${ge.signatureNext||''}</div></div><div class="growth-card"><div class="growth-label">Supporting Strength to Develop</div><div class="growth-text">${ge.developTheme||''}</div></div><div class="growth-card" style="background:#FFF8E7;border-color:#FDE68A"><div class="growth-label" style="color:#92400E">Shadow Side to Master</div><div class="growth-text">${ge.masterShadow||''}</div></div></div>`;
-  const ap=r.actionPlan||{};
-  const actionHtml=`<div class="action-timeline"><div class="action-item"><div class="action-icon-wrap"><div class="action-icon" style="background:var(--ex-l)">⚡</div><div class="action-line" style="background:var(--border)"></div></div><div><div class="action-time">Within 24 Hours</div><div class="action-text">${ap.hours24||''}</div></div></div><div class="action-item"><div class="action-icon-wrap"><div class="action-icon" style="background:var(--rb-l)">📅</div><div class="action-line" style="background:var(--border)"></div></div><div><div class="action-time">Within 1 Week</div><div class="action-text">${ap.week1||''}</div></div></div><div class="action-item"><div class="action-icon-wrap"><div class="action-icon" style="background:var(--st-l)">🗓</div><div class="action-line" style="background:var(--border)"></div></div><div><div class="action-time">Within 3 Months</div><div class="action-text">${ap.months3||''}</div></div></div></div>${ap.coachingQuestion?`<div class="coaching-q"><div class="cq-label">Your Coaching Question for This Week</div><div class="cq-text">"${ap.coachingQuestion}"</div></div>`:''}`;
-
-  const sc=['#7B5EA7','#C96310','#1360A8','#187840','#7B5EA7','#C96310','#1360A8','#187840','#7B5EA7','#C96310','#1360A8','#187840','#187840'];
-  function sec(n,icon,title,sub,content){return`<div class="rpt-section"><div class="sec-hdr"><div class="sec-num" style="background:${sc[n-1]}">${n}</div><div><div class="sec-title">${icon} ${title}</div>${sub?`<div class="sec-sub">${sub}</div>`:''}</div></div>${content}</div>`}
-
-  document.getElementById('reportContent').innerHTML=`
-<div class="rpt-hero"><div class="rpt-inner"><div class="rpt-greeting">Your Strengths Profile</div><div class="rpt-name">${r.name||S.name||'Your Strengths'}</div><div class="rpt-tagline">${r.tagline||''}</div><div class="rpt-top5">${pillsHtml}</div><div class="domain-bar">${dbarHtml}</div></div></div>
-<div class="rpt-actions"><button class="btn btn-ghost btn-sm" onclick="window.print()">Print / Save as PDF</button><button class="btn btn-ghost btn-sm" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">Jump to Action Plan</button><button class="btn btn-ghost btn-sm" onclick="location.reload()">New Assessment</button></div>
-${sec(1,'📊','Your Full Profile','All 34 themes ranked across 4 domains',buildDomainGrid(allT)+profileTableHtml)}
-${sec(2,'✨','Strengths Portrait','Who you are when all your strengths are firing together',`<div class="portrait-text">${r.portrait||''}</div>`)}
-${sec(3,'⭐','Your Signature Five','Your most powerful, instinctive, and dominant talents',sig5Html+`<div class="when-all-fire"><div class="waf-label">When All Five Fire Together</div>${r.whenAllFire||''}</div>`)}
-${sec(4,'🔗','Power Combinations','Where 1+1=3',`<div class="combo-list">${comboHtml}</div>`)}
-${sec(5,'⚠️','Shadow Sides & Blind Spots','The other side of every strength',`<div class="shadow-list">${shadowHtml}</div>`)}
-${sec(6,'🌱','What You Need to Thrive','The conditions that bring out your absolute best',thriveHtml)}
-${sec(7,'💼','Career & Role Alignment','Where your profile thrives, what drains it, and three moves that only make sense for you',caHtml)}
-${sec(8,'🤝','You in the Workplace','Your natural role, your highest value, the friction you don\'t mean to create',wpHtml)}
-${sec(9,'👑','You as a Leader','Your style, your team\'s experience, and where to grow deliberately',ldHtml)}
-${sec(10,'💛','You in Relationships','How you love, what you need, and where to watch yourself',relHtml)}
-${sec(11,'🪞','How Others Experience You','Your magnetic impact, the friction you create without meaning to',howHtml)}
-${sec(12,'🔄','Self-Sabotage Patterns','The most likely ways this exact combination gets in its own way',`<div class="sabotage-list">${sabHtml}</div>`)}
-${sec(13,'🎯','Your Growth Edge & Action Plan','What\'s next — and exactly what to do about it starting now',growthHtml+'<div style="margin-top:20px">'+actionHtml+'</div>')}
-<div style="text-align:center;padding:40px 20px 20px;color:var(--gray-l);font-size:12px;line-height:1.8;border-top:1px solid var(--border);margin-top:20px">
-  Generated by StrengthsMap — an independent AI-powered strengths discovery tool<br>
-  <strong style="color:var(--navy2)">Important Disclaimer</strong><br>
-  StrengthsMap is an independent tool and is not affiliated with, endorsed by, or connected to Gallup, Inc. or the official CliftonStrengths® assessment. CliftonStrengths® is a registered trademark of Gallup, Inc. All rights reserved.<br><br>
-  This report is generated by artificial intelligence for personal reflection and development purposes only. It is not a clinical, psychological, or professional assessment. Results should not be used as the sole basis for employment decisions, medical decisions, or any consequential life decisions. The creators of StrengthsMap accept no liability for actions taken based on this report.<br><br>
-  For the official CliftonStrengths® assessment, visit gallup.com.
-</div>
+  var top5=r.signatureFive||[];var allT=r.allThemes||[];
+  var top10=allT.slice(0,10);
+  var dct={executing:0,influencing:0,relationship:0,strategic:0};
+  top10.forEach(function(t){if(dct[t.domain]!==undefined)dct[t.domain]++});
+  var pillsH=top5.map(function(t){return'<span class="rpt-pill" style="background:'+dc(t.domain)+'">'+t.theme+'</span>'}).join('');
+  var dbarH=Object.entries(dct).map(function(e){var d=e[0];var c=e[1];return'<div class="dbar-item"><div class="dbar-lbl">'+DN[d].split(' ')[0]+'</div><div class="dbar-track"><div class="dbar-fill" style="width:'+(c*10)+'%;background:'+dc(d)+'"></div></div><div class="dbar-ct">'+c+'/10</div></div>'}).join('');
+  var domGridH=buildDomainGrid(allT);
+  var ptableH='<table class="ptable"><thead><tr><th>Rank</th><th>Theme</th><th>Domain</th><th>Tier</th></tr></thead><tbody>'+allT.map(function(t){var tier=t.rank<=5?'sig':t.rank<=10?'sup':t.rank<=20?'bg':'les';var tl=t.rank<=5?'Signature':t.rank<=10?'Supporting':t.rank<=20?'Background':'Lesser Used';return'<tr><td><span class="rnum">'+t.rank+'</span></td><td style="font-weight:'+(t.rank<=5?700:400)+';color:'+(t.rank<=5?'var(--text)':'var(--text2)')+'">'+t.theme+'</td><td><span class="dbadge" style="background:'+dc(t.domain)+'">'+DN[t.domain]+'</span></td><td><span class="tbadge t-'+tier+'">'+tl+'</span></td></tr>'}).join('')+'</tbody></table>';
+  var sig5H=top5.map(function(t){return'<div class="sig5-card" style="border-left-color:'+dc(t.domain)+'"><div class="s5rank" style="color:'+dc(t.domain)+'">★</div><div class="s5name" style="color:'+dc(t.domain)+'">'+t.theme+'</div><div class="s5desc">'+t.description+'</div></div>'}).join('');
+  var comboH=(r.powerCombinations||[]).map(function(c){var tb=(c.themes||[]).map(function(t,i){return'<span class="ctheme" style="background:'+dc((c.domains||[])[i]||'strategic')+'">'+t+'</span>'}).join('<span class="cop">+</span>');return'<div class="combo"><div class="combo-eq">'+tb+'<span class="cop">=</span><span style="font-family:Outfit,sans-serif;font-size:14px;font-weight:800;color:var(--text)">'+c.title+'</span></div><div class="ctitle">'+c.title+'</div><div class="ccap">'+c.capability+'</div><div class="cex"><strong>In Practice</strong>'+c.example+'</div></div>'}).join('');
+  var shadowH=(r.shadowSides||[]).map(function(s){return'<div class="shadow"><div class="sh-badge"><div class="sh-dot" style="background:'+dc(s.domain)+'"></div><div class="sh-name">'+s.theme+'</div></div><div class="sh-row"><div class="sh-box"><div class="sh-lbl">When Overused</div><p>'+s.liability+'</p></div><div class="sh-box"><div class="sh-lbl">What It Looks Like</div><p>'+s.looksLike+'</p></div></div><div class="sh-warn"><p><strong>Early Warning Sign</strong>'+s.warning+'</p></div></div>'}).join('');
+  var th=r.thrive||{};
+  var thriveH='<div class="thrive-grid"><div class="tbox g"><h4>What Brings Out Your Best</h4><ul class="tlist">'+(th.bestConditions||[]).map(function(c){return'<li>'+c+'</li>'}).join('')+'</ul></div><div class="tbox r"><h4>What Drains You</h4><ul class="tlist">'+(th.energyKillers||[]).map(function(c){return'<li>'+c+'</li>'}).join('')+'</ul></div></div>'+(th.idealPartner?'<div class="tideal"><h5>Ideal Manager or Partner</h5><p>'+th.idealPartner+'</p></div>':'')+(th.bestCollaborators?'<div class="tideal g2"><h5>Who Brings Out Your Best</h5><p>'+th.bestCollaborators+'</p></div>':'')+'<div class="tsplit"><div class="tphrase"><h5>Say This to Me</h5><ul class="plist">'+(th.needToHear||[]).map(function(p){return'<li>"'+p+'"</li>'}).join('')+'</ul></div><div class="tphrase"><h5>Never Say This</h5><ul class="plist">'+(th.doNotSay||[]).map(function(p){return'<li>"'+p+'"</li>'}).join('')+'</ul></div></div>';
+  var rel=r.relationships||{};
+  var relH='<div class="prose"><div class="pblock"><h5>What You Offer Those You Love</h5><p>'+rel.whatTheyOffer+'</p></div><div class="pblock"><h5>What You Need in Return</h5><p>'+rel.whatTheyNeed+'</p></div><div class="pblock"><h5>Your Relationship Blind Spots</h5><p>'+rel.blindSpots+'</p></div><div class="flaggrid"><div class="fbox g"><h5>Green Flags — Natural Fits</h5><ul class="flist">'+(rel.greenFlags||[]).map(function(f){return'<li>'+f+'</li>'}).join('')+'</ul></div><div class="fbox r"><h5>Watch &amp; Navigate</h5><ul class="flist">'+(rel.redFlags||[]).map(function(f){return'<li>'+f+'</li>'}).join('')+'</ul></div></div></div>';
+  var wp=r.workplace||{};
+  var wpH='<div class="prose"><div class="pblock"><h5>How Colleagues Experience You</h5><p>'+wp.colleagueExperience+'</p></div><div class="pblock"><h5>Your Natural Team Role</h5><p>'+wp.naturalRole+'</p></div><div class="pblock"><h5>Where You Add the Most Value</h5><p>'+wp.highestValue+'</p></div><div class="pblock warn"><h5>Unintended Friction to Watch</h5><p>'+wp.unintendedFriction+'</p></div></div>';
+  var ld=r.leadership||{};
+  var ldH='<div class="prose"><div class="pblock"><h5>Your Natural Leadership Style</h5><p>'+ld.style+'</p></div><div class="flaggrid"><div class="fbox g"><h5>Your Team Will Love</h5><p style="font-size:13px;color:var(--text2);line-height:1.6">'+ld.teamLoves+'</p></div><div class="fbox r"><h5>Your Team Will Find Challenging</h5><p style="font-size:13px;color:var(--text2);line-height:1.6">'+ld.teamChallenges+'</p></div></div><div class="mlabel" style="margin-top:17px">3 Leadership Behaviours to Develop Deliberately</div><div class="devlist">'+(ld.developBehaviors||[]).map(function(b,i){return'<div class="devitem"><div class="devnum">'+(i+1)+'</div><p>'+b+'</p></div>'}).join('')+'</div></div>';
+  var ca=r.career||{};
+  var caH='<div class="cgrid"><div class="cbox ex"><h5>Where You'll Excel</h5><ul class="clist">'+(ca.excels||[]).map(function(c){return'<li>'+c+'</li>'}).join('')+'</ul></div><div class="cbox dr"><h5>What Will Drain You</h5><ul class="clist">'+(ca.drains||[]).map(function(c){return'<li>'+c+'</li>'}).join('')+'</ul></div></div><div class="mlabel">3 Career Moves That Only Make Sense For Your Profile</div><div class="moves">'+(ca.moves||[]).map(function(m){return'<div class="mcard"><div class="mtitle">'+m.title+'</div><div class="mwhy">'+m.reasoning+'</div><div class="mtags">'+(m.themes||[]).map(function(t){return'<span class="mtag">'+t+'</span>'}).join('')+'</div></div>'}).join('')+'</div>';
+  var sabH=(r.selfSabotage||[]).map(function(s){return'<div class="sab"><div class="sabtitle">🔄 '+s.patternName+'</div><div class="sabflow"><div class="sabbox"><div class="sablbl">The Pattern</div><p>'+s.behavior+'</p></div><div class="sabbox"><div class="sablbl">What Triggers It</div><p>'+s.trigger+'</p></div><div class="sabbox"><div class="sablbl">The Fix</div><p>'+s.solution+'</p></div></div></div>'}).join('');
+  var ho=r.howOthers||{};
+  var howH='<div class="othgrid"><div class="othbox mag"><h5>The Magnetic Impact</h5><p>'+ho.magnetic+'</p></div><div class="othbox fric"><h5>The Unintended Friction</h5><p>'+ho.friction+'</p></div></div>'+(ho.misread?'<div class="misread"><h5>What People Commonly Misread About You</h5><p>'+ho.misread+'</p></div>':'')+'<div class="pblock" style="margin-top:11px"><h5>What People Remember</h5><p>'+ho.remembered+'</p></div>';
+  var ge=r.growthEdge||{};
+  var growthH='<div class="gcards"><div class="gcard hl"><div class="glbl">Your #1 Talent — Fully Trusted</div><div class="gtitle">What the Next Level Looks Like</div><div class="gtext">'+ge.signatureNext+'</div></div><div class="gcard"><div class="glbl">Supporting Theme to Develop</div><div class="gtext">'+ge.developTheme+'</div></div><div class="gcard" style="background:rgba(249,115,22,.03);border-color:rgba(249,115,22,.09)"><div class="glbl" style="color:rgba(249,115,22,.7)">Shadow Side to Master</div><div class="gtext">'+ge.masterShadow+'</div></div></div>';
+  var ap=r.actionPlan||{};
+  var actH='<div class="actions"><div class="aitem"><div class="aicon-wrap"><div class="aicon">⚡</div><div class="aline"></div></div><div><div class="atime">Within 24 Hours</div><div class="atext">'+ap.hours24+'</div></div></div><div class="aitem"><div class="aicon-wrap"><div class="aicon">📅</div><div class="aline"></div></div><div><div class="atime">Within 1 Week</div><div class="atext">'+ap.week1+'</div></div></div><div class="aitem"><div class="aicon-wrap"><div class="aicon">🗓</div><div class="aline"></div></div><div><div class="atime">Within 3 Months</div><div class="atext">'+ap.months3+'</div></div></div></div>'+(ap.coachingQuestion?'<div class="cq"><div class="cq-lbl">Your Coaching Question for This Week</div><div class="cq-text">"'+ap.coachingQuestion+'"</div></div>':'');
+  var SC=['#8B5CF6','#F97316','#3B82F6','#10B981','#8B5CF6','#F97316','#3B82F6','#10B981','#8B5CF6','#F97316','#3B82F6','#10B981','#10B981'];
+  function sec(n,icon,title,sub,content){return'<div class="sec"><div class="sec-hdr"><div class="sec-num" style="background:'+SC[n-1]+'">'+n+'</div><div><div class="sec-title">'+icon+' '+title+'</div>'+(sub?'<div class="sec-sub">'+sub+'</div>':'')+'</div></div>'+content+'</div>'}
+  document.getElementById('reportContent').innerHTML=
+    '<div class="rpt-hero"><div class="rpt-inner"><div class="rpt-greet">Your Strengths Profile</div><div class="rpt-name">'+(r.name||S.name||'Your Profile')+'</div><div class="rpt-tagline">'+(r.tagline||'')+'</div><div class="rpt-pills">'+pillsH+'</div><div class="dbar">'+dbarH+'</div></div></div>'+
+    '<div class="rpt-actions"><button class="btn btn-g btn-sm" onclick="window.print()">Print / Save PDF</button><button class="btn btn-g btn-sm" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:\'smooth\'})">Jump to Action Plan</button><button class="btn btn-g btn-sm" onclick="location.reload()">New Assessment</button></div>'+
+    sec(1,'📊','Your Full Profile','All 34 themes ranked across 4 domains',domGridH+ptableH)+
+    sec(2,'✨','Strengths Portrait','Who you are when all your talents are firing together','<div class="portrait">'+(r.portrait||'')+'</div>')+
+    sec(3,'⭐','Your Signature Five','Your most powerful instinctive and dominant talents',sig5H+'<div class="waf"><div class="waf-lbl">When All Five Fire Together</div>'+(r.whenAllFire||'')+'</div>')+
+    sec(4,'🔗','Power Combinations','Where 1+1=3 — unique capabilities your theme pairings create','<div class="combos">'+comboH+'</div>')+
+    sec(5,'⚠️','Shadow Sides & Blind Spots','The other side of every talent — when strengths work against you','<div class="shadows">'+shadowH+'</div>')+
+    sec(6,'🌱','What You Need to Thrive','The conditions and people that bring out your absolute best',thriveH)+
+    sec(7,'💼','Career & Role Alignment','Where your profile naturally thrives — and three moves that only make sense for you',caH)+
+    sec(8,'🤝','You in the Workplace','Your natural role your highest value and the friction you don\'t mean to create',wpH)+
+    sec(9,'👑','You as a Leader','Your leadership style your team\'s experience and where to grow deliberately',ldH)+
+    sec(10,'💛','You in Relationships','How you love what you need and how to navigate differences constructively',relH)+
+    sec(11,'🪞','How Others Experience You','Your magnetic impact the friction you create without meaning to and what you\'re remembered for',howH)+
+    sec(12,'🔄','Self-Sabotage Patterns','The most likely ways this exact profile gets in its own way — and how to solve it','<div class="sabs">'+sabH+'</div>')+
+    sec(13,'🎯','Growth Edge & Action Plan','What\'s next — and exactly what to do about it starting now',growthH+'<div style="margin-top:20px">'+actH+'</div>')+
+    '<div class="rpt-footer"><strong>Important Disclaimer</strong>StrengthsMap is an independent AI-powered tool and is not affiliated with endorsed by or connected to Gallup Inc or any official assessment provider. This tool uses a trait-based profiling framework inspired by strengths-based psychology research. Reports are generated by artificial intelligence for personal reflection and development purposes only and should not be used as the sole basis for employment medical or other consequential decisions. The creators of StrengthsMap accept no liability for actions taken based on these reports. For the official assessment visit gallup.com</div>';
 }
 </script>
 </body>
