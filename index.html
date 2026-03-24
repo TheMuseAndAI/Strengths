@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StrengthsMap — Discover What You're Naturally Brilliant At</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   BASE RESET & VARIABLES
+═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#F1F4F9;
+  --card:#FFFFFF;
+  --navy:#0D1B2A;
+  --navy2:#1A2E42;
+  --gray:#5A6478;
+  --gray-l:#94A3B8;
+  --border:#DDE3ED;
+  --ex:#7B5EA7; --ex-l:#EDE8F7;
+  --in:#C96310; --in-l:#FAF0E6;
+  --rb:#1360A8; --rb-l:#E8F0FA;
+  --st:#187840; --st-l:#E6F5EC;
+  --accent:#1360A8;
+  --shadow-sm:0 1px 8px rgba(13,27,42,.07);
+  --shadow:0 4px 20px rgba(13,27,42,.10);
+  --shadow-lg:0 12px 48px rgba(13,27,42,.14);
+  --r:14px; --r-sm:9px;
+  --t:.2s ease;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--navy);min-height:100vh;line-height:1.55}
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════ */
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 80px}
+.screen{display:none}
+.screen.active{display:block}
+
+/* ═══════════════════════════════════════════
+   GLOBAL NAV HEADER
+═══════════════════════════════════════════ */
+.site-nav{padding:18px 0 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:9px}
+.brand-dots{display:flex;gap:4px}
+.bd{width:9px;height:9px;border-radius:50%}
+.brand-name{font-size:13px;font-weight:700;letter-spacing:.4px;color:var(--navy)}
+.brand-sub{font-size:11px;color:var(--gray-l);margin-left:3px;font-weight:400}
+
+/* ═══════════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════════ */
+.prog-wrap{background:var(--card);border-radius:var(--r);padding:16px 22px;box-shadow:var(--shadow-sm);margin-bottom:18px}
+.prog-meta{display:flex;justify-content:space-between;margin-bottom:9px;font-size:12.5px}
+.prog-round{font-weight:700;color:var(--navy)}
+.prog-ct{color:var(--gray-l)}
+.prog-bar{height:5px;background:var(--border);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ex),var(--in),var(--rb),var(--st));transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+/* ═══════════════════════════════════════════
+   INTRO SCREEN
+═══════════════════════════════════════════ */
+.hero{
+  background:var(--navy);border-radius:var(--r);padding:52px 44px;
+  text-align:center;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;margin-bottom:18px;
+}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 25% 15%,rgba(123,94,167,.35),transparent 55%),radial-gradient(ellipse at 75% 85%,rgba(24,120,64,.22),transparent 55%);pointer-events:none}
+.hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(26px,5vw,42px);color:#fff;line-height:1.18;margin-bottom:14px;position:relative}
+.hero h1 em{font-style:italic;color:#93C5FD}
+.hero p{color:rgba(255,255,255,.68);font-size:15.5px;max-width:460px;margin:0 auto 30px;position:relative;line-height:1.6}
+.domain-pills{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;position:relative}
+.pill{padding:5px 13px;border-radius:99px;font-size:11.5px;font-weight:600;letter-spacing:.3px;color:#fff}
+.pill-ex{background:var(--ex)}.pill-in{background:var(--in)}.pill-rb{background:var(--rb)}.pill-st{background:var(--st)}
+
+.info-card{background:var(--card);border-radius:var(--r);padding:26px 30px;box-shadow:var(--shadow)}
+.info-card h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--gray-l);margin-bottom:15px}
+.rules{display:grid;gap:11px}
+.rule{display:flex;gap:11px;align-items:flex-start}
+.rule-icon{min-width:26px;height:26px;border-radius:7px;background:var(--rb-l);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px}
+.rule p{font-size:13.5px;color:var(--navy2);line-height:1.48}
+
+.name-row{display:flex;gap:10px;margin:22px 0 24px;flex-wrap:wrap}
+.txt-input{flex:1;min-width:190px;padding:11px 15px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:14.5px;color:var(--navy);outline:none;transition:border-color var(--t)}
+.txt-input:focus{border-color:var(--accent)}
+.txt-input::placeholder{color:var(--gray-l)}
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 26px;border-radius:8px;font-family:inherit;font-weight:600;font-size:14.5px;cursor:pointer;border:none;transition:var(--t);text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#0D4F8A;transform:translateY(-1px)}
+.btn-primary:active{transform:none}
+.btn-primary:disabled{background:#CBD5E1;cursor:not-allowed;transform:none}
+.btn-ghost{background:transparent;color:var(--gray);border:1.5px solid var(--border)}
+.btn-ghost:hover{background:var(--card);color:var(--navy);border-color:#94A3B8}
+.btn-lg{padding:14px 34px;font-size:15.5px;border-radius:10px}
+.btn-full{width:100%}
+.btn-sm{padding:7px 15px;font-size:13px;border-radius:6px}
+
+/* ═══════════════════════════════════════════
+   QUIZ SCREEN
+═══════════════════════════════════════════ */
+.round-hdr{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.round-badge{background:var(--accent);color:#fff;padding:3px 12px;border-radius:99px;font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.round-title{font-size:13px;font-weight:600;color:var(--gray)}
+
+.q-card{background:var(--card);border-radius:var(--r);padding:26px 26px 18px;box-shadow:var(--shadow-sm);margin-bottom:13px;border-left:3px solid transparent;transition:border-color .3s}
+.q-card.answered{border-left-color:var(--accent)}
+.q-num{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-l);margin-bottom:9px}
+.q-text{font-size:16.5px;font-weight:600;color:var(--navy);line-height:1.38;margin-bottom:18px}
+
+.options{display:flex;flex-direction:column;gap:9px;margin-bottom:13px}
+.option{display:flex;align-items:flex-start;gap:11px;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:var(--t);background:#fff}
+.option:hover{background:#F5F8FF;border-color:#93C5FD}
+.option.selected{background:var(--rb-l);border-color:var(--accent)}
+.option.selected .opt-l{background:var(--accent);color:#fff;border-color:var(--accent)}
+.opt-l{min-width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11.5px;color:var(--gray);flex-shrink:0;transition:var(--t);background:#fff}
+.opt-txt{font-size:13.5px;color:var(--navy2);line-height:1.45;padding-top:3px}
+
+.cmt-wrap{margin-top:1px}
+.cmt-btn{background:none;border:none;padding:0;font-family:inherit;font-size:12.5px;color:var(--accent);cursor:pointer;display:flex;align-items:center;gap:3px;font-weight:500}
+.cmt-btn:hover{text-decoration:underline}
+.cmt-area{display:none;margin-top:9px}
+.cmt-area.open{display:block}
+.cmt-area textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;color:var(--navy);resize:vertical;min-height:64px;outline:none;transition:border-color var(--t);line-height:1.5}
+.cmt-area textarea:focus{border-color:var(--accent)}
+.cmt-area textarea::placeholder{color:#94A3B8}
+
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+
+/* ═══════════════════════════════════════════
+   API KEY SCREEN
+═══════════════════════════════════════════ */
+.setup-card{background:var(--card);border-radius:var(--r);padding:40px 36px;box-shadow:var(--shadow-lg);text-align:center}
+.setup-icon{font-size:44px;margin-bottom:14px}
+.setup-card h2{font-family:'DM Serif Display',Georgia,serif;font-size:28px;margin-bottom:10px}
+.setup-card>p{color:var(--gray);font-size:14.5px;max-width:480px;margin:0 auto 28px;line-height:1.6}
+.steps-box{background:#F8FAFF;border-radius:var(--r-sm);padding:22px;text-align:left;margin-bottom:26px}
+.steps-box h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-l);margin-bottom:14px}
+.step{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.step:last-child{margin-bottom:0}
+.step-n{min-width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;margin-top:2px}
+.step p{font-size:13.5px;color:var(--navy2);line-height:1.45}
+.step a{color:var(--accent);font-weight:600}
+
+.api-input-wrap{position:relative;margin:0 0 16px}
+.api-input{width:100%;padding:13px 48px 13px 16px;border:1.5px solid var(--border);border-radius:9px;font-family:inherit;font-size:14px;color:var(--navy);outline:none;transition:border-color var(--t)}
+.api-input:focus{border-color:var(--accent)}
+.api-input::placeholder{color:var(--gray-l)}
+.toggle-vis{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray-l);font-size:16px;padding:0;line-height:1}
+.api-note{font-size:12px;color:var(--gray-l);text-align:left;line-height:1.5;margin-bottom:20px}
+.api-note a{color:var(--accent)}
+.error-msg{background:#FEF2F2;border:1px solid #FECACA;color:#991B1B;border-radius:7px;padding:10px 14px;font-size:13px;margin-bottom:14px;display:none}
+.error-msg.show{display:block}
+
+/* ═══════════════════════════════════════════
+   LOADING SCREEN
+═══════════════════════════════════════════ */
+.loading-card{background:var(--card);border-radius:var(--r);padding:60px 40px;box-shadow:var(--shadow-lg);text-align:center}
+.pulse-ring{width:72px;height:72px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--accent);animation:spin 1s linear infinite;margin:0 auto 24px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-card h2{font-family:'DM Serif Display',Georgia,serif;font-size:26px;margin-bottom:10px;color:var(--navy)}
+.loading-card p{color:var(--gray);font-size:14.5px;max-width:400px;margin:0 auto 28px;line-height:1.6}
+.load-steps{display:flex;flex-direction:column;gap:10px;max-width:340px;margin:0 auto}
+.load-step{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--gray-l);transition:color .4s}
+.load-step.active{color:var(--navy);font-weight:600}
+.load-step.done{color:var(--st)}
+.load-dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0;transition:background .4s}
+.load-step.active .load-dot{background:var(--accent);animation:pulse-dot 1s infinite}
+.load-step.done .load-dot{background:var(--st)}
+@keyframes pulse-dot{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+
+/* ═══════════════════════════════════════════
+   REPORT SCREEN
+═══════════════════════════════════════════ */
+.rpt-wrap{margin-top:0}
+
+/* HERO */
+.rpt-hero{background:var(--navy);border-radius:var(--r);padding:48px 40px;box-shadow:var(--shadow-lg);margin-bottom:20px;position:relative;overflow:hidden}
+.rpt-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(123,94,167,.3),transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(24,120,64,.2),transparent 50%);pointer-events:none}
+.rpt-hero-inner{position:relative}
+.rpt-greeting{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.45);margin-bottom:6px}
+.rpt-name{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,6vw,48px);color:#fff;line-height:1.1;margin-bottom:10px}
+.rpt-tagline{font-family:'DM Serif Display',Georgia,serif;font-style:italic;color:rgba(255,255,255,.7);font-size:clamp(15px,2.5vw,19px);margin-bottom:28px;line-height:1.4}
+.rpt-top5{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:28px}
+.rpt-pill{padding:5px 14px;border-radius:99px;font-size:12px;font-weight:600;color:#fff;letter-spacing:.2px}
+.domain-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.dbar-item{text-align:center}
+.dbar-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.45);margin-bottom:5px}
+.dbar-track{height:4px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
+.dbar-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.dbar-count{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);margin-top:4px}
+
+/* PRINT BUTTON */
+.rpt-actions{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+
+/* SECTION CARDS */
+.rpt-section{background:var(--card);border-radius:var(--r);padding:32px 30px;box-shadow:var(--shadow-sm);margin-bottom:16px;opacity:0;transform:translateY(16px);animation:fadeUp .5s forwards}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+.rpt-section:nth-child(1){animation-delay:.05s}
+.rpt-section:nth-child(2){animation-delay:.10s}
+.rpt-section:nth-child(3){animation-delay:.15s}
+.rpt-section:nth-child(4){animation-delay:.20s}
+.rpt-section:nth-child(5){animation-delay:.25s}
+.rpt-section:nth-child(6){animation-delay:.30s}
+.rpt-section:nth-child(7){animation-delay:.35s}
+.rpt-section:nth-child(8){animation-delay:.40s}
+.rpt-section:nth-child(9){animation-delay:.45s}
+.rpt-section:nth-child(10){animation-delay:.50s}
+.rpt-section:nth-child(11){animation-delay:.55s}
+.rpt-section:nth-child(12){animation-delay:.60s}
+.rpt-section:nth-child(13){animation-delay:.65s}
+
+.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.sec-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;flex-shrink:0}
+.sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:21px;color:var(--navy);line-height:1.2}
+.sec-sub{font-size:12px;color:var(--gray-l);margin-top:2px}
+
+/* PORTRAIT */
+.portrait-text{font-family:'DM Serif Display',Georgia,serif;font-size:17px;line-height:1.75;color:var(--navy2);font-style:italic}
+.portrait-text strong{font-style:normal;color:var(--navy)}
+
+/* SIGNATURE FIVE */
+.sig5-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.sig5-card{border-radius:var(--r-sm);padding:18px 16px;border-left:4px solid transparent}
+.sig5-rank{font-size:22px;font-weight:700;margin-bottom:2px}
+.sig5-name{font-size:13.5px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}
+.sig5-desc{font-size:13px;line-height:1.5}
+.when-all-fire{margin-top:20px;padding:18px 20px;border-radius:var(--r-sm);background:var(--navy);color:rgba(255,255,255,.88);font-size:14px;line-height:1.65}
+.waf-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:8px}
+
+/* POWER COMBOS */
+.combo-list{display:flex;flex-direction:column;gap:16px}
+.combo-card{border-radius:var(--r-sm);padding:20px;background:#F8FAFF;border:1px solid var(--border)}
+.combo-eq{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.combo-theme{padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;color:#fff}
+.combo-op{font-size:18px;font-weight:300;color:var(--gray-l)}
+.combo-title{font-size:15.5px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.combo-capability{font-size:13.5px;color:var(--navy2);line-height:1.55;margin-bottom:8px}
+.combo-example{font-size:13px;color:var(--gray);line-height:1.5;padding:10px 14px;background:var(--card);border-radius:8px;border-left:3px solid var(--accent)}
+.combo-example strong{color:var(--navy);font-size:11px;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:3px}
+
+/* SHADOW SIDES */
+.shadow-list{display:flex;flex-direction:column;gap:14px}
+.shadow-card{border-radius:var(--r-sm);padding:18px;background:#FFFBF5;border:1px solid #FDE8C8}
+.shadow-theme-badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px}
+.shadow-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.shadow-theme-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--navy)}
+.shadow-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+@media(max-width:560px){.shadow-row{grid-template-columns:1fr}}
+.shadow-box{padding:11px 13px;border-radius:8px;background:#fff;border:1px solid #FDE8C8}
+.shadow-box-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#C26B1A;margin-bottom:5px}
+.shadow-box p{font-size:13px;color:var(--navy2);line-height:1.48}
+.shadow-warn{padding:9px 12px;border-radius:8px;background:#FFF8E7;border:1px solid #FDE68A;display:flex;gap:8px;align-items:flex-start}
+.shadow-warn-icon{font-size:13px;flex-shrink:0;margin-top:1px}
+.shadow-warn p{font-size:12.5px;color:#92400E;line-height:1.45}
+.shadow-warn strong{display:block;margin-bottom:2px;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px}
+
+/* THRIVE */
+.thrive-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:540px){.thrive-grid{grid-template-columns:1fr}}
+.thrive-box{padding:18px;border-radius:var(--r-sm)}
+.thrive-box.green{background:var(--st-l);border:1px solid #B7DFCA}
+.thrive-box.red{background:#FEF2F2;border:1px solid #FECACA}
+.thrive-box h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.thrive-box.green h4{color:var(--st)}
+.thrive-box.red h4{color:#DC2626}
+.thrive-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.thrive-list li{font-size:13px;color:var(--navy2);line-height:1.45;display:flex;gap:7px;align-items:flex-start}
+.thrive-list li::before{font-size:10px;flex-shrink:0;margin-top:3px}
+.thrive-box.green .thrive-list li::before{content:'✓';color:var(--st);font-weight:700}
+.thrive-box.red .thrive-list li::before{content:'✕';color:#DC2626;font-weight:700}
+.thrive-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+@media(max-width:540px){.thrive-split{grid-template-columns:1fr}}
+.thrive-phrase-box{padding:14px;border-radius:var(--r-sm);background:#F8FAFF;border:1px solid var(--border)}
+.thrive-phrase-box h5{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:9px}
+.phrase-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+.phrase-list li{font-size:13px;color:var(--navy2);line-height:1.4;padding:7px 10px;border-radius:6px;background:var(--card)}
+.thrive-ideal{margin-top:14px;padding:16px;border-radius:var(--r-sm);background:var(--rb-l);border:1px solid #BFDBFE}
+.thrive-ideal h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--rb);margin-bottom:8px}
+.thrive-ideal p{font-size:13.5px;color:var(--navy2);line-height:1.55}
+
+/* RELATIONSHIPS, WORKPLACE, LEADERSHIP */
+.prose-section{display:flex;flex-direction:column;gap:16px}
+.prose-block{padding:16px;border-radius:var(--r-sm);background:#F8FAFF;border:1px solid var(--border)}
+.prose-block h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:8px}
+.prose-block p{font-size:13.5px;color:var(--navy2);line-height:1.6}
+.flag-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:540px){.flag-grid{grid-template-columns:1fr}}
+.flag-box{padding:14px;border-radius:var(--r-sm)}
+.flag-box.green{background:var(--st-l);border:1px solid #B7DFCA}
+.flag-box.red{background:#FEF2F2;border:1px solid #FECACA}
+.flag-box h5{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px}
+.flag-box.green h5{color:var(--st)}
+.flag-box.red h5{color:#DC2626}
+.flag-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+.flag-list li{font-size:13px;color:var(--navy2);line-height:1.42;display:flex;gap:7px;align-items:flex-start}
+.flag-box.green .flag-list li::before{content:'💚';font-size:10px;flex-shrink:0;margin-top:2px}
+.flag-box.red .flag-list li::before{content:'🚩';font-size:10px;flex-shrink:0;margin-top:2px}
+.develop-list{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.develop-item{display:flex;gap:9px;align-items:flex-start;padding:11px 13px;background:var(--card);border-radius:8px;border:1px solid var(--border)}
+.dev-num{min-width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;margin-top:1px}
+.develop-item p{font-size:13px;color:var(--navy2);line-height:1.45}
+
+/* CAREER */
+.career-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:540px){.career-grid{grid-template-columns:1fr}}
+.career-box{padding:16px;border-radius:var(--r-sm)}
+.career-box.excels{background:var(--st-l);border:1px solid #B7DFCA}
+.career-box.drains{background:#FEF2F2;border:1px solid #FECACA}
+.career-box h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px}
+.career-box.excels h5{color:var(--st)}
+.career-box.drains h5{color:#DC2626}
+.career-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.career-list li{font-size:13px;color:var(--navy2);line-height:1.42;display:flex;gap:8px;align-items:flex-start}
+.career-box.excels .career-list li::before{content:'→';color:var(--st);font-weight:700;flex-shrink:0}
+.career-box.drains .career-list li::before{content:'−';color:#DC2626;font-weight:700;flex-shrink:0}
+.move-list{display:flex;flex-direction:column;gap:12px}
+.move-card{padding:16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--card)}
+.move-title{font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.move-why{font-size:13px;color:var(--navy2);line-height:1.5;margin-bottom:8px}
+.move-themes{display:flex;gap:5px;flex-wrap:wrap}
+.move-tag{padding:2px 9px;border-radius:99px;font-size:11px;font-weight:600;background:var(--rb-l);color:var(--accent);border:1px solid #BFDBFE}
+
+/* SELF-SABOTAGE */
+.sabotage-list{display:flex;flex-direction:column;gap:14px}
+.sabotage-card{border-radius:var(--r-sm);padding:18px;background:#FFFBF5;border:1px solid #FDE8C8}
+.sabotage-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px}
+.sabotage-flow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@media(max-width:560px){.sabotage-flow{grid-template-columns:1fr}}
+.sab-box{padding:11px 12px;border-radius:8px;background:#fff;border:1px solid #FDE8C8}
+.sab-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.sab-box:nth-child(1) .sab-label{color:#C26B1A}
+.sab-box:nth-child(2) .sab-label{color:#9A3412}
+.sab-box:nth-child(3) .sab-label{color:var(--st)}
+.sab-box p{font-size:12.5px;color:var(--navy2);line-height:1.45}
+
+/* HOW OTHERS */
+.others-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:540px){.others-grid{grid-template-columns:1fr}}
+.others-box{padding:16px;border-radius:var(--r-sm)}
+.others-box.magnetic{background:var(--rb-l);border:1px solid #BFDBFE}
+.others-box.friction{background:#FFF8E7;border:1px solid #FDE68A}
+.others-box h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px}
+.others-box.magnetic h5{color:var(--rb)}
+.others-box.friction h5{color:#92400E}
+.others-box p{font-size:13px;color:var(--navy2);line-height:1.55}
+.misread-box{margin-top:12px;padding:14px;border-radius:var(--r-sm);background:#F8F0FF;border:1px solid #E0C5F7}
+.misread-box h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ex);margin-bottom:8px}
+.misread-box p{font-size:13px;color:var(--navy2);line-height:1.55}
+
+/* GROWTH EDGE */
+.growth-cards{display:flex;flex-direction:column;gap:12px}
+.growth-card{padding:18px;border-radius:var(--r-sm);border:1px solid var(--border)}
+.growth-card.highlight{background:var(--navy);border-color:var(--navy)}
+.growth-card.highlight .growth-label{color:rgba(255,255,255,.4)}
+.growth-card.highlight .growth-title{color:#fff}
+.growth-card.highlight .growth-text{color:rgba(255,255,255,.75)}
+.growth-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:6px}
+.growth-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:7px}
+.growth-text{font-size:13.5px;color:var(--navy2);line-height:1.55}
+
+/* ACTION PLAN */
+.action-timeline{display:flex;flex-direction:column;gap:0}
+.action-item{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--border)}
+.action-item:last-child{border-bottom:none}
+.action-icon-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.action-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.action-line{width:2px;flex:1;min-height:20px;margin-top:4px}
+.action-item:last-child .action-line{display:none}
+.action-time{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-l);margin-bottom:5px}
+.action-text{font-size:14px;color:var(--navy2);line-height:1.6}
+.action-text strong{color:var(--navy)}
+.coaching-q{margin-top:20px;padding:20px;border-radius:var(--r-sm);background:var(--navy);border-left:4px solid var(--in)}
+.cq-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.35);margin-bottom:8px}
+.cq-text{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:17px;color:rgba(255,255,255,.88);line-height:1.5}
+
+/* FULL PROFILE TABLE */
+.profile-table{width:100%;border-collapse:collapse;font-size:13px}
+.profile-table th{text-align:left;padding:8px 10px;font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);border-bottom:1px solid var(--border)}
+.profile-table td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--navy2)}
+.profile-table tr:last-child td{border-bottom:none}
+.profile-table tr:hover td{background:#F8FAFF}
+.rank-num{font-weight:700;color:var(--navy);min-width:28px;display:inline-block}
+.tier-badge{padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;display:inline-block}
+.tier-sig{background:var(--navy);color:#fff}
+.tier-sup{background:var(--border);color:var(--navy)}
+.tier-bg{background:#F1F4F9;color:var(--gray)}
+.tier-les{background:#F8F9FA;color:var(--gray-l)}
+.domain-badge{padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;display:inline-block;color:#fff}
+
+/* RESUME BANNER */
+.resume-banner{background:var(--rb-l);border:1.5px solid #BFDBFE;border-radius:var(--r-sm);padding:13px 17px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;margin-bottom:16px;font-size:13.5px}
+.resume-banner strong{color:var(--accent)}
+.resume-btns{display:flex;gap:7px}
+
+/* PRINT */
+@media print{
+  .site-nav,.prog-wrap,.rpt-actions,.btn{display:none!important}
+  .rpt-section{box-shadow:none;border:1px solid var(--border);break-inside:avoid}
+  .rpt-hero{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rpt-section{animation:none!important;opacity:1!important;transform:none!important}
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .hero{padding:36px 22px}
+  .info-card,.setup-card,.loading-card{padding:26px 18px}
+  .rpt-hero{padding:36px 22px}
+  .rpt-section{padding:24px 20px}
+  .sig5-grid{grid-template-columns:1fr 1fr}
+  .btn-lg{padding:13px 22px;font-size:15px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ── GLOBAL NAV ── -->
+<div class="site-nav">
+  <div class="brand">
+    <div class="brand-dots">
+      <div class="bd" style="background:var(--ex)"></div>
+      <div class="bd" style="background:var(--in)"></div>
+      <div class="bd" style="background:var(--rb)"></div>
+      <div class="bd" style="background:var(--st)"></div>
+    </div>
+    <span class="brand-name">StrengthsMap<span class="brand-sub">by Dr. Marcus Reid</span></span>
+  </div>
+</div>
+
+<!-- ── PROGRESS BAR ── -->
+<div class="prog-wrap" id="progWrap" style="display:none">
+  <div class="prog-meta">
+    <span class="prog-round" id="progRound">Round 1 of 10</span>
+    <span class="prog-ct" id="progCt">0 / 100 answered</span>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+</div>
+
+<!-- ══════════════════════════════════
+  SCREEN 1 — INTRO
+══════════════════════════════════ -->
+<div class="screen active" id="sIntro">
+
+  <div class="hero">
+    <div class="domain-pills">
+      <span class="pill pill-ex">Executing</span>
+      <span class="pill pill-in">Influencing</span>
+      <span class="pill pill-rb">Relationship Building</span>
+      <span class="pill pill-st">Strategic Thinking</span>
+    </div>
+    <h1>What are you<br><em>naturally brilliant</em> at?</h1>
+    <p>A research-grounded 100-question strengths assessment that maps your unique talent profile across all 34 CliftonStrengths themes — and generates your full AI coaching report instantly.</p>
+    <button class="btn btn-primary btn-lg" onclick="showInfo()">Discover Your Strengths →</button>
+  </div>
+
+  <div class="info-card" id="infoCard" style="display:none">
+    <h3>Before You Begin</h3>
+    <div class="rules">
+      <div class="rule"><div class="rule-icon">⚡</div><p><strong>100 questions across 10 rounds.</strong> Each round takes about 3 minutes. You can pause and resume anytime.</p></div>
+      <div class="rule"><div class="rule-icon">💡</div><p><strong>Choose what feels most like you, most of the time.</strong> Your first instinct is almost always the most accurate. Don't overthink.</p></div>
+      <div class="rule"><div class="rule-icon">💬</div><p><strong>Use the "Add context" field freely.</strong> Personal comments carry the highest weight in your report. The more you share, the more precise your coaching.</p></div>
+      <div class="rule"><div class="rule-icon">🤖</div><p><strong>Your report is generated by AI coaching intelligence.</strong> At the end, you'll enter a free Gemini API key and receive your full personalised report in under 60 seconds.</p></div>
+    </div>
+
+    <div class="name-row" style="margin-top:22px">
+      <input type="text" class="txt-input" id="nameInput" placeholder="Your first name (personalises your report)" maxlength="50">
+    </div>
+
+    <div id="resumeBanner" class="resume-banner" style="display:none">
+      <div><strong>Progress saved</strong> — <span id="resumeCount"></span></div>
+      <div class="resume-btns">
+        <button class="btn btn-primary btn-sm" onclick="resumeIt()">Resume</button>
+        <button class="btn btn-ghost btn-sm" onclick="freshStart()">Start Fresh</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-lg btn-full" onclick="beginAssessment()">Begin Assessment →</button>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+  SCREEN 2 — QUIZ
+══════════════════════════════════ -->
+<div class="screen" id="sQuiz">
+  <div class="round-hdr">
+    <span class="round-badge" id="roundBadge">Round 1</span>
+    <span class="round-title" id="roundTitle">Questions 1–10</span>
+  </div>
+  <div id="questionsWrap"></div>
+  <div class="nav-row">
+    <button class="btn btn-ghost" id="btnPrev" onclick="goBack()" style="visibility:hidden">← Back</button>
+    <button class="btn btn-primary" id="btnNext" onclick="goNext()" disabled>Next Round →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+  SCREEN 3 — API KEY
+══════════════════════════════════ -->
+<div class="screen" id="sApiKey">
+  <div class="setup-card">
+    <div class="setup-icon">🔑</div>
+    <h2>One Last Step</h2>
+    <p>Your assessment is complete. To generate your personalised AI coaching report, you need a free Gemini API key — it takes about 2 minutes to get one.</p>
+
+    <div class="steps-box">
+      <h4>Get Your Free Gemini API Key</h4>
+      <div class="step">
+        <div class="step-n">1</div>
+        <p>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a> (sign in with any Google account)</p>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <p>Click <strong>"Create API Key"</strong> — choose any project or create new one</p>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <p>Copy the key (starts with <strong>AIza...</strong>) and paste it below</p>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <p>Click <strong>"Generate My Report"</strong>. Your full coaching report appears in under 60 seconds. The free tier allows up to 1,500 reports/day.</p>
+      </div>
+    </div>
+
+    <div class="api-input-wrap">
+      <input type="password" class="api-input" id="apiKeyInput" placeholder="Paste your Gemini API key here (AIza...)" autocomplete="off">
+      <button class="toggle-vis" onclick="toggleKeyVis()" id="toggleBtn">👁</button>
+    </div>
+    <p class="api-note">🔒 Your API key is used only to generate your report and is never stored or transmitted anywhere other than directly to Google's Gemini API. <a href="https://ai.google.dev/gemini-api/docs/quota" target="_blank">View Gemini free tier limits →</a></p>
+    <div class="error-msg" id="apiError">⚠️ <span id="apiErrorText">Invalid API key. Please check and try again.</span></div>
+    <button class="btn btn-primary btn-lg btn-full" onclick="generateReport()">✨ Generate My Report</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+  SCREEN 4 — LOADING
+══════════════════════════════════ -->
+<div class="screen" id="sLoading">
+  <div class="loading-card">
+    <div class="pulse-ring"></div>
+    <h2>Analysing Your Strengths</h2>
+    <p>Dr. Marcus Reid's coaching intelligence is mapping your 100 responses across all 34 CliftonStrengths themes and building your personalised report...</p>
+    <div class="load-steps">
+      <div class="load-step active" id="ls1"><div class="load-dot"></div><span>Reading your response patterns</span></div>
+      <div class="load-step" id="ls2"><div class="load-dot"></div><span>Ranking all 34 themes</span></div>
+      <div class="load-step" id="ls3"><div class="load-dot"></div><span>Identifying power combinations</span></div>
+      <div class="load-step" id="ls4"><div class="load-dot"></div><span>Mapping shadow sides and blind spots</span></div>
+      <div class="load-step" id="ls5"><div class="load-dot"></div><span>Building your career alignment</span></div>
+      <div class="load-step" id="ls6"><div class="load-dot"></div><span>Writing your personal action plan</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+  SCREEN 5 — REPORT
+══════════════════════════════════ -->
+<div class="screen" id="sReport">
+  <div class="rpt-wrap" id="reportContent"></div>
+</div>
+
+</div><!-- end .wrap -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// QUESTIONS DATABASE — 100 questions across 10 rounds
+// ═══════════════════════════════════════════════════════════
+const ROUND_NAMES=['First Impressions','Patterns & Preferences','How You Work','What Drives You','Your Instincts','Facing Challenges','Your Relationships','Your Inner World','Who You Are','Your Signature'];
+
+const Q=[
+{id:1,q:"When facing a complex problem with no obvious solution...",a:"I instinctively see multiple paths through it and quickly find the most viable route forward — clarity emerges fast",b:"I want to understand the full context and history first — how we got here shapes what we should do"},
+{id:2,q:"The energy I feel around starting vs finishing...",a:"Starting energises me most — launch energy, the moment something comes to life, is where I feel most alive",b:"Finishing is what drives me — the deep satisfaction of completing something properly is my real reward"},
+{id:3,q:"How I relate to the people in my life...",a:"I prefer a small circle of deep, completely trusted relationships — I invest everything in those few",b:"I find genuine energy in connecting broadly — making new people feel immediately welcomed is one of my natural gifts"},
+{id:4,q:"What I most naturally notice when thinking through a problem...",a:"Unexpected connections — two seemingly unrelated things linking together to form a completely new angle",b:"Flaws, gaps, inconsistencies — I want to stress-test what seems true and find what actually holds up under pressure"},
+{id:5,q:"In a group or meeting without a clear direction...",a:"I read the emotional temperature — I know how people are feeling before anything is said",b:"I step in and direct — when there's ambiguity about what needs to happen, I'm comfortable being the one who decides"},
+{id:6,q:"When working toward something that matters to me...",a:"I lock onto the destination with tenacity — I don't lose sight of where I'm going and filter out everything that doesn't serve it",b:"I flow with what's actually happening — responding to the present moment matters more than rigidly following the original plan"},
+{id:7,q:"What gives me the deepest professional satisfaction...",a:"Watching someone grow into their potential — I see capability before people see it themselves",b:"Diagnosing what's broken and fixing it — identifying problems and engineering solutions is deeply satisfying"},
+{id:8,q:"What pulls me forward most powerfully...",a:"A vivid picture of what the future could look like — I can see clearly what's possible and it genuinely motivates me",b:"Daily progress — moving things forward and completing meaningful work is what keeps me energised"},
+{id:9,q:"In a group, I'm most naturally aware of...",a:"Who might be left out — if someone is on the edge of the group, I feel a pull to bring them in",b:"What makes each person genuinely different — I notice unique qualities, motivations, and wiring in each individual"},
+{id:10,q:"My relationship with knowledge and information...",a:"I love collecting — I gather continuously because having a rich, ever-growing store to draw from is satisfying in itself",b:"I love the process of learning itself — the journey from not-knowing to deeply understanding something is what energises me"},
+{id:11,q:"What guides my decisions most consistently...",a:"My core values — they are non-negotiable and filter every significant commitment I make",b:"My personal accountability — when I commit to something, I own it completely until it's done right"},
+{id:12,q:"Where my confidence ultimately comes from...",a:"My own judgment — I've learned to trust my instincts and don't need external endorsement to act on them",b:"Wanting my work to matter — I want to be known for contributing something meaningful and significant"},
+{id:13,q:"How I make sense of conflict and disagreement...",a:"I look for common ground — when people disagree, I naturally find where they agree and build from there",b:"I see the larger web — people, events, and ideas are connected in ways that aren't always obvious but always feel real to me"},
+{id:14,q:"My natural operating preference...",a:"Clear structure and consistent routines — I perform best when I have predictable systems I can execute against",b:"Continuous optimisation — I'm always looking for a better arrangement of tasks and resources and I reconfigure without hesitation"},
+{id:15,q:"My most instinctive contribution in any situation...",a:"Finding the clearest path through complexity — I see the route when others are still trying to map the terrain",b:"Generating a completely new way of looking at something — an unexpected reframing, a genuinely novel angle"},
+{id:16,q:"Before making an important decision, I naturally...",a:"Mentally rehearse what could go wrong — I scan for risks and address each one before committing",b:"Examine the evidence — I want data and logic to confirm what's actually true before I commit to anything"},
+{id:17,q:"When I first encounter a person, what I notice most...",a:"Their emotional state — how they're feeling registers immediately and clearly before anything else",b:"What makes them specifically different — their unique motivations, capabilities, and wiring are what I see first"},
+{id:18,q:"When I see a clear opportunity or goal in front of me...",a:"I want to move — once I've determined something is right, waiting feels like the biggest cost of all",b:"I lock in — I set it as a clear destination and maintain relentless focus until I reach it, filtering out distractions"},
+{id:19,q:"My deepest satisfaction in close relationships...",a:"Depth of knowing — truly knowing and being known by someone is what creates real intimacy for me",b:"Witnessing growth — watching someone I've invested in move beyond where they started is the most rewarding thing"},
+{id:20,q:"How I relate to information from the past...",a:"I gather broadly and continuously — I never know when something will become useful so I love having a rich store",b:"I look backwards for insight — understanding how something came to be reveals more than examining what it is right now"},
+{id:21,q:"At a professional event with a few hours to spend...",a:"I move through the room warmly — I connect with many people and each one leaves feeling genuinely welcomed",b:"I find one or two people where I sense real depth and invest everything — one real connection beats twenty surface ones",c:"I've identified specific people I want to meet and I allocate my time deliberately toward those goals"},
+{id:22,q:"When I encounter something that's already performing well...",a:"I'm drawn to elevating it — good is never enough; I want to push it toward exceptional",b:"I notice what's still not working — the remaining gaps pull at me even within something that's mostly performing"},
+{id:23,q:"My instinct around treating people fairly...",a:"Everyone should play by the same rules — consistency of application is what fairness means to me",b:"Everyone deserves to be treated as the individual they are — equal treatment isn't always equitable treatment"},
+{id:24,q:"What energises me more in leadership or planning...",a:"Painting a compelling picture of what the future could look like — I can make people feel what's possible",b:"Finding the best path from here to there — I care more about the route than the vision; I navigate, I don't just dream"},
+{id:25,q:"What drives me most deeply beyond daily tasks...",a:"My values — acting in alignment with what I believe is right is non-negotiable regardless of external pressure",b:"My legacy — I want to be known for doing something that truly mattered and that outlasts the immediate moment"},
+{id:26,q:"In a difficult situation involving people under stress...",a:"I bring optimism — I naturally find what's good and possible and help lift the energy of people around me",b:"I sense the emotional reality — I know exactly what people are feeling even before they've expressed it"},
+{id:27,q:"What gives me the deepest sense of working well...",a:"Knowing I followed through on my commitments — personal ownership of what I said I'd do is essential to who I am",b:"Seeing measurable progress — moving things forward and completing meaningful work gives me my sense of momentum"},
+{id:28,q:"How I hold authority and my own judgment...",a:"I'm comfortable directing — when a group needs leadership, I step in and name what needs to happen",b:"My confidence is internal — I trust my own judgment deeply and act on it without needing to broadcast it outwardly"},
+{id:29,q:"Midway through a major project, important new information arrives suggesting a different approach. You...",a:"Evaluate whether this changes the destination — if the goal is still right, I find a better route. I only change course if the destination itself changes",b:"Adapt quickly — new information means a new best path, and following it feels natural rather than disruptive",c:"Complete what I committed to and apply the learning next time — changing approach midway creates more problems than it solves"},
+{id:30,q:"You've identified a real opportunity but don't yet have complete information. You...",a:"Gather more first — I move when I'm confident, not before. Insufficient preparation always costs more than a short delay",b:"Make the move — clarity comes through action; I can adjust as I go and I trust my ability to adapt",c:"Identify exactly what I need to know, gather only that, then commit fully with complete confidence"},
+{id:31,q:"When a colleague is struggling with their performance...",a:"I diagnose — I want to identify exactly what's going wrong and help fix the specific problem",b:"I develop — I see this as a growth opportunity and invest in helping them emerge from it stronger"},
+{id:32,q:"When asked to solve a genuinely novel problem in an area I know well...",a:"I scan for patterns — I look for what this situation resembles and find the angle others haven't tried",b:"I examine the evidence — I want to understand exactly what is and isn't true before I try to solve anything"},
+{id:33,q:"My relationship with the information I gather...",a:"I accumulate — I love having a rich, growing resource base that I can draw on from memory when needed",b:"I connect — when I encounter something new, I immediately think about what else it links to and what new idea emerges"},
+{id:34,q:"In a group where tension or disagreement exists...",a:"I notice who's not speaking — I make sure quieter voices are heard before we reach any conclusion",b:"I look for what people agree on — I naturally move toward the shared ground that lets everyone progress"},
+{id:35,q:"My approach to learning in a new domain I care about...",a:"I build a comprehensive resource base — I find the best books, experts, and sources and create a rich foundation",b:"I go deep on fundamentals — I study until I understand the underlying structure, then explore further from there"},
+{id:36,q:"When I've made a significant decision and then encounter evidence I might be wrong...",a:"I seriously consider it — I'm willing to change course if the evidence genuinely warrants it",b:"I examine it carefully but don't reverse lightly — I made this decision with full preparation and I trust that process"},
+{id:37,q:"What I want my work to ultimately mean...",a:"Acting in alignment with what I believe is right — I won't compromise my values for results, recognition, or reward",b:"Lasting impact — I want what I've built to matter beyond the immediate moment and be remembered"},
+{id:38,q:"How I experience connections between things in the world...",a:"I sense a larger web — everything and everyone is linked in ways not always visible but fundamentally real to me",b:"I see the next chapter — I can picture with clarity what hasn't happened yet, and that future feels real and motivating"},
+{id:39,q:"When managing important tasks and priorities suddenly shift...",a:"I reconfigure immediately — I re-sort, re-sequence, and re-assign without resistance and find the optimal new arrangement",b:"I evaluate the shift — I ask whether this genuinely changes my destination or just the immediate order, then adjust"},
+{id:40,q:"In a heated meeting where both data and emotions are running high...",a:"I focus on the emotional undercurrent first — what people are really feeling needs to be acknowledged before anything resolves",b:"I focus on separating fact from feeling — I try to return the group to what's actually true so a sound decision emerges"},
+{id:41,q:"What motivates me day to day most reliably...",a:"A clear destination — knowing exactly where I'm going and maintaining sight of it keeps me fully engaged",b:"Daily momentum — feeling like I've moved things forward and completed meaningful work drives my sense of purpose"},
+{id:42,q:"The warmth I extend to people...",a:"Is broad and genuine — I can make almost anyone feel welcomed and I find real energy in connecting widely",b:"Is reserved and deep — the people I trust receive something qualitatively different and more total from me"},
+{id:43,q:"My most natural mode of thinking...",a:"Generating — new ideas, new framings, unexpected angles are what excite and energise me most",b:"Navigating — finding the best path through complex situations is where I add my most distinctive value"},
+{id:44,q:"When someone I believe in is hesitating on a decision I think is right for them...",a:"I build their confidence patiently — I reflect back what I know they can do and help them see their capability",b:"I make the case and spark movement — I believe in the decision and I want to activate them toward it now"},
+{id:45,q:"What calls to me most in any work environment...",a:"What's broken — the gap, the problem, the thing not working pulls at me until I've diagnosed and addressed it",b:"What's already good — I'm drawn to what's performing and feel a pull to elevate it toward extraordinary"},
+{id:46,q:"How my values operate in practice...",a:"As my personal compass — they guide my own behaviour regardless of what others around me are doing",b:"As my standard for fairness — I believe in consistent application of shared rules and expectations for everyone"},
+{id:47,q:"When I collect or gather information and ideas...",a:"It nourishes me — I love having a growing, rich store that feeds my thinking and connects to almost everything",b:"I interrogate it — I want to stress-test ideas and find where the logic breaks or the evidence is genuinely thin"},
+{id:48,q:"In conflict or disagreement between people...",a:"I sense what's underneath — I know what people are really feeling and respond to that before addressing the surface",b:"I seek what's shared — I naturally move toward common ground that lets us reach a resolution everyone can accept"},
+{id:49,q:"My orientation to time and what motivates me...",a:"I'm pulled forward — a clear picture of a compelling future drives my effort and decisions in the present",b:"I'm anchored by precedent — understanding history and how things came to be gives me real confidence about the present"},
+{id:50,q:"How I direct a group when clarity is needed...",a:"I trust my judgment — I've learned my instincts are reliable and I act on them without needing external confirmation",b:"I take charge — I'm comfortable being the person who directs the group and makes decisions when others hesitate"},
+{id:51,q:"Your manager makes a significant decision you believe is wrong. You...",a:"Speak up clearly and directly — I'll make my case confidently regardless of hierarchy",b:"Choose my moment deliberately — I'll raise it, but thoughtfully, picking when and how to have the most impact",c:"Raise it privately with my manager first — I'll voice my view but I manage how and when"},
+{id:52,q:"You've just joined a new team. What do you notice first?",a:"What's not working — the gaps, bottlenecks, and problems that need solving are immediately visible to me",b:"What's working well — the existing strengths and assets that could be built on are what I gravitate toward first"},
+{id:53,q:"What I bring most naturally to a group under pressure...",a:"Optimism — I naturally find what's good and possible and lift the energy around me",b:"Calm — change and uncertainty don't shake me; I flow through them and help others feel grounded"},
+{id:54,q:"How I influence and lead in a group...",a:"I express — I find the words that make people understand and feel something; communication is a natural tool for me",b:"I direct — I'm comfortable taking charge, naming what needs to happen, and ensuring the group moves toward it"},
+{id:55,q:"My approach to knowledge and mastery...",a:"I become — the process of deepening my understanding and capability is inherently rewarding in any domain",b:"I question — I want to stress-test what everyone believes to be true and find what actually holds up under scrutiny"},
+{id:56,q:"When someone is left out of a group or conversation...",a:"I notice and act — I feel responsible for bringing overlooked people in and making them feel genuinely included",b:"I notice the tension — when friction or exclusion rises, I feel pulled to find common ground that eases it"},
+{id:57,q:"What sparks my deepest creative energy...",a:"Unexpected connection — two unrelated things linking to form something genuinely new is almost physical for me",b:"Vivid future — the more clearly I can see what hasn't happened yet, the more motivated I become to make it real"},
+{id:58,q:"What I configure vs what I navigate...",a:"I orchestrate — I love configuring people, resources, and timelines into the most efficient possible arrangement",b:"I navigate — I see the best path through complexity and find routes others haven't mapped yet"},
+{id:59,q:"What I invest in most naturally when I care about someone...",a:"Their growth — I want to help them develop from where they are toward where they genuinely could be",b:"Their mission — I want to spark them toward action and ensure they're moving toward what's possible for them"},
+{id:60,q:"Six months into a major goal, the original path has become significantly harder. You...",a:"Find another route to the same destination — the goal doesn't change; I adapt the method and keep moving relentlessly",b:"Reassess the whole picture — I stay fluid and let the best next move emerge from what the situation is telling me"},
+{id:61,q:"My natural operating rhythm...",a:"Reliable structure — I perform best with clear routines and systems I can execute against consistently",b:"Constant optimisation — I'm always reconfiguring my approach for greater efficiency and I adapt without hesitation"},
+{id:62,q:"How I extend care to people around me...",a:"I include — I make sure everyone feels welcome and part of the group, not just those I already know",b:"I develop — helping someone become more than they were is where I find my deepest satisfaction"},
+{id:63,q:"My relationship with language and ideas...",a:"I express — I'm energised by finding language that makes ideas land; communication is a genuine gift",b:"I generate — the spark of a new idea or unexpected connection is what I find most energising of all"},
+{id:64,q:"Where I gain understanding and confidence...",a:"From becoming — the journey from novice to knowledgeable is inherently rewarding in whatever domain I'm exploring",b:"From precedent — understanding how things came to be reveals patterns that the present moment alone cannot show"},
+{id:65,q:"What energises me in competitive or high-stakes situations...",a:"Benchmarks and rankings — knowing where I stand relative to others or previous standards pushes me to my best",b:"Impact and meaning — contributing something that genuinely mattered drives me far more than any comparative ranking"},
+{id:66,q:"When I make a new connection with someone...",a:"I warm them — I make strangers feel immediately comfortable and welcome; relational warmth opens every door",b:"I fire them — I energise people toward action and movement; I want to activate people, not just welcome them"},
+{id:67,q:"How I handle unpredictability...",a:"Change activates me — I remain calm and fluid when things shift; uncertainty is a space I navigate naturally",b:"I manage tension proactively — when disagreement rises, I'm drawn to find the common ground that lets everyone move forward"},
+{id:68,q:"What I commit to most deeply...",a:"What I've said I'll do — personal accountability is central to my identity; letting someone down feels genuinely wrong",b:"What aligns with my values — my moral compass filters my commitments before I make them"},
+{id:69,q:"What I'm drawn to raise up...",a:"What's already strong — I'm drawn to making something good become genuinely outstanding",b:"What's still emerging — I'm drawn to helping someone or something develop toward their full, unrealised potential"},
+{id:70,q:"You encounter a complex problem in an area you're new to. Your first instinct...",a:"Research extensively — I find every credible source, expert, and piece of data I can access before forming a view",b:"Diagnose systematically — I begin identifying probable causes and work through them methodically to find the root"},
+{id:71,q:"What defines my closest, most trusted relationships...",a:"Mutual trust and deep knowing — I invest in people over a long time and the depth of that knowing is what creates intimacy",b:"Emotional attunement — I feel what people feel; that immediate resonance creates a connection words can't always capture"},
+{id:72,q:"How I warm vs how I activate others...",a:"I warm — I make people feel welcome and comfortable; my warmth opens things up naturally",b:"I activate — I want to energise people toward action; once I see something is right, I want movement now"},
+{id:73,q:"Where I find reliable pattern and understanding...",a:"In the past — I look backwards to find patterns that explain the present and reduce uncertainty about what to do",b:"In the data — I stress-test evidence and separate what genuinely holds up from what merely seems to"},
+{id:74,q:"My source of internal confidence...",a:"My own judgment — I trust what I know from experience and reasoning; external pressure rarely shakes a deliberate decision",b:"My values — when I act in alignment with what I believe is right, I feel certainty regardless of external feedback"},
+{id:75,q:"Before making a major decision (investment, career move, big commitment), my natural process...",a:"I gather comprehensively — I talk to every expert I can access, read widely, and compile everything relevant",b:"I stress-test risks — I identify every way this could go wrong and make sure I've accounted for each",c:"I do both in sequence — gather first, then stress-test risks, then commit fully with complete confidence"},
+{id:76,q:"When helping someone make a major decision they're unsure about...",a:"I build their confidence patiently — I help them see their own capability and reflect back what I know they can do",b:"I make the case directly and persistently — I believe in the decision and I want to activate them toward it now"},
+{id:77,q:"In work with real deadlines and limited resources...",a:"I fix what's broken first — clearing blockers and solving real problems is where I add the most immediate value",b:"I elevate what's working — exceptional output is what I push toward with whatever time and resources are available"},
+{id:78,q:"When I discover a subject area I find genuinely compelling...",a:"I build a resource library — I find the best books, podcasts, experts, and tools and create a rich store to return to",b:"I go deep on core principles — I study fundamentals until I understand the underlying structure, then explore from there"},
+{id:79,q:"The thread that runs through everything I do...",a:"Meaning and connection — I sense a larger web; my work and life feel part of something interconnected and significant",b:"Values and conscience — acting in alignment with what I believe is right is the thread that holds everything together"},
+{id:80,q:"When I've achieved something significant that others haven't yet noticed...",a:"I find a way to make it visible — visibility of excellent work matters for credibility and future impact",b:"It doesn't change my sense of its value — my confidence in what I've done doesn't depend on whether others recognise it"},
+{id:81,q:"Your organisation introduces a policy that is ethically right but applied inconsistently. What matters more?",a:"The intent and values behind the policy — imperfect implementation of something right is better than consistent application of something wrong",b:"Consistent application — a policy applied inconsistently creates injustice regardless of the intent behind it"},
+{id:82,q:"You're asked to lead a long-term project with no clear precedent. You begin by...",a:"Gathering extensively — I access every source, expert, and precedent I can find to build a comprehensive foundation",b:"Mapping the territory — I identify patterns in the complexity and find viable paths forward from there",c:"Understanding my people — I quickly learn what each person brings and configure the team around their specific strengths"},
+{id:83,q:"When you have an hour of unscheduled thinking time, you most naturally spend it...",a:"Connecting — thinking about how different things I know link together and what new ideas emerge from those connections",b:"Reflecting — going deep on a single question, exploring it privately and thoroughly until something clarifies"},
+{id:84,q:"When you spot a way to make a process or routine more efficient...",a:"I change it — I can't leave an inefficiency in place if I can see a better way; optimising is almost involuntary",b:"I assess materiality — not every inefficiency is worth the disruption; I weigh the real gain against the real cost"},
+{id:85,q:"In a group where someone is being overlooked or unheard...",a:"I bring them in — I make a point of including the overlooked person and ensuring their voice is genuinely heard",b:"I find common ground — I focus on what the group can agree on and build from there regardless of who's contributing"},
+{id:86,q:"When I reflect on what I find most meaningful about work I've done...",a:"The problems I've solved — diagnosing difficult challenges and engineering lasting fixes is what I remember most",b:"The people I've helped grow — watching someone I invested in surpass their previous limits is what stays with me"},
+{id:87,q:"What truly motivates me beyond surface drivers...",a:"Benchmarks and comparison sharpen me — knowing where I stand relative to others activates something real in me",b:"Shared purpose and meaningful contribution — working toward something important with people I respect brings out my best"},
+{id:88,q:"My confidence in what I decide is ultimately based on...",a:"The quality of my preparation — I've identified and addressed the key risks so I act with genuine certainty",b:"The reliability of my judgment — I've made enough good decisions to trust the instinct itself, not just the preparation"},
+{id:89,q:"What I offer most distinctively at my very best...",a:"Clarity through complexity — I see the path and help people navigate what others find overwhelming",b:"Depth of connection — I know the people I invest in at a level that creates real trust and I show up for them consistently"},
+{id:90,q:"When deciding whether to speak up in a high-stakes situation...",a:"I speak — I'll voice my perspective even when uncomfortable; silence on important matters feels dishonest to me",b:"I choose my moment — I speak when it matters but I'm deliberate about when and how; the impact of the message matters most"},
+{id:91,q:"My most natural approach to an unfamiliar, high-stakes challenge...",a:"Research first — I gather comprehensively from every credible source before forming a position",b:"Pattern first — I look for what the situation resembles and find the angle others haven't seen",c:"Diagnosis first — I identify what's broken or unclear and systematically work toward the root cause"},
+{id:92,q:"What I'm most likely to be doing when I feel most professionally alive...",a:"Generating something new — an idea, a solution, an approach that surprises even me",b:"Navigating something complex — finding the path through a situation where no map exists yet"},
+{id:93,q:"How I invest my relational loyalty and care...",a:"Broadly but genuinely — I can make almost anyone feel truly welcomed and seen in a relatively brief interaction",b:"Deeply and selectively — the people in my inner circle receive something qualitatively different; I hold nothing back for them"},
+{id:94,q:"What I reach for instinctively when facing something broken or stuck...",a:"The fix — I diagnose quickly and move to resolution; unsolved problems pull at me and I can't comfortably leave them alone",b:"The upgrade — I look for what could make this not just fixed but genuinely better than it was before"},
+{id:95,q:"My interpersonal sensitivity and attunement...",a:"I sense what others feel — their emotional states are immediately real and present to me before they need to speak",b:"I see who others are — their unique wiring, motivations, and specific patterns are what I read naturally in any person"},
+{id:96,q:"What I believe about how people and events connect...",a:"Everything is linked — I sense a larger web; there are invisible threads between people, events, and ideas always present",b:"Context explains everything — how things came to be tells me more than any examination of what they are right now"},
+{id:97,q:"What I guard most carefully in my personal commitments...",a:"My integrity — I won't compromise my values regardless of pressure, opportunity, or external expectation",b:"My energy — I direct my deepest commitment toward those and things that genuinely deserve it; I protect that capacity"},
+{id:98,q:"When I learn something genuinely useful...",a:"I share it proactively — I think immediately about who else needs to know this and I act on that instinct",b:"I apply it — I connect the new knowledge directly to the problems or opportunities in front of me and put it to work"},
+{id:99,q:"What people who know me best would say is my most defining quality...",a:"You are always there — your loyalty and follow-through are unlike anyone else's; we know you will never let us down",b:"You always see — you read situations and people with an accuracy that still surprises us; you see what we can't see"},
+{id:100,q:"You are asked to lead a team through a genuinely complex, unprecedented challenge. Your first week...",a:"I gather everything — every data source, expert, and precedent I can access to build a complete, informed picture",b:"I map the landscape — I find the patterns in the complexity and identify the most viable paths through the unknown",c:"I understand my people — I learn what each person uniquely brings and configure the team around those specific strengths",d:"I set the destination — I ensure everyone has a vivid, shared sense of where we're going and holds it together"}
+];
+
+// ═══════════════════════════════════════════════════════════
+// STATE & STORAGE
+// ═══════════════════════════════════════════════════════════
+let S={round:0,answers:{},name:''};
+
+function save(){try{localStorage.setItem('sm_a',JSON.stringify(S.answers));localStorage.setItem('sm_r',S.round);localStorage.setItem('sm_n',S.name)}catch(e){}}
+function load(){try{const a=localStorage.getItem('sm_a');const r=localStorage.getItem('sm_r');const n=localStorage.getItem('sm_n');if(a)S.answers=JSON.parse(a);if(r)S.round=parseInt(r)||0;if(n)S.name=n}catch(e){}}
+function clear(){try{localStorage.removeItem('sm_a');localStorage.removeItem('sm_r');localStorage.removeItem('sm_n')}catch(e){}}
+
+// ═══════════════════════════════════════════════════════════
+// SCREEN MANAGEMENT
+// ═══════════════════════════════════════════════════════════
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+
+// ═══════════════════════════════════════════════════════════
+// INTRO LOGIC
+// ═══════════════════════════════════════════════════════════
+function showInfo(){
+  document.getElementById('infoCard').style.display='block';
+  document.querySelector('.hero').style.marginBottom='18px';
+  document.getElementById('infoCard').scrollIntoView({behavior:'smooth',block:'nearest'});
+  load();
+  const ct=Object.keys(S.answers).length;
+  if(ct>0){
+    document.getElementById('resumeBanner').style.display='flex';
+    document.getElementById('resumeCount').textContent=ct+' of 100 questions answered';
+    if(S.name)document.getElementById('nameInput').value=S.name;
+  }
+}
+function beginAssessment(){
+  S.name=document.getElementById('nameInput').value.trim();
+  clear();S.answers={};S.round=0;
+  launchQuiz();
+}
+function resumeIt(){S.name=document.getElementById('nameInput').value.trim()||S.name;launchQuiz()}
+function freshStart(){clear();S={round:0,answers:{},name:''};document.getElementById('resumeBanner').style.display='none';document.getElementById('nameInput').value='';beginAssessment()}
+function launchQuiz(){show('sQuiz');document.getElementById('progWrap').style.display='block';renderRound()}
+
+// ═══════════════════════════════════════════════════════════
+// QUIZ RENDERING
+// ═══════════════════════════════════════════════════════════
+function renderRound(){
+  const start=S.round*10;
+  const rQs=Q.slice(start,start+10);
+  document.getElementById('roundBadge').textContent='Round '+(S.round+1);
+  document.getElementById('roundTitle').textContent=ROUND_NAMES[S.round]+' — Questions '+(start+1)+'–'+(start+10);
+  document.getElementById('btnPrev').style.visibility=S.round===0?'hidden':'visible';
+  const isLast=S.round===9;
+  document.getElementById('btnNext').textContent=isLast?'Complete Assessment ✓':'Next Round →';
+
+  let html='';
+  rQs.forEach((q,i)=>{
+    const qNum=start+i+1;
+    const ans=S.answers[q.id];
+    const savedChoice=ans?ans.choice:null;
+    const savedComment=ans?ans.comment:'';
+    const opts=[{k:'a',t:q.a},{k:'b',t:q.b}];
+    if(q.c)opts.push({k:'c',t:q.c});
+    if(q.d)opts.push({k:'d',t:q.d});
+
+    html+=`<div class="q-card${savedChoice?' answered':''}" id="qc-${q.id}">
+<div class="q-num">Question ${qNum} of 100</div>
+<div class="q-text">${q.q}</div>
+<div class="options">`;
+    opts.forEach(o=>{
+      const sel=savedChoice===o.k;
+      html+=`<div class="option${sel?' selected':''}" onclick="pick(${q.id},'${o.k}',this)">
+<div class="opt-l">${o.k.toUpperCase()}</div>
+<div class="opt-txt">${o.t}</div>
+</div>`;
+    });
+    html+=`</div>
+<div class="cmt-wrap">
+<button class="cmt-btn" onclick="toggleCmt(${q.id})">+ Add context or nuance</button>
+<div class="cmt-area${savedComment?' open':''}" id="ca-${q.id}">
+<textarea id="ta-${q.id}" placeholder="Add any 'it depends', personal context, or nuance — these details make your report more precise..." onchange="saveCmt(${q.id},this.value)">${savedComment}</textarea>
+</div>
+</div>
+</div>`;
+  });
+
+  document.getElementById('questionsWrap').innerHTML=html;
+  updateProgress();
+  updateNextBtn();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function pick(qId,choice,el){
+  const card=document.getElementById('qc-'+qId);
+  card.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  if(!S.answers[qId])S.answers[qId]={choice:'',comment:''};
+  S.answers[qId].choice=choice;
+  card.classList.add('answered');
+  save();updateProgress();updateNextBtn();
+}
+function saveCmt(qId,val){if(!S.answers[qId])S.answers[qId]={choice:'',comment:''};S.answers[qId].comment=val;save()}
+function toggleCmt(qId){const ca=document.getElementById('ca-'+qId);ca.classList.toggle('open');if(ca.classList.contains('open'))setTimeout(()=>document.getElementById('ta-'+qId).focus(),50)}
+function roundDone(r){const s=r*10;for(let i=s;i<s+10;i++){if(!S.answers[Q[i].id]||!S.answers[Q[i].id].choice)return false}return true}
+function updateNextBtn(){document.getElementById('btnNext').disabled=!roundDone(S.round)}
+function updateProgress(){
+  const ct=Object.keys(S.answers).filter(k=>S.answers[k].choice).length;
+  document.getElementById('progFill').style.width=(ct)+'%';
+  document.getElementById('progCt').textContent=ct+' / 100 answered';
+  document.getElementById('progRound').textContent='Round '+(S.round+1)+' of 10 — '+ROUND_NAMES[S.round];
+}
+function goNext(){if(!roundDone(S.round))return;if(S.round<9){S.round++;save();renderRound()}else{document.getElementById('progWrap').style.display='none';show('sApiKey')}}
+function goBack(){if(S.round>0){S.round--;save();renderRound()}}
+
+// ═══════════════════════════════════════════════════════════
+// API KEY SCREEN
+// ═══════════════════════════════════════════════════════════
+function toggleKeyVis(){const i=document.getElementById('apiKeyInput');const b=document.getElementById('toggleBtn');if(i.type==='password'){i.type='text';b.textContent='🙈'}else{i.type='password';b.textContent='👁'}}
+
+// ═══════════════════════════════════════════════════════════
+// BUILD GEMINI PROMPT
+// ═══════════════════════════════════════════════════════════
+function buildPrompt(){
+  const name=S.name||'the person';
+  let responses='';
+  Q.forEach(q=>{
+    const ans=S.answers[q.id];
+    if(!ans||!ans.choice)return;
+    const opts=[{k:'a',t:q.a},{k:'b',t:q.b}];
+    if(q.c)opts.push({k:'c',t:q.c});
+    if(q.d)opts.push({k:'d',t:q.d});
+    const chosen=opts.find(o=>o.k===ans.choice);
+    responses+=`Q${q.id}: ${q.q}\nCHOSE ${ans.choice.toUpperCase()}: ${chosen?chosen.t:''}\n`;
+    if(ans.comment&&ans.comment.trim())responses+=`PERSONAL CONTEXT: "${ans.comment.trim()}"\n`;
+    responses+='\n';
+  });
+
+  const nameNote=S.name?`\nThe person's name is ${name}. Address them by name throughout the report.\n`:'';
+
+  return `You are Dr. Marcus Reid — a world-class CliftonStrengths master coach with 25 years of experience coaching over 3,000 individuals. You have deep mastery of all 34 CliftonStrengths themes across their four domains. You also draw on positive psychology (Seligman), emotional intelligence (Goleman), and evidence-based coaching frameworks.
+
+THE 34 CLIFTONSTRENGTHS THEMES AND DOMAINS:
+EXECUTING (domain="executing"): Achiever, Arranger, Belief, Consistency, Deliberative, Discipline, Focus, Responsibility, Restorative
+INFLUENCING (domain="influencing"): Activator, Command, Communication, Competition, Maximizer, Self-Assurance, Significance, Woo  
+RELATIONSHIP BUILDING (domain="relationship"): Adaptability, Connectedness, Developer, Empathy, Harmony, Includer, Individualization, Positivity, Relator
+STRATEGIC THINKING (domain="strategic"): Analytical, Context, Futuristic, Ideation, Input, Intellection, Learner, Strategic
+${nameNote}
+CRITICAL RULES:
+1. Every insight must name specific themes. No generic advice whatsoever.
+2. Shadow sides for all top 5 themes are mandatory.
+3. Analyse themes in combination, not isolation.
+4. Be specific, honest, and coach-like — not just flattering.
+5. Immediate action steps are required in Section 13.
+6. Personal comments in the responses carry the HIGHEST diagnostic weight — weight them heavily.
+
+ASSESSMENT RESPONSES:
+${responses}
+
+RESPOND WITH ONLY VALID JSON matching this exact schema (no markdown, no code blocks, just raw JSON):
+{
+  "name": "string",
+  "tagline": "string (12-15 words capturing their essence at their best)",
+  "allThemes": [
+    {"rank": 1, "theme": "ThemeName", "domain": "executing|influencing|relationship|strategic"}
+  ],
+  "signatureFive": [
+    {"theme": "string", "domain": "string", "description": "string (2-3 sentences specific to THIS person)"}
+  ],
+  "portrait": "string (280-320 word narrative of this person at their absolute best, specific to their exact combination)",
+  "whenAllFire": "string (150 words: what happens when all 5 signature strengths fire together)",
+  "powerCombinations": [
+    {
+      "title": "string (catchy name e.g. The Navigator-Inventor)",
+      "themes": ["theme1", "theme2"],
+      "domains": ["domain1", "domain2"],
+      "capability": "string (what unique capability emerges that neither produces alone, 2-3 sentences)",
+      "example": "string (concrete real-world example, 2-3 sentences)"
+    }
+  ],
+  "shadowSides": [
+    {
+      "theme": "string",
+      "domain": "string",
+      "liability": "string (how it becomes a liability when overused or triggered under stress)",
+      "looksLike": "string (what it looks like when working against them in practice)",
+      "warning": "string (one specific early warning sign they can catch)"
+    }
+  ],
+  "thrive": {
+    "bestConditions": ["string", "string", "string", "string"],
+    "energyKillers": ["string", "string", "string", "string"],
+    "idealPartner": "string (what kind of partner or manager they need)",
+    "needToHear": ["string", "string", "string"],
+    "doNotSay": ["string", "string", "string"]
+  },
+  "relationships": {
+    "whatTheyOffer": "string",
+    "whatTheyNeed": "string",
+    "blindSpots": "string",
+    "greenFlags": ["string", "string", "string"],
+    "redFlags": ["string", "string", "string"]
+  },
+  "workplace": {
+    "colleagueExperience": "string",
+    "naturalRole": "string",
+    "highestValue": "string",
+    "unintendedFriction": "string"
+  },
+  "leadership": {
+    "style": "string",
+    "teamLoves": "string",
+    "teamChallenges": "string",
+    "developBehaviors": ["string", "string", "string"]
+  },
+  "career": {
+    "excels": ["string", "string", "string"],
+    "drains": ["string", "string", "string"],
+    "moves": [
+      {"title": "string", "reasoning": "string", "themes": ["string", "string"]}
+    ]
+  },
+  "selfSabotage": [
+    {
+      "patternName": "string (catchy descriptive name)",
+      "behavior": "string",
+      "trigger": "string",
+      "solution": "string (using existing top themes — never fixing a weakness directly)"
+    }
+  ],
+  "howOthers": {
+    "magnetic": "string",
+    "friction": "string",
+    "misread": "string",
+    "remembered": "string"
+  },
+  "growthEdge": {
+    "signatureNext": "string (what trusting their #1 strength fully looks like in practice)",
+    "developTheme": "string (which supporting theme to consciously develop and how)",
+    "masterShadow": "string (which shadow side to focus on mastering and the specific practice)"
+  },
+  "actionPlan": {
+    "hours24": "string (one specific action using a signature strength on something currently in front of them)",
+    "week1": "string (one structural change to environment or routine activating their top combination)",
+    "months3": "string (one strategic move that only makes sense for someone with this exact profile)",
+    "coachingQuestion": "string (one powerful question to carry into the coming week)"
+  }
+}`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// GEMINI API CALL
+// ═══════════════════════════════════════════════════════════
+async function generateReport(){
+  const apiKey=document.getElementById('apiKeyInput').value.trim();
+  if(!apiKey||!apiKey.startsWith('AIza')){showErr('Please enter a valid Gemini API key (starts with AIza...)');return}
+
+  document.getElementById('apiError').classList.remove('show');
+  show('sLoading');
+
+  // Animated loading steps
+  const steps=['ls1','ls2','ls3','ls4','ls5','ls6'];
+  let si=0;
+  const stepInterval=setInterval(()=>{
+    if(si>0)document.getElementById(steps[si-1]).className='load-step done';
+    if(si<steps.length){document.getElementById(steps[si]).className='load-step active';si++}
+    else clearInterval(stepInterval);
+  },3500);
+
+  try{
+    const prompt=buildPrompt();
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        contents:[{parts:[{text:prompt}]}],
+        generationConfig:{temperature:0.75,maxOutputTokens:8192,responseMimeType:'application/json'}
+      })
+    });
+
+    clearInterval(stepInterval);
+    steps.forEach(s=>document.getElementById(s).className='load-step done');
+
+    if(!res.ok){
+      const err=await res.json().catch(()=>({}));
+      const msg=err?.error?.message||'API request failed (status '+res.status+')';
+      show('sApiKey');showErr(msg);return;
+    }
+
+    const data=await res.json();
+    const text=data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if(!text){show('sApiKey');showErr('No response received from Gemini. Please try again.');return}
+
+    let report;
+    try{
+      // Strip any accidental markdown code fences
+      const clean=text.replace(/^```json?\s*/,'').replace(/\s*```$/,'').trim();
+      report=JSON.parse(clean);
+    }catch(e){
+      show('sApiKey');showErr('Report parsing error. Please try again — this is usually a one-time glitch.');return;
+    }
+
+    await new Promise(r=>setTimeout(r,800));
+    renderReport(report);
+  }catch(e){
+    clearInterval(stepInterval);
+    show('sApiKey');
+    if(e.message.includes('fetch')||e.message.includes('network')){showErr('Network error. Please check your connection and try again.')}
+    else{showErr('Something went wrong: '+e.message)}
+  }
+}
+
+function showErr(msg){document.getElementById('apiErrorText').textContent=msg;document.getElementById('apiError').classList.add('show')}
+
+// ═══════════════════════════════════════════════════════════
+// REPORT RENDERING
+// ═══════════════════════════════════════════════════════════
+const DC={executing:'#7B5EA7',influencing:'#C96310',relationship:'#1360A8',strategic:'#187840'};
+const DL={executing:'#EDE8F7',influencing:'#FAF0E6',relationship:'#E8F0FA',strategic:'#E6F5EC'};
+const DN={executing:'Executing',influencing:'Influencing',relationship:'Relationship Building',strategic:'Strategic Thinking'};
+
+function domainColor(d){return DC[d]||'#5A6478'}
+function domainLight(d){return DL[d]||'#F1F4F9'}
+
+function renderReport(r){
+  show('sReport');
+  document.getElementById('progWrap').style.display='none';
+
+  const top5=r.signatureFive||[];
+  const allT=r.allThemes||[];
+
+  // Calculate domain counts for top 10
+  const top10=allT.slice(0,10);
+  const dcounts={executing:0,influencing:0,relationship:0,strategic:0};
+  top10.forEach(t=>{if(dcounts[t.domain]!==undefined)dcounts[t.domain]++});
+
+  // Top 5 pills HTML
+  const pillsHtml=top5.map(t=>`<span class="rpt-pill" style="background:${domainColor(t.domain)}">${t.theme}</span>`).join('');
+
+  // Domain bar HTML
+  const dbarHtml=Object.entries(dcounts).map(([d,c])=>`
+<div class="dbar-item">
+  <div class="dbar-label">${DN[d].split(' ')[0]}</div>
+  <div class="dbar-track"><div class="dbar-fill" style="width:${c*10}%;background:${domainColor(d)}"></div></div>
+  <div class="dbar-count">${c}/10</div>
+</div>`).join('');
+
+  // Full profile table
+  const profileTableHtml=`
+<table class="profile-table">
+<thead><tr><th>Rank</th><th>Theme</th><th>Domain</th><th>Tier</th></tr></thead>
+<tbody>
+${allT.map(t=>{
+  const tier=t.rank<=5?'sig':t.rank<=10?'sup':t.rank<=20?'bg':'les';
+  const tierLabel=t.rank<=5?'Signature':t.rank<=10?'Supporting':t.rank<=20?'Background':'Lesser Used';
+  const tierClass=`tier-${tier}`;
+  return `<tr>
+<td><span class="rank-num">${t.rank}</span></td>
+<td style="font-weight:${t.rank<=5?'700':'400'}">${t.theme}</td>
+<td><span class="domain-badge" style="background:${domainColor(t.domain)}">${DN[t.domain]}</span></td>
+<td><span class="tier-badge ${tierClass}">${tierLabel}</span></td>
+</tr>`;
+}).join('')}
+</tbody>
+</table>`;
+
+  // Signature Five HTML
+  const sig5Html=top5.map(t=>`
+<div class="sig5-card" style="background:${domainLight(t.domain)};border-left-color:${domainColor(t.domain)}">
+  <div class="sig5-rank" style="color:${domainColor(t.domain)}">★</div>
+  <div class="sig5-name" style="color:${domainColor(t.domain)}">${t.theme}</div>
+  <div class="sig5-desc">${t.description}</div>
+</div>`).join('');
+
+  // Power combos HTML
+  const comboHtml=(r.powerCombinations||[]).map(c=>{
+    const themesBadges=(c.themes||[]).map((t,i)=>{
+      const d=(c.domains||[])[i]||'strategic';
+      return `<span class="combo-theme" style="background:${domainColor(d)}">${t}</span>`;
+    }).join(`<span class="combo-op">+</span>`);
+    return `<div class="combo-card">
+<div class="combo-eq">${themesBadges}<span class="combo-op">=</span><span style="font-size:14px;font-weight:700;color:#0D1B2A">${c.title}</span></div>
+<div class="combo-capability">${c.capability}</div>
+<div class="combo-example"><strong>In Practice:</strong>${c.example}</div>
+</div>`;
+  }).join('');
+
+  // Shadow sides HTML
+  const shadowHtml=(r.shadowSides||[]).map(s=>`
+<div class="shadow-card">
+  <div class="shadow-theme-badge">
+    <div class="shadow-dot" style="background:${domainColor(s.domain)}"></div>
+    <div class="shadow-theme-name">${s.theme}</div>
+  </div>
+  <div class="shadow-row">
+    <div class="shadow-box">
+      <div class="shadow-box-label">When Overused</div>
+      <p>${s.liability}</p>
+    </div>
+    <div class="shadow-box">
+      <div class="shadow-box-label">What It Looks Like</div>
+      <p>${s.looksLike}</p>
+    </div>
+  </div>
+  <div class="shadow-warn">
+    <div class="shadow-warn-icon">⚠️</div>
+    <p><strong>Early Warning Sign</strong>${s.warning}</p>
+  </div>
+</div>`).join('');
+
+  // Thrive HTML
+  const th=r.thrive||{};
+  const thriveHtml=`
+<div class="thrive-grid">
+  <div class="thrive-box green">
+    <h4>✓ What Brings Out Your Best</h4>
+    <ul class="thrive-list">${(th.bestConditions||[]).map(c=>`<li>${c}</li>`).join('')}</ul>
+  </div>
+  <div class="thrive-box red">
+    <h4>✕ What Drains You</h4>
+    <ul class="thrive-list">${(th.energyKillers||[]).map(c=>`<li>${c}</li>`).join('')}</ul>
+  </div>
+</div>
+${th.idealPartner?`<div class="thrive-ideal"><h5>Ideal Manager or Partner</h5><p>${th.idealPartner}</p></div>`:''}
+<div class="thrive-split">
+  <div class="thrive-phrase-box">
+    <h5>Say This to Me</h5>
+    <ul class="phrase-list">${(th.needToHear||[]).map(p=>`<li>"${p}"</li>`).join('')}</ul>
+  </div>
+  <div class="thrive-phrase-box">
+    <h5>Never Say This</h5>
+    <ul class="phrase-list">${(th.doNotSay||[]).map(p=>`<li>"${p}"</li>`).join('')}</ul>
+  </div>
+</div>`;
+
+  // Relationships HTML
+  const rel=r.relationships||{};
+  const relHtml=`
+<div class="prose-section">
+  <div class="prose-block"><h5>What You Offer Those You Love</h5><p>${rel.whatTheyOffer||''}</p></div>
+  <div class="prose-block"><h5>What You Genuinely Need in Return</h5><p>${rel.whatTheyNeed||''}</p></div>
+  <div class="prose-block"><h5>Your Relationship Blind Spots</h5><p>${rel.blindSpots||''}</p></div>
+  <div class="flag-grid">
+    <div class="flag-box green"><h5>Green Flags — Your Best Matches</h5><ul class="flag-list">${(rel.greenFlags||[]).map(f=>`<li>${f}</li>`).join('')}</ul></div>
+    <div class="flag-box red"><h5>Red Flags — Watch Out For</h5><ul class="flag-list">${(rel.redFlags||[]).map(f=>`<li>${f}</li>`).join('')}</ul></div>
+  </div>
+</div>`;
+
+  // Workplace HTML
+  const wp=r.workplace||{};
+  const wpHtml=`
+<div class="prose-section">
+  <div class="prose-block"><h5>How Colleagues Experience You</h5><p>${wp.colleagueExperience||''}</p></div>
+  <div class="prose-block"><h5>Your Natural Team Role</h5><p>${wp.naturalRole||''}</p></div>
+  <div class="prose-block"><h5>Where You Add the Most Value</h5><p>${wp.highestValue||''}</p></div>
+  <div class="prose-block" style="background:#FFF8E7;border-color:#FDE68A"><h5 style="color:#92400E">⚠ Unintended Friction to Watch</h5><p>${wp.unintendedFriction||''}</p></div>
+</div>`;
+
+  // Leadership HTML
+  const ld=r.leadership||{};
+  const ldHtml=`
+<div class="prose-section">
+  <div class="prose-block"><h5>Your Natural Leadership Style</h5><p>${ld.style||''}</p></div>
+  <div class="flag-grid">
+    <div class="flag-box green"><h5>Your Team Will Love</h5><p style="font-size:13px;color:var(--navy2);line-height:1.55">${ld.teamLoves||''}</p></div>
+    <div class="flag-box red"><h5>Your Team Will Find Challenging</h5><p style="font-size:13px;color:var(--navy2);line-height:1.55">${ld.teamChallenges||''}</p></div>
+  </div>
+  <div>
+    <h5 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:10px">3 Leadership Behaviours to Develop Deliberately</h5>
+    <div class="develop-list">${(ld.developBehaviors||[]).map((b,i)=>`<div class="develop-item"><div class="dev-num">${i+1}</div><p>${b}</p></div>`).join('')}</div>
+  </div>
+</div>`;
+
+  // Career HTML
+  const ca=r.career||{};
+  const caHtml=`
+<div class="career-grid">
+  <div class="career-box excels"><h5>→ Where You'll Excel</h5><ul class="career-list">${(ca.excels||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div>
+  <div class="career-box drains"><h5>− What Will Drain You</h5><ul class="career-list">${(ca.drains||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div>
+</div>
+<h5 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-l);margin-bottom:12px">3 Career Moves That Make Sense For Your Exact Profile</h5>
+<div class="move-list">${(ca.moves||[]).map(m=>`
+<div class="move-card">
+  <div class="move-title">${m.title}</div>
+  <div class="move-why">${m.reasoning}</div>
+  <div class="move-themes">${(m.themes||[]).map(t=>`<span class="move-tag">${t}</span>`).join('')}</div>
+</div>`).join('')}</div>`;
+
+  // Self-sabotage HTML
+  const sabHtml=(r.selfSabotage||[]).map(s=>`
+<div class="sabotage-card">
+  <div class="sabotage-title">🔄 ${s.patternName}</div>
+  <div class="sabotage-flow">
+    <div class="sab-box"><div class="sab-label">The Pattern</div><p>${s.behavior}</p></div>
+    <div class="sab-box"><div class="sab-label">What Triggers It</div><p>${s.trigger}</p></div>
+    <div class="sab-box"><div class="sab-label">The Fix (From Your Strengths)</div><p>${s.solution}</p></div>
+  </div>
+</div>`).join('');
+
+  // How others HTML
+  const ho=r.howOthers||{};
+  const howHtml=`
+<div class="others-grid">
+  <div class="others-box magnetic"><h5>✦ The Magnetic Impact</h5><p>${ho.magnetic||''}</p></div>
+  <div class="others-box friction"><h5>⚡ The Unintended Friction</h5><p>${ho.friction||''}</p></div>
+</div>
+${ho.misread?`<div class="misread-box"><h5>What People Commonly Misread About You</h5><p>${ho.misread}</p></div>`:''}
+${ho.remembered?`<div class="prose-block" style="margin-top:12px"><h5>What People Remember</h5><p>${ho.remembered}</p></div>`:''}`;
+
+  // Growth edge HTML
+  const ge=r.growthEdge||{};
+  const growthHtml=`
+<div class="growth-cards">
+  <div class="growth-card highlight">
+    <div class="growth-label">Your #1 Strength — Fully Trusted</div>
+    <div class="growth-title">What the Next Level Looks Like</div>
+    <div class="growth-text">${ge.signatureNext||''}</div>
+  </div>
+  <div class="growth-card">
+    <div class="growth-label">Supporting Strength to Develop Deliberately</div>
+    <div class="growth-text">${ge.developTheme||''}</div>
+  </div>
+  <div class="growth-card" style="background:#FFF8E7;border-color:#FDE68A">
+    <div class="growth-label" style="color:#92400E">Shadow Side to Master</div>
+    <div class="growth-text">${ge.masterShadow||''}</div>
+  </div>
+</div>`;
+
+  // Action plan HTML
+  const ap=r.actionPlan||{};
+  const actionHtml=`
+<div class="action-timeline">
+  <div class="action-item">
+    <div class="action-icon-wrap">
+      <div class="action-icon" style="background:var(--ex-l)">⚡</div>
+      <div class="action-line" style="background:var(--border)"></div>
+    </div>
+    <div>
+      <div class="action-time">Within 24 Hours</div>
+      <div class="action-text">${ap.hours24||''}</div>
+    </div>
+  </div>
+  <div class="action-item">
+    <div class="action-icon-wrap">
+      <div class="action-icon" style="background:var(--rb-l)">📅</div>
+      <div class="action-line" style="background:var(--border)"></div>
+    </div>
+    <div>
+      <div class="action-time">Within 1 Week</div>
+      <div class="action-text">${ap.week1||''}</div>
+    </div>
+  </div>
+  <div class="action-item">
+    <div class="action-icon-wrap">
+      <div class="action-icon" style="background:var(--st-l)">🗓</div>
+      <div class="action-line" style="background:var(--border)"></div>
+    </div>
+    <div>
+      <div class="action-time">Within 3 Months</div>
+      <div class="action-text">${ap.months3||''}</div>
+    </div>
+  </div>
+</div>
+${ap.coachingQuestion?`<div class="coaching-q"><div class="cq-label">Your Coaching Question for This Week</div><div class="cq-text">"${ap.coachingQuestion}"</div></div>`:''}`;
+
+  // Section builder helper
+  const secColor=['#7B5EA7','#C96310','#1360A8','#187840','#7B5EA7','#C96310','#1360A8','#187840','#7B5EA7','#C96310','#1360A8','#187840','#187840'];
+  function sec(num,icon,title,sub,content){
+    return `<div class="rpt-section">
+<div class="sec-hdr">
+<div class="sec-num" style="background:${secColor[num-1]}">${num}</div>
+<div><div class="sec-title">${icon} ${title}</div>${sub?`<div class="sec-sub">${sub}</div>`:''}</div>
+</div>
+${content}
+</div>`;
+  }
+
+  // ASSEMBLE FULL REPORT
+  const html=`
+<div class="rpt-hero">
+  <div class="rpt-hero-inner">
+    <div class="rpt-greeting">Your CliftonStrengths Profile</div>
+    <div class="rpt-name">${r.name||S.name||'Your Strengths'}</div>
+    <div class="rpt-tagline">${r.tagline||''}</div>
+    <div class="rpt-top5">${pillsHtml}</div>
+    <div class="domain-bar">${dbarHtml}</div>
+  </div>
+</div>
+
+<div class="rpt-actions">
+  <button class="btn btn-ghost btn-sm" onclick="window.print()">🖨 Print / Save as PDF</button>
+  <button class="btn btn-ghost btn-sm" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">⬇ Jump to Action Plan</button>
+  <button class="btn btn-ghost btn-sm" onclick="location.reload()">↺ New Assessment</button>
+</div>
+
+${sec(1,'📊','Your Full 34-Theme Profile','All themes ranked from most to least dominant',profileTableHtml)}
+${sec(2,'✨','Strengths Portrait','Who you are when all your strengths are firing',`<div class="portrait-text">${r.portrait||''}</div>`)}
+${sec(3,'⭐','Your Signature Five','Your most powerful, instinctive, and dominant talents',sig5Html+`<div class="when-all-fire"><div class="waf-label">When All Five Fire Together</div>${r.whenAllFire||''}</div>`)}
+${sec(4,'🔗','Power Combinations','Where 1+1=3 — unique capabilities that emerge from your theme pairings',`<div class="combo-list">${comboHtml}</div>`)}
+${sec(5,'⚠️','Shadow Sides & Blind Spots','The other side of every strength — when your talents work against you',`<div class="shadow-list">${shadowHtml}</div>`)}
+${sec(6,'🌱','What You Need to Thrive','The environments and conditions that bring out your absolute best',thriveHtml)}
+${sec(7,'💛','You in Relationships','How you love, what you need, and where to watch yourself',relHtml)}
+${sec(8,'🤝','You in the Workplace','Your natural role, your highest value, and the friction you don\'t mean to create',wpHtml)}
+${sec(9,'👑','You as a Leader','Your leadership style, your team\'s experience, and where to grow deliberately',ldHtml)}
+${sec(10,'💼','Career & Role Alignment','Where your profile thrives, what drains it, and three moves that only make sense for you',caHtml)}
+${sec(11,'🔄','Self-Sabotage Patterns','The 2-3 most likely ways this exact theme combination gets in its own way',`<div class="sabotage-list">${sabHtml}</div>`)}
+${sec(12,'🪞','How Others Experience You','Your magnetic impact, the friction you create without meaning to, and what people remember',howHtml)}
+${sec(13,'🎯','Your Growth Edge & Action Plan','What\'s next — and exactly what to do about it starting now',growthHtml+'<div style="margin-top:20px">'+actionHtml+'</div>')}
+
+<div style="text-align:center;padding:40px 20px;color:var(--gray-l);font-size:12px;line-height:1.7">
+  Generated by StrengthsMap • Powered by Dr. Marcus Reid Coaching Intelligence<br>
+  Based on the CliftonStrengths 34 framework by Gallup<br>
+  <span style="color:var(--border)">•</span>
+</div>`;
+
+  document.getElementById('reportContent').innerHTML=html;
+  // Trigger re-animation
+  setTimeout(()=>{show('sReport')},50);
+}
+</script>
+</body>
+</html>
