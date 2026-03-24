@@ -337,7 +337,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
       <div class="bd" style="background:var(--rb)"></div>
       <div class="bd" style="background:var(--st)"></div>
     </div>
-    <span class="brand-name">StrengthsMap<span class="brand-sub">by Dr. Marcus Reid</span></span>
+    <span class="brand-name">StrengthsMap<span class="brand-tag">&thinsp;strengths discovery</span></span>
   </div>
 </div>
 
@@ -345,6 +345,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   <div class="prog-meta">
     <span class="prog-round" id="progRound">Round 1 of 10</span>
     <span class="prog-ct" id="progCt">0 / 100 answered</span>
+      <span style="font-size:12px;color:var(--gold-l);font-weight:600;display:flex;align-items:center;gap:4px;" id="progTime">⏱ ~20 min remaining</span>
   </div>
   <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
 </div>
@@ -359,8 +360,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
       <span class="pill pill-st">Strategic Thinking</span>
     </div>
     <h1>What are you<br><em>naturally brilliant</em> at?</h1>
-    <p>A research-grounded 100-question strengths assessment across all 34 CliftonStrengths themes. Your full personalised coaching report generates in under 60 seconds.</p>
-    <button class="btn btn-primary btn-lg" onclick="showInfo()">Discover Your Strengths →</button>
+    <p>A research-grounded 100-question strengths assessment across all 34 talent themes. Your full personalised coaching report generates in under 60 seconds.</p>
+    <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.09);border:1px solid rgba(16,185,129,.22);border-radius:99px;padding:5px 15px;font-size:12px;font-weight:600;color:#10B981;margin-bottom:22px;letter-spacing:.2px">⏱ About 20 minutes &nbsp;·&nbsp; Save and resume anytime</div><br><button class="btn btn-primary btn-lg" onclick="showInfo()">Discover Your Strengths →</button>
   </div>
 
   <div class="info-card" id="infoCard" style="display:none">
@@ -384,6 +385,10 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
       </div>
     </div>
 
+    <div style="margin-bottom:16px;padding:14px 16px;background:#F8FAFF;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--gray);line-height:1.6">
+      <strong style="color:var(--navy);display:block;margin-bottom:4px">Important Notice</strong>
+      StrengthsMap is an independent tool and is not affiliated with Gallup, Inc. or the official CliftonStrengths® assessment. This report is AI-generated for personal reflection purposes only and should not be used as the sole basis for employment, medical, or other consequential decisions. By proceeding you acknowledge this is a self-discovery tool, not a clinical assessment.
+    </div>
     <button class="btn btn-primary btn-lg btn-full" onclick="beginAssessment()">Begin Assessment →</button>
   </div>
 </div>
@@ -406,7 +411,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   <div class="loading-card">
     <div class="pulse-ring"></div>
     <h2>Analysing Your Strengths</h2>
-    <p>Building your personalised coaching report across all 34 CliftonStrengths themes...</p>
+    <p>Mapping your responses across 34 talent themes and building your personalised coaching report...</p>
     <div class="load-steps">
       <div class="load-step active" id="ls1"><div class="load-dot"></div><span>Reading your response patterns</span></div>
       <div class="load-step" id="ls2"><div class="load-dot"></div><span>Ranking all 34 themes</span></div>
@@ -613,7 +618,7 @@ function buildPrompt(){
     responses+='\n';
   });
   const nameNote=S.name?`\nThe person's name is ${name}. Address them by name throughout the report.\n`:'';
-  return `You are Dr. Marcus Reid — a world-class CliftonStrengths master coach with 25 years of experience coaching over 3,000 individuals. You have deep mastery of all 34 CliftonStrengths themes across their four domains.
+  return `You are an expert strengths coach and organisational psychologist with deep mastery of trait-based profiling frameworks and all 34 talent themes across their four domains. You draw on evidence-based coaching frameworks and positive psychology research.
 
 THE 34 CLIFTONSTRENGTHS THEMES:
 EXECUTING (domain="executing"): Achiever, Arranger, Belief, Consistency, Deliberative, Discipline, Focus, Responsibility, Restorative
@@ -632,8 +637,14 @@ CRITICAL RULES:
 ASSESSMENT RESPONSES:
 ${responses}
 
+IMPORTANT ADDITIONAL RULES:
+- ALL 4 domains must appear in the top 10 results
+- Red flags MUST include a constructive reframe or navigation strategy — never just a trait to avoid
+- bestCollaborators field: describe who brings out their best (qualities that complement their blind spots)
+- Personal comments (PERSONAL CONTEXT) carry the HIGHEST weight
+
 RESPOND WITH ONLY VALID JSON (no markdown, no code blocks, just raw JSON):
-{"name":"string","tagline":"string (12-15 words capturing their essence at their best)","allThemes":[{"rank":1,"theme":"ThemeName","domain":"executing|influencing|relationship|strategic"}],"signatureFive":[{"theme":"string","domain":"string","description":"string (2-3 sentences specific to THIS person)"}],"portrait":"string (280-320 word narrative at their absolute best)","whenAllFire":"string (150 words what happens when all 5 fire together)","powerCombinations":[{"title":"string","themes":["t1","t2"],"domains":["d1","d2"],"capability":"string","example":"string"}],"shadowSides":[{"theme":"string","domain":"string","liability":"string","looksLike":"string","warning":"string"}],"thrive":{"bestConditions":["s","s","s","s"],"energyKillers":["s","s","s","s"],"idealPartner":"string","needToHear":["s","s","s"],"doNotSay":["s","s","s"]},"relationships":{"whatTheyOffer":"string","whatTheyNeed":"string","blindSpots":"string","greenFlags":["s","s","s"],"redFlags":["s","s","s"]},"workplace":{"colleagueExperience":"string","naturalRole":"string","highestValue":"string","unintendedFriction":"string"},"leadership":{"style":"string","teamLoves":"string","teamChallenges":"string","developBehaviors":["s","s","s"]},"career":{"excels":["s","s","s"],"drains":["s","s","s"],"moves":[{"title":"string","reasoning":"string","themes":["s","s"]}]},"selfSabotage":[{"patternName":"string","behavior":"string","trigger":"string","solution":"string"}],"howOthers":{"magnetic":"string","friction":"string","misread":"string","remembered":"string"},"growthEdge":{"signatureNext":"string","developTheme":"string","masterShadow":"string"},"actionPlan":{"hours24":"string","week1":"string","months3":"string","coachingQuestion":"string"}}`;
+{"name":"string","tagline":"string (12-15 words capturing their essence at their best)","allThemes":[{"rank":1,"theme":"ThemeName","domain":"executing|influencing|relationship|strategic"}],"signatureFive":[{"theme":"string","domain":"string","description":"string (2-3 sentences specific to THIS person)"}],"portrait":"string (280-320 word narrative at their absolute best)","whenAllFire":"string (150 words what happens when all 5 fire together)","powerCombinations":[{"title":"string","themes":["t1","t2"],"domains":["d1","d2"],"capability":"string","example":"string"}],"shadowSides":[{"theme":"string","domain":"string","liability":"string","looksLike":"string","warning":"string"}],"thrive":{"bestConditions":["s","s","s","s"],"energyKillers":["s","s","s","s"],"idealPartner":"string","bestCollaborators":"string (describe themes or qualities in people who naturally complement this person's blind spots — frame positively as who brings out their best, not who they should avoid)","needToHear":["s","s","s"],"doNotSay":["s","s","s"]},"relationships":{"whatTheyOffer":"string","whatTheyNeed":"string","blindSpots":"string","greenFlags":["string — each flag must include a brief explanation of why this is a natural fit for this profile, not just a trait label"],"redFlags":["string — IMPORTANT: each red flag must be framed constructively. Do not say 'avoid people who X'. Instead say 'People who X may create friction — but this can be navigated by Y'. Include a brief mitigation or reframe for each flag so the reader does not use this to exclude or judge people unfairly."]},"workplace":{"colleagueExperience":"string","naturalRole":"string","highestValue":"string","unintendedFriction":"string"},"leadership":{"style":"string","teamLoves":"string","teamChallenges":"string","developBehaviors":["s","s","s"]},"career":{"excels":["s","s","s"],"drains":["s","s","s"],"moves":[{"title":"string","reasoning":"string","themes":["s","s"]}]},"selfSabotage":[{"patternName":"string","behavior":"string","trigger":"string","solution":"string"}],"howOthers":{"magnetic":"string","friction":"string","misread":"string","remembered":"string"},"growthEdge":{"signatureNext":"string","developTheme":"string","masterShadow":"string"},"actionPlan":{"hours24":"string","week1":"string","months3":"string","coachingQuestion":"string"}}`;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -684,6 +695,36 @@ async function generateReport(){
 function retryGenerate(){generateReport()}
 function showError(msg){document.getElementById('errorDetail').textContent=msg;show('sError')}
 
+
+// DOMAIN GRID CHART BUILDER
+const DOMAIN_ORDER_DG=['executing','influencing','relationship','strategic'];
+function buildDomainGrid(allThemes){
+  const groups={executing:[],influencing:[],relationship:[],strategic:[]};
+  allThemes.forEach(t=>{if(groups[t.domain])groups[t.domain].push(t)});
+  Object.values(groups).forEach(g=>g.sort((a,b)=>a.rank-b.rank));
+  const DN2={executing:'EXECUTING',influencing:'INFLUENCING',relationship:'RELATIONSHIP BUILDING',strategic:'STRATEGIC THINKING'};
+  let html='<div style="margin-bottom:24px;overflow-x:auto;-webkit-overflow-scrolling:touch"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-width:560px">';
+  DOMAIN_ORDER_DG.forEach(d=>{
+    const themes=groups[d]||[];const col=DC[d];
+    html+=`<div><div style="font-family:Outfit,sans-serif;font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:${col};padding-bottom:7px;margin-bottom:5px;border-bottom:2px solid ${col}">${DN2[d]}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">`;
+    themes.forEach(t=>{
+      const rank=t.rank;let bg,tc,rs,ns;
+      if(rank<=5){bg=col;tc='#fff';rs='19px';ns='9px'}
+      else if(rank<=10){bg=col+'66';tc='#fff';rs='15px';ns='8.5px'}
+      else if(rank<=20){bg=col+'28';tc=col;rs='12px';ns='7.5px'}
+      else{bg=col+'12';tc=col+'99';rs='11px';ns='7px'}
+      html+=`<div style="background:${bg};border-radius:6px;padding:8px 5px 7px;text-align:center;transition:transform .15s" title="${t.theme} — Rank ${rank}"><div style="font-family:Outfit,sans-serif;font-weight:900;line-height:1;margin-bottom:3px;color:${tc};font-size:${rs}">${rank}</div><div style="font-family:Outfit,sans-serif;font-weight:700;line-height:1.25;color:${tc};font-size:${ns}">${t.theme}</div></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  html+=`</div><div style="display:flex;gap:16px;justify-content:center;margin-top:12px;flex-wrap:wrap">`;
+  [{l:'Signature (1–5)',o:'1'},{l:'Supporting (6–10)',o:'.65'},{l:'Background (11–20)',o:'.35'},{l:'Lesser Used (21–34)',o:'.18'}].forEach(item=>{
+    html+=`<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gray)"><div style="width:12px;height:12px;border-radius:3px;background:#8B5CF6;opacity:${item.o};flex-shrink:0"></div>${item.l}</div>`;
+  });
+  html+=`</div></div>`;
+  return html;
+}
+
 // ═══════════════════════════════════════════════════════════
 // REPORT RENDER
 // ═══════════════════════════════════════════════════════════
@@ -707,9 +748,9 @@ function renderReport(r){
   const comboHtml=(r.powerCombinations||[]).map(c=>{const tb=(c.themes||[]).map((t,i)=>`<span class="combo-theme" style="background:${dc((c.domains||[])[i]||'strategic')}">${t}</span>`).join(`<span class="combo-op">+</span>`);return`<div class="combo-card"><div class="combo-eq">${tb}<span class="combo-op">=</span><span style="font-size:14px;font-weight:700;color:#0D1B2A">${c.title}</span></div><div class="combo-capability">${c.capability}</div><div class="combo-example"><strong>In Practice:</strong>${c.example}</div></div>`}).join('');
   const shadowHtml=(r.shadowSides||[]).map(s=>`<div class="shadow-card"><div class="shadow-theme-badge"><div class="shadow-dot" style="background:${dc(s.domain)}"></div><div class="shadow-theme-name">${s.theme}</div></div><div class="shadow-row"><div class="shadow-box"><div class="shadow-box-label">When Overused</div><p>${s.liability}</p></div><div class="shadow-box"><div class="shadow-box-label">What It Looks Like</div><p>${s.looksLike}</p></div></div><div class="shadow-warn"><div class="shadow-warn-icon">⚠️</div><p><strong>Early Warning Sign</strong>${s.warning}</p></div></div>`).join('');
   const th=r.thrive||{};
-  const thriveHtml=`<div class="thrive-grid"><div class="thrive-box green"><h4>What Brings Out Your Best</h4><ul class="thrive-list">${(th.bestConditions||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div><div class="thrive-box red"><h4>What Drains You</h4><ul class="thrive-list">${(th.energyKillers||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div></div>${th.idealPartner?`<div class="thrive-ideal"><h5>Ideal Manager or Partner</h5><p>${th.idealPartner}</p></div>`:''}<div class="thrive-split"><div class="thrive-phrase-box"><h5>Say This to Me</h5><ul class="phrase-list">${(th.needToHear||[]).map(p=>`<li>"${p}"</li>`).join('')}</ul></div><div class="thrive-phrase-box"><h5>Never Say This</h5><ul class="phrase-list">${(th.doNotSay||[]).map(p=>`<li>"${p}"</li>`).join('')}</ul></div></div>`;
+  const thriveHtml=`<div class="thrive-grid"><div class="thrive-box green"><h4>What Brings Out Your Best</h4><ul class="thrive-list">${(th.bestConditions||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div><div class="thrive-box red"><h4>What Drains You</h4><ul class="thrive-list">${(th.energyKillers||[]).map(c=>`<li>${c}</li>`).join('')}</ul></div></div>${th.idealPartner?`<div class="thrive-ideal"><h5>Ideal Manager or Partner</h5><p>${th.idealPartner}</p></div>`:''}${th.bestCollaborators?`<div class="thrive-ideal" style="background:var(--st-l);border-color:#B7DFCA;margin-top:12px"><h5 style="color:var(--st)">Who Brings Out Your Best</h5><p>${th.bestCollaborators}</p></div>`:''}${th.bestCollaborators?`<div class="thrive-ideal" style="background:var(--st-l);border-color:#B7DFCA;margin-top:12px"><h5 style="color:var(--st)">Who Brings Out Your Best</h5><p>${th.bestCollaborators}</p></div>`:''}<div class="thrive-split"><div class="thrive-phrase-box"><h5>Say This to Me</h5><ul class="phrase-list">${(th.needToHear||[]).map(p=>`<li>"${p}"</li>`).join('')}</ul></div><div class="thrive-phrase-box"><h5>Never Say This</h5><ul class="phrase-list">${(th.doNotSay||[]).map(p=>`<li>"${p}"</li>`).join('')}</ul></div></div>`;
   const rel=r.relationships||{};
-  const relHtml=`<div class="prose-section"><div class="prose-block"><h5>What You Offer Those You Love</h5><p>${rel.whatTheyOffer||''}</p></div><div class="prose-block"><h5>What You Genuinely Need in Return</h5><p>${rel.whatTheyNeed||''}</p></div><div class="prose-block"><h5>Your Relationship Blind Spots</h5><p>${rel.blindSpots||''}</p></div><div class="flag-grid"><div class="flag-box green"><h5>Green Flags</h5><ul class="flag-list">${(rel.greenFlags||[]).map(f=>`<li>${f}</li>`).join('')}</ul></div><div class="flag-box red"><h5>Red Flags</h5><ul class="flag-list">${(rel.redFlags||[]).map(f=>`<li>${f}</li>`).join('')}</ul></div></div></div>`;
+  const relHtml=`<div class="prose-section"><div class="prose-block"><h5>What You Offer Those You Love</h5><p>${rel.whatTheyOffer||''}</p></div><div class="prose-block"><h5>What You Genuinely Need in Return</h5><p>${rel.whatTheyNeed||''}</p></div><div class="prose-block"><h5>Your Relationship Blind Spots</h5><p>${rel.blindSpots||''}</p></div><div class="flag-grid"><div class="flag-box green"><h5>Green Flags</h5><ul class="flag-list">${(rel.greenFlags||[]).map(f=>`<li>${f}</li>`).join('')}</ul></div><div class="flag-box red"><h5>Watch &amp; Navigate</h5><ul class="flag-list">${(rel.redFlags||[]).map(f=>`<li>${f}</li>`).join('')}</ul></div></div></div>`;
   const wp=r.workplace||{};
   const wpHtml=`<div class="prose-section"><div class="prose-block"><h5>How Colleagues Experience You</h5><p>${wp.colleagueExperience||''}</p></div><div class="prose-block"><h5>Your Natural Team Role</h5><p>${wp.naturalRole||''}</p></div><div class="prose-block"><h5>Where You Add the Most Value</h5><p>${wp.highestValue||''}</p></div><div class="prose-block" style="background:#FFF8E7;border-color:#FDE68A"><h5 style="color:#92400E">Unintended Friction to Watch</h5><p>${wp.unintendedFriction||''}</p></div></div>`;
   const ld=r.leadership||{};
@@ -728,22 +769,28 @@ function renderReport(r){
   function sec(n,icon,title,sub,content){return`<div class="rpt-section"><div class="sec-hdr"><div class="sec-num" style="background:${sc[n-1]}">${n}</div><div><div class="sec-title">${icon} ${title}</div>${sub?`<div class="sec-sub">${sub}</div>`:''}</div></div>${content}</div>`}
 
   document.getElementById('reportContent').innerHTML=`
-<div class="rpt-hero"><div class="rpt-inner"><div class="rpt-greeting">Your CliftonStrengths Profile</div><div class="rpt-name">${r.name||S.name||'Your Strengths'}</div><div class="rpt-tagline">${r.tagline||''}</div><div class="rpt-top5">${pillsHtml}</div><div class="domain-bar">${dbarHtml}</div></div></div>
+<div class="rpt-hero"><div class="rpt-inner"><div class="rpt-greeting">Your Strengths Profile</div><div class="rpt-name">${r.name||S.name||'Your Strengths'}</div><div class="rpt-tagline">${r.tagline||''}</div><div class="rpt-top5">${pillsHtml}</div><div class="domain-bar">${dbarHtml}</div></div></div>
 <div class="rpt-actions"><button class="btn btn-ghost btn-sm" onclick="window.print()">Print / Save as PDF</button><button class="btn btn-ghost btn-sm" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">Jump to Action Plan</button><button class="btn btn-ghost btn-sm" onclick="location.reload()">New Assessment</button></div>
-${sec(1,'📊','Your Full 34-Theme Profile','All themes ranked from most to least dominant',profileTableHtml)}
+${sec(1,'📊','Your Full Profile','All 34 themes ranked across 4 domains',buildDomainGrid(allT)+profileTableHtml)}
 ${sec(2,'✨','Strengths Portrait','Who you are when all your strengths are firing together',`<div class="portrait-text">${r.portrait||''}</div>`)}
 ${sec(3,'⭐','Your Signature Five','Your most powerful, instinctive, and dominant talents',sig5Html+`<div class="when-all-fire"><div class="waf-label">When All Five Fire Together</div>${r.whenAllFire||''}</div>`)}
 ${sec(4,'🔗','Power Combinations','Where 1+1=3',`<div class="combo-list">${comboHtml}</div>`)}
 ${sec(5,'⚠️','Shadow Sides & Blind Spots','The other side of every strength',`<div class="shadow-list">${shadowHtml}</div>`)}
 ${sec(6,'🌱','What You Need to Thrive','The conditions that bring out your absolute best',thriveHtml)}
-${sec(7,'💛','You in Relationships','How you love, what you need, and where to watch yourself',relHtml)}
+${sec(7,'💼','Career & Role Alignment','Where your profile thrives, what drains it, and three moves that only make sense for you',caHtml)}
 ${sec(8,'🤝','You in the Workplace','Your natural role, your highest value, the friction you don\'t mean to create',wpHtml)}
 ${sec(9,'👑','You as a Leader','Your style, your team\'s experience, and where to grow deliberately',ldHtml)}
-${sec(10,'💼','Career & Role Alignment','Where your profile thrives, what drains it, and three moves that only make sense for you',caHtml)}
-${sec(11,'🔄','Self-Sabotage Patterns','The most likely ways this exact combination gets in its own way',`<div class="sabotage-list">${sabHtml}</div>`)}
-${sec(12,'🪞','How Others Experience You','Your magnetic impact, the friction you create without meaning to',howHtml)}
+${sec(10,'💛','You in Relationships','How you love, what you need, and where to watch yourself',relHtml)}
+${sec(11,'🪞','How Others Experience You','Your magnetic impact, the friction you create without meaning to',howHtml)}
+${sec(12,'🔄','Self-Sabotage Patterns','The most likely ways this exact combination gets in its own way',`<div class="sabotage-list">${sabHtml}</div>`)}
 ${sec(13,'🎯','Your Growth Edge & Action Plan','What\'s next — and exactly what to do about it starting now',growthHtml+'<div style="margin-top:20px">'+actionHtml+'</div>')}
-<div style="text-align:center;padding:40px 20px;color:var(--gray-l);font-size:12px;line-height:1.7">Generated by StrengthsMap • Powered by Dr. Marcus Reid Coaching Intelligence<br>Based on the CliftonStrengths 34 framework by Gallup</div>`;
+<div style="text-align:center;padding:40px 20px 20px;color:var(--gray-l);font-size:12px;line-height:1.8;border-top:1px solid var(--border);margin-top:20px">
+  Generated by StrengthsMap — an independent AI-powered strengths discovery tool<br>
+  <strong style="color:var(--navy2)">Important Disclaimer</strong><br>
+  StrengthsMap is an independent tool and is not affiliated with, endorsed by, or connected to Gallup, Inc. or the official CliftonStrengths® assessment. CliftonStrengths® is a registered trademark of Gallup, Inc. All rights reserved.<br><br>
+  This report is generated by artificial intelligence for personal reflection and development purposes only. It is not a clinical, psychological, or professional assessment. Results should not be used as the sole basis for employment decisions, medical decisions, or any consequential life decisions. The creators of StrengthsMap accept no liability for actions taken based on this report.<br><br>
+  For the official CliftonStrengths® assessment, visit gallup.com.
+</div>
 }
 </script>
 </body>
