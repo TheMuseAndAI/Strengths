@@ -737,4 +737,29 @@ function renderReport(r,ranked){
   var ho=r.howOthers||{};
   var howH='<div class="othgrid"><div class="othbox mag"><h5>The Magnetic Impact</h5><p>'+ho.magnetic+'</p></div><div class="othbox fric"><h5>The Unintended Friction</h5><p>'+ho.friction+'</p></div></div>'+(ho.misread?'<div class="misread"><h5>What People Misread About You</h5><p>'+ho.misread+'</p></div>':'')+'<div class="pblock" style="margin-top:11px"><h5>What People Remember</h5><p>'+ho.remembered+'</p></div>';
   var ge=r.growthEdge||{};
-  var growthH='<div class="gcards"><div class="gcard hl"><div class="glbl">Your #1 Talent — Fully Trusted</div><div class="gtitle">What the Next Level Looks Like</div><div class="gtext">'+ge.signatureNext+'</div></div><div class="gcard"><div class
+  var growthH='<div class="gcards"><div class="gcard hl"><div class="glbl">Your #1 Talent — Fully Trusted</div><div class="gtitle">What the Next Level Looks Like</div><div class="gtext">'+ge.signatureNext+'</div></div><div class="gcard"><div class="glbl">Theme to Develop Deliberately</div><div class="gtext">'+ge.developTheme+'</div></div><div class="gcard" style="background:rgba(249,115,22,.03);border-color:rgba(249,115,22,.09)"><div class="glbl" style="color:rgba(249,115,22,.7)">Shadow Side to Master</div><div class="gtext">'+ge.masterShadow+'</div></div></div>';
+  var ap=r.actionPlan||{};
+  var actH='<div class="actions"><div class="aitem"><div class="aicon-wrap"><div class="aicon">⚡</div><div class="aline"></div></div><div><div class="atime">Within 24 Hours</div><div class="atext">'+ap.hours24+'</div></div></div><div class="aitem"><div class="aicon-wrap"><div class="aicon">📅</div><div class="aline"></div></div><div><div class="atime">Within 1 Week</div><div class="atext">'+ap.week1+'</div></div></div><div class="aitem"><div class="aicon-wrap"><div class="aicon">🗓</div><div class="aline"></div></div><div><div class="atime">Within 3 Months</div><div class="atext">'+ap.months3+'</div></div></div></div>'+(ap.coachingQuestion?'<div class="cq"><div class="cq-lbl">Your Reflection Question</div><div class="cq-text">"'+ap.coachingQuestion+'"</div></div>':'');
+  var SC=['#8B5CF6','#F97316','#3B82F6','#10B981','#8B5CF6','#F97316','#3B82F6','#10B981','#8B5CF6','#F97316','#3B82F6','#10B981','#10B981'];
+  function sec(n,icon,title,sub,content){return'<div class="sec"><div class="sec-hdr"><div class="sec-num" style="background:'+SC[n-1]+'">'+n+'</div><div><div class="sec-title">'+icon+' '+title+'</div>'+(sub?'<div class="sec-sub">'+sub+'</div>':'')+'</div></div>'+content+'</div>'}
+  document.getElementById('reportContent').innerHTML=
+    '<div class="rpt-hero"><div class="rpt-inner"><div class="rpt-greet">Your Strengths Profile</div><div class="rpt-name">'+(r.name||S.name||'Your Profile')+'</div><div class="rpt-tagline">'+(r.tagline||'')+'</div><div class="rpt-pills">'+pillsH+'</div><div class="dbar">'+dbarH+'</div></div></div>'+
+    '<div class="rpt-actions"><button class="btn btn-g btn-sm" onclick="window.print()">Print / Save PDF</button><button class="btn btn-g btn-sm" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:&quot;smooth&quot;})">Jump to Action Plan</button><button class="btn btn-g btn-sm" onclick="location.reload()">New Assessment</button></div>'+
+    sec(1,"📊","Your Full Profile","All 34 themes ranked from your answers — domain grid above, full table below",domGridH+ptableH)+
+    sec(2,'✨','Strengths Portrait','Who you are when your top talents are all firing together','<div class="portrait">'+(r.portrait||'')+'</div>')+
+    sec(3,'⭐','Your Signature Five','Your five most dominant natural talents',sig5H+'<div class="waf"><div class="waf-lbl">When All Five Fire Together</div>'+(r.whenAllFire||'')+'</div>')+
+    sec(4,'🔗','Power Combinations','Where 1+1=3 — what your specific pairings create together','<div class="combos">'+comboH+'</div>')+
+    sec(5,'⚠️','Shadow Sides','When your strengths work against you — and how to catch it early','<div class="shadows">'+shadowH+'</div>')+
+    sec(6,'🌱','What You Need to Thrive','The conditions that bring out your best',thriveH)+
+    sec(7,'💼','Career & Role Alignment','Where your profile naturally thrives and three moves that fit your exact pattern',caH)+
+    sec(8,'🤝','You in the Workplace','Your natural role and the friction you create without meaning to',wpH)+
+    sec(9,'👑','You as a Leader','Your style and where to grow deliberately',ldH)+
+    sec(10,'💛','You in Relationships','What you offer, what you need, and what to navigate',relH)+
+    sec(11,'🪞','How Others Experience You','Your impact and what you are remembered for',howH)+
+    sec(12,'🔄','Self-Sabotage Patterns','The most likely ways this profile gets in its own way','<div class="sabs">'+sabH+'</div>')+
+    sec(13,'🎯','Growth Edge & Action Plan','What is next and exactly what to do starting now',growthH+'<div style="margin-top:20px">'+actH+'</div>')+
+    '<div class="rpt-footer"><strong>Important Disclaimer</strong>Strengths Map is an independent assessment inspired by strengths-based psychology research. It is not affiliated with, endorsed by, or a substitute for any proprietary assessment tool. Results are for personal development purposes only. The creator accepts no liability for decisions made based on this assessment.</div>';
+}
+</script>
+</body>
+</html>
